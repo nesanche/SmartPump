@@ -1,2 +1,2 @@
-# SmartPump HOLAAAAAAAAAAAAAAAAAAAA
+# SmartPump Prueba
 Repository for the development of the software suite for SmartPump
