@@ -63,4 +63,17 @@
 		</dependency>
  
 	</dependencies>
+	  <build>
+	  <finalName>Bismara</finalName>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.tomcat.maven</groupId>
+          <artifactId>tomcat7-maven-plugin</artifactId>
+         <version>2.3-SNAPSHOT</version>
+        <configuration>
+          <path>/${project.build.finalName}</path>
+        </configuration>
+        </plugin>
+      </plugins>
+	  </build>
 </project>
