@@ -1,17 +1,22 @@
-package com.smartpump.persistent.entity;
+package com.smartpump.service;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name = "persona")
-@NamedQuery(name="Person.findAll",query="select * from persona")
-public class Person {
+@Table(name = "Person")
+@NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p")
+public class Person{
+
+	@Id
+    @Column(name = "id")
 	private int id;
+	@Column(name = "nombre")
 	private String nombre;
+	@Column(name = "edad")
 	private int edad;
 
 	public void setId(int id) {
@@ -38,4 +43,5 @@ public class Person {
 	public int getEdad() {
 		return edad;
 	}
+	
 }
