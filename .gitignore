@@ -14,6 +14,7 @@ hs_err_pid*
 
 **/target/
 **/.idea/
+**/bin/*
 .DS_Store
 node_modules/
 *.project
