@@ -10,29 +10,56 @@
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 			
-    <bean
-	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-	<property name="locations">
-		<list>
-			<value>\WEB-INF\database.properties</value>
-		</list>
-	</property>
-	</bean>
+	   <!--  Scan for both Jersey Rest Annotations a -->
+       <context:component-scan base-package="com.smartpump.rest,com.smartpump.dao"/>
+       <context:annotation-config />
+	   <context:spring-configured />
+       <tx:annotation-driven />
+       <bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		p:driverClassName="com.mysql.jdbc.Driver" p:url="jdbc:mysql://96.30.30.72:2083/bismara_smartpump"
+		p:username="bismara_user" p:password="smartpump" />
 
-	<bean id="dataSource"
-	class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-	p:driverClassName="${jdbc.driver}" p:url="${jdbc.url}" p:username="${jdbc.username}"
-	p:password="${jdbc.password}" />
-	
-	<bean id="personService"
-		class="com.smartpump.service.jpa.PersonServiceJpa"></bean>
-	
 	<bean id="entityManagerFactory"
-		class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean"
-		lazy-init="true">
-		<property name="persistenceUnitName" value="transactions-optional" />
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+		p:dataSource-ref="dataSource" p:jpaVendorAdapter-ref="jpaAdapter">
+		    <property name="persistenceUnitManager" ref="persistenceUnitManager" />
+			    <property name="persistenceUnitName" value="personUnit" />
+		<property name="loadTimeWeaver">
+			<bean
+				class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+		</property>
+		  <property name="jpaDialect">
+        			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+   		  </property>
 	</bean>
-	<bean name="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
-</beans>
+	
+	 <bean id="persistenceUnitManager" class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
+		        <property name="persistenceXmlLocations">
+		            <list>
+		                <value>classpath*:META-INF/persistence.xml</value>
+		            </list>
+		        </property>
+		        <property name="defaultDataSource" ref="dataSource"/>
+	</bean>	
+	
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+		p:entityManagerFactory-ref="entityManagerFactory" />
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<bean id="jpaAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+		p:database="MYSQL" p:showSql="true" />
+	
+	 <bean id="personDao" 
+                  class="com.smartpump.dao.PersonDaoImpl" />
+	
+	<!-- Needed so the @PersistenceUnit annotation is recognized -->
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+    		
+   </beans>
+         	<!-- 		
+		   
+		    <bean id="dbUtil" class="com.smartpump.service.DbUtil" init-method="initialize">
+		<property name="dataSource" ref="dataSource" />
+	</bean>	-->
