@@ -67,9 +67,9 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-agent.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jersey-json.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api-1.0-sdk-1.9.19.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-agentimpl.jar"/>
 	<classpathentry kind="con" path="org.eclipse.datatools.connectivity.jdt.DRIVERLIBRARY/Generic JDBC Driver"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/luqi/git/SmartPump/BismaraPoC/war/WEB-INF/lib/appengine-api-1.0-sdk-1.9.19.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api-1.0-sdk-1.9.19.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
