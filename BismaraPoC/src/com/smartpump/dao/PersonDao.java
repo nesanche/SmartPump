@@ -1,13 +1,13 @@
 package com.smartpump.dao;
 
 import java.util.List;
-import com.smartpump.service.Person;
-import org.springframework.dao.DataAccessException;
+
+import com.smartpump.entity.Person;
 
 public interface PersonDao {
 	
-	public String getNombre() throws DataAccessException;
+	public String getNombre();
 	
-	public List<Person> getAll() throws DataAccessException;
+	public List<Person> getAll();
 
 }

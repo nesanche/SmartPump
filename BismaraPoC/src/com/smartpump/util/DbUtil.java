@@ -1,5 +1,4 @@
-package com.smartpump.service;
-
+package com.smartpump.util;
 
 import java.sql.SQLException;
 
@@ -34,4 +33,3 @@ public class DbUtil {
 	}	
 	}
 }
-	

@@ -10,56 +10,37 @@
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 			
-	   <!--  Scan for both Jersey Rest Annotations a -->
-       <context:component-scan base-package="com.smartpump.rest,com.smartpump.dao"/>
-       <context:annotation-config />
-	   <context:spring-configured />
-       <tx:annotation-driven />
-       <bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-		p:driverClassName="com.mysql.jdbc.Driver" p:url="jdbc:mysql://96.30.30.72:2083/bismara_smartpump"
-		p:username="bismara_user" p:password="smartpump" />
-
-	<bean id="entityManagerFactory"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-		p:dataSource-ref="dataSource" p:jpaVendorAdapter-ref="jpaAdapter">
-		    <property name="persistenceUnitManager" ref="persistenceUnitManager" />
-			    <property name="persistenceUnitName" value="personUnit" />
-		<property name="loadTimeWeaver">
-			<bean
-				class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
-		</property>
-		  <property name="jpaDialect">
-        			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
-   		  </property>
+    <context:component-scan base-package="com.smartpump.rest.*" />
+    
+    <tx:annotation-driven transaction-manager="transactionManager" />  
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+    
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceXmlLocation" value="classpath:/META-INF/persistence.xml" />
+        <property name="persistenceUnitName" value="personUnit" />       
+        <property name="dataSource" ref="dataSource" />
+        <!-- <property name="packagesToScan" value="com.smartpump.*" /> -->
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="showSql" value="true" />
+                <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+            </bean>
+        </property>
+    </bean>     
+    
+   <bean id="personDao" class="com.smartpump.dao.impl.PersonDaoImpl"/>	
+   <bean id="restService" class="com.smartpump.service.RestService" />
+    
+   <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/bismara_bd" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
 	</bean>
 	
-	 <bean id="persistenceUnitManager" class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
-		        <property name="persistenceXmlLocations">
-		            <list>
-		                <value>classpath*:META-INF/persistence.xml</value>
-		            </list>
-		        </property>
-		        <property name="defaultDataSource" ref="dataSource"/>
-	</bean>	
-	
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
-		p:entityManagerFactory-ref="entityManagerFactory" />
-	<tx:annotation-driven transaction-manager="transactionManager" />
-	
-	<bean id="jpaAdapter"
-		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
-		p:database="MYSQL" p:showSql="true" />
-	
-	 <bean id="personDao" 
-                  class="com.smartpump.dao.PersonDaoImpl" />
-	
-	<!-- Needed so the @PersistenceUnit annotation is recognized -->
+   <!-- Needed so the @PersistenceUnit annotation is recognized -->
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
-    		
+ 
    </beans>
-         	<!-- 		
-		   
-		    <bean id="dbUtil" class="com.smartpump.service.DbUtil" init-method="initialize">
-		<property name="dataSource" ref="dataSource" />
-	</bean>	-->

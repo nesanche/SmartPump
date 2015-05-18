@@ -13,4 +13,5 @@ mySqlHostName=localhost
 mySqlIsConfigured=true
 mySqlJdbcJar=C\:\\Users\\luqi\\workspace\\Bismara\\war\\WEB-INF\\lib\\com.mysql.jdbc_5.1.5.jar
 mySqlPort=3306
-validationExclusions=src/com/smartpump/rest/PaymentService.java
+ormEnhancementInclusions=src/
+validationExclusions=
