@@ -24,5 +24,11 @@ public class PersonDaoImpl implements PersonDao {
 	public List<Person> getAll() {		
 		return entityManager.createNamedQuery("Person.findAll", Person.class).getResultList();
 	}
+	
+	public Long createPerson(Person user){
+		entityManager.persist(user);
+		entityManager.flush();		
+		return (long) user.getId();
+	}
 
 }

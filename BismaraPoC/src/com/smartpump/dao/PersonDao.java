@@ -9,5 +9,7 @@ public interface PersonDao {
 	public String getNombre();
 	
 	public List<Person> getAll();
+	
+	public Long createPerson(Person user);
 
 }
