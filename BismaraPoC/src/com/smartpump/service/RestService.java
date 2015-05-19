@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.gson.Gson;
 import com.smartpump.dao.PersonDao;
 import com.smartpump.entity.Person;
 
@@ -25,33 +26,36 @@ public class RestService {
 	 
 		@Autowired
 		private PersonDao personDao;
-	 
-		@Path("/app")
-		@GET
-		@Produces("text/plain")
-		public String getIt() {			
-			String nombre = personDao.getNombre();
-			return "Hola: " + nombre + " estas usando Google App Engine + Jersey + Spring. Solo te queda JPA!";
-		} 	
-
 		
+		Gson gson = new Gson();
+	 	
 		@Path("/all")
 		@GET
-		/*@Produces("text/plain")*/
-		@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-		public List<Person> getAll() {	
+		@Consumes(MediaType.APPLICATION_JSON)
+		public String getAll() {	
 			List<Person> persons = personDao.getAll();
-			return persons;
+			String json = gson.toJson(persons);
+			return json;
 		} 
 		
 		@Path("/new")
 		@POST
 		@Consumes({ MediaType.APPLICATION_JSON })
-		@Produces({ MediaType.TEXT_HTML })
 		@Transactional
 		public Response createPerson(Person user) {
-			personDao.createPerson(user);
-			return Response.status(201).entity("A new doctor has been created!").build();
+			Person result = personDao.createPerson(user);
+			String json = gson.toJson(result);
+			return Response.status(201).entity(json).build();
+		}
+		
+		@Path("/login")
+		@POST
+		@Consumes({ MediaType.APPLICATION_JSON })
+		@Transactional
+		public Response login(Person user) {
+			Person result = personDao.login(user);
+			String json = gson.toJson(result);
+			return Response.status(201).entity(json).build();
 		}
 		
 		

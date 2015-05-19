@@ -10,22 +10,28 @@ angular.module('app.services', ['ngResource', 'angular-loading-bar', 'ngAnimate'
     var authService = {};
  
     authService.login = function (credentials) {
-    cfpLoadingBar.start();
-  	/*var sanitizeCredentials = function(credentials) {
-    return {
-      username: $sanitize(credentials.username),
-      password: $sanitize(credentials.password),
-      csrf_token: CSRF_TOKEN
-    };
-  	};*/
+        cfpLoadingBar.start();
+      	/*var sanitizeCredentials = function(credentials) {
+        return {
+          username: $sanitize(credentials.username),
+          password: $sanitize(credentials.password),
+          csrf_token: CSRF_TOKEN
+        };
+      	};*/
 		   	$http.post("http://localhost:8888/rest/myresource/login",credentials).
 			  success(function(data, status, headers, config) {
             cfpLoadingBar.complete();
-				   return true;
+				    if(data == null){
+              alert("No existe el Medico con los datos ingresados! Imposible ingresar.")
+            }
+            else{
+              alert("Bienvenido a Bismara " + data.username);
+              location.reload();
+            }
 			  }).
 			  error(function(data, status, headers, config) {
              cfpLoadingBar.complete();
-			   		return false;
+			   		 alert("Imposible conectar con el servidor.")
 			  });
 
   }
@@ -33,14 +39,18 @@ angular.module('app.services', ['ngResource', 'angular-loading-bar', 'ngAnimate'
   authService.newUser = function (user) {
         $http.post("http://localhost:8888/rest/myresource/new",user).
         success(function(data, status, headers, config) {
-            cfpLoadingBar.complete();
-            alert("bien");
-           return true;
+            cfpLoadingBar.complete();    
+            if(data == "null"){
+              alert("Ya existe un medico con esa matricula! Imposible registrar.")
+            }
+            else{
+              alert("Bienvenido a Bismara " + data.username);
+              location.reload();
+            }
         }).
         error(function(data, status, headers, config) {
              cfpLoadingBar.complete();
-             alert("mal");
-            return false;
+              alert("Imposible conectar con el servidor.")
         });
   }
   

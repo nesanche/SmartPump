@@ -10,6 +10,8 @@ public interface PersonDao {
 	
 	public List<Person> getAll();
 	
-	public Long createPerson(Person user);
+	public Person createPerson(Person user);
+	
+	public Person login(Person user);
 
 }

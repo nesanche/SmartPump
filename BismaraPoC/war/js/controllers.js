@@ -27,29 +27,22 @@ angular.module('app.controllers', ['app.services'])
 .controller('loginController', function($scope , AuthService) {
 
         	$scope.login = function (user) {
-      			var credentials = {
-	          		username: user.username,
-	          		password: user.password,
-	          		matricula: user.matricula
-      			};
-
-      			$scope.credentials = credentials;
-
-      			AuthService.login($scope.credentials);
+      			$scope.user = user;
+				var userJSON = angular.toJson(user);
+      			AuthService.login(userJSON);
       		}
 
-      		$scope.newUser = function (user) {
+      		$scope.newUser = function (user) {      			
       			var user = {
 	          		username: user.username,
 	          		password: user.password,
-	          		confirmPassword: user.confirmPassword,
+	          		matricula: user.matricula,
 	          		first_name: user.firstName,
 	          		last_name: user.lastName,
 	          		phone: user.phone,
 	          		location: user.location,
 	          		email: user.email
       			};
-
       			$scope.user = user;
 
       			AuthService.newUser($scope.user);

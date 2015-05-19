@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -12,7 +13,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "person")
-@NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p")
+@NamedQueries({ 
+	@NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
+	@NamedQuery(name = "Person.findByMatricula", query = "SELECT p FROM Person p where p.matricula=:matricula"),
+	@NamedQuery(name = "Person.findForLogin", query = "SELECT p FROM Person p where p.matricula=:matricula and p.username=:username and p.password=:password")
+})
 @XmlRootElement
 public class Person implements Serializable {
 
@@ -21,6 +26,8 @@ public class Person implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
+	
+	private int matricula;
 
 	private String first_name;
 	
@@ -48,6 +55,14 @@ public class Person implements Serializable {
 		return id;
 	}
 	
+	public int getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(int matricula) {
+		this.matricula = matricula;
+	}
+
 	public String getFirst_name() {
 		return first_name;
 	}
