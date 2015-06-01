@@ -1,0 +1,166 @@
+<div class="container" ng-controller="loginController">
+        <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="panel panel-login">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-6">
+                  <a href="#" class="active" id="login-form-link">Login</a>
+                </div>
+                <div class="col-xs-6">
+                  <a href="#" id="register-form-link">Registrarse</a>
+                </div>
+              </div>
+              <hr>
+            </div>
+            <div class="panel-body">
+               <img id="profile-img" class="profile-img-card" src="images/user.png">
+                      <!--<div class="col-md-12" id="social-buttons">
+                          <div class="row text-center">
+                              <div class="col-md-4 col-sm-12">
+                                  <button type="button" class="btn btn-primary btn-block">Facebook</button>
+                              </div>
+                              <div class="col-md-4 col-sm-12">
+                                  <button type="button" class="btn btn-info btn-block">Twitter</button>
+                              </div>
+                              <div class="col-md-4 col-sm-12">
+                                  <button type="button" class="btn btn-danger btn-block">Google+</button>
+                              </div>
+                          </div>
+                      </div>-->
+              <div class="row">
+                <div class="col-lg-12">
+                  <form id="login-form" ng-submit="login(doctor)" role="form">
+                    <div class="form-group">                     
+                      <!-- <div class="omb_login">
+                        <div class="row omb_row-sm-offset-3 omb_loginOr">
+                          <div class="col-xs-12 col-sm-6">
+                            <hr class="omb_hrOr">
+                            <span class="omb_spanOr">or</span>
+                          </div>
+                        </div>
+                      </div>-->
+                      <div class="input-group">                   
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>   
+                      <input type="text" ng-model="doctor.username" name="doctorUsername" id="doctorUsername" tabindex="1" class="form-control" placeholder="Usuario" value="" aria-describedby="basic-addon1" required>
+                      </div>
+                    </div>                  
+                    <div class="form-group">
+                       <div class="input-group">   
+                       <span class="input-group-addon" ><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                      <input type="password" ng-model="doctor.password" name="doctorPassword" id="doctorPassword" tabindex="2" class="form-control" placeholder="Contraseña" required>
+                    </div>
+                    </div>
+                    <!--<div class="form-group">
+                      <div class="input-group"> 
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-education" aria-hidden="true"></span></span>         
+                      <input type="text" ng-model="user.matricula" name="matricula" id="matricula" tabindex="3" class="form-control" placeholder="Matrícula" value="" required>
+                    </div>
+                    </div>-->
+                    <div class="form-group text-center">
+                      <input type="checkbox" tabindex="4" class="" name="remember" id="remember">
+                      <label for="remember"> Recordarme</label>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                          <input type="submit" name="login-submit" id="login-submit" tabindex="5" class="form-control btn btn-login" value="Ingresar">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="text-center">
+                            <a class="forgot-password">¿Olvido Contraseña?</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <form id="register-form" ng-submit="newUser(user)" role="form">
+                       <div class="form-group">
+                      <div class="input-group">                   
+                       <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>   
+                      <input type="text" ng-model="user.username" name="username" id="username" tabindex="1" class="form-control" placeholder="Usuario" value="" required>
+                      </div>  
+                    </div>
+                  <div class="form-group">
+                       <div class="input-group"> 
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-education" aria-hidden="true"></span></span>         
+                      <input type="text"  ng-model="user.matricula" name="matricula" id="matricula" tabindex="2" class="form-control" placeholder="Matrícula" value="" required>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                     <div class="input-group">   
+                       <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                      <input type="password"  ng-model="user.password" name="password" id="password" tabindex="3" class="form-control" placeholder="Contraseña" required>
+                    </div>
+                  </div>
+                    <div class="form-group">
+                     <div class="input-group">   
+                       <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                      <input type="password"  ng-model="user.confirmPassword" name="confirmPassword" id="confirmPassword" tabindex="4" class="form-control" placeholder="Confirmar Contraseña" required>
+                    </div>
+                  </div>
+                  <h1>
+                    Datos Personales
+                  </h1>  
+                   <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">                   
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>                        
+                      <input type="text"  ng-model="user.first_name" name="first_name" id="first_name" tabindex="5" class="form-control" placeholder="Nombre" value="" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                   <div class="form-group">
+                           <div class="input-group">                   
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>                        
+                      <input type="text"  ng-model="user.last_name" name="last_name" id="last_name" tabindex="6" class="form-control" placeholder="Apellido" value="" required>
+                    </div>
+                  </div>
+                </div>
+            </div>   
+                     <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">  
+                         <span class="input-group-addon"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></span>                        
+                      <input type="tel"  ng-model="user.phone" name="phone" id="phone" tabindex="7" class="form-control" placeholder="Teléfono" value="" required>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                  <div class="input-group">  
+                         <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></span></span>   
+                      <input type="text" ng-model="user.location" name="location" id="location" tabindex="8" class="form-control" placeholder="Localidad" value="" required>
+                    </div>
+                     </div>                 
+                </div>
+            </div>     
+                    <div class="form-group">
+                         <div class="input-group">  
+                         <span class="input-group-addon" id="basic-addon1">@</span>
+                      <input type="email" ng-model="user.email" name="email" id="email" tabindex="9" class="form-control" placeholder="Email" value="" required>
+                    </div>
+                    </div>                    
+                    <br>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                          <input type="submit" name="register-submit" id="register-submit" tabindex="10" class="form-control btn btn-register" value="Registerse Ahora">
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
