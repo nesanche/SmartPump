@@ -13,111 +13,108 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "person")
-@NamedQueries({ 
+@NamedQueries({
 	@NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
 	@NamedQuery(name = "Person.findByMatricula", query = "SELECT p FROM Person p where p.matricula=:matricula"),
-	@NamedQuery(name = "Person.findForLogin", query = "SELECT p FROM Person p where p.matricula=:matricula and p.username=:username and p.password=:password")
-})
+	@NamedQuery(name = "Person.findForLogin", query = "SELECT p FROM Person p where p.username=:username and p.password=:password") })
 @XmlRootElement
 public class Person implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue
-	private int id;
-	
-	private int matricula;
+    @Id
+    @GeneratedValue
+    private int id;
 
-	private String first_name;
-	
-	private String last_name;
-	
-	private int phone;
-	
-	private String email;
-	
-	private String location;
-	
-	private String username;
-	
-	private String password;
-		
-	@Transient 
-	protected Object[] jdoDetachedState; 
-	
+    private int matricula;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    private String first_name;
 
-	public int getId() {
-		return id;
-	}
-	
-	public int getMatricula() {
-		return matricula;
-	}
+    private String last_name;
 
-	public void setMatricula(int matricula) {
-		this.matricula = matricula;
-	}
+    private int phone;
 
-	public String getFirst_name() {
-		return first_name;
-	}
+    private String email;
 
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
-	}
+    private String location;
 
-	public String getLocation() {
-		return location;
-	}
+    private String username;
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
+    private String password;
 
-	public String getUsername() {
-		return username;
-	}
+    @Transient
+    protected Object[] jdoDetachedState;
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setId(int id) {
+	this.id = id;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public int getId() {
+	return id;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public int getMatricula() {
+	return matricula;
+    }
 
-	public String getLast_name() {
-		return last_name;
-	}
+    public void setMatricula(int matricula) {
+	this.matricula = matricula;
+    }
 
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
-	}
+    public String getFirst_name() {
+	return first_name;
+    }
 
-	public int getPhone() {
-		return phone;
-	}
+    public void setFirst_name(String first_name) {
+	this.first_name = first_name;
+    }
 
-	public void setPhone(int phone) {
-		this.phone = phone;
-	}
-	
-	public String getEmail() {
-		return email;
-	}
+    public String getLocation() {
+	return location;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-		
+    public void setLocation(String location) {
+	this.location = location;
+    }
+
+    public String getUsername() {
+	return username;
+    }
+
+    public void setUsername(String username) {
+	this.username = username;
+    }
+
+    public String getPassword() {
+	return password;
+    }
+
+    public void setPassword(String password) {
+	this.password = password;
+    }
+
+    public String getLast_name() {
+	return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+	this.last_name = last_name;
+    }
+
+    public int getPhone() {
+	return phone;
+    }
+
+    public void setPhone(int phone) {
+	this.phone = phone;
+    }
+
+    public String getEmail() {
+	return email;
+    }
+
+    public void setEmail(String email) {
+	this.email = email;
+    }
+
 }
-

@@ -8,6 +8,8 @@ angular.module('app.services', ['ngResource', 'angular-loading-bar', 'ngAnimate'
 .factory('AuthService', function ($rootScope, $http, cfpLoadingBar) {
 
     var authService = {};
+    var pathLocal = "http://localhost:8888/";
+    var pathRemote = "http://3-dot-smartpump-dev.appspot.com/";
  
     authService.login = function (credentials) {
         cfpLoadingBar.start();
@@ -18,7 +20,7 @@ angular.module('app.services', ['ngResource', 'angular-loading-bar', 'ngAnimate'
           csrf_token: CSRF_TOKEN
         };
       	};*/
-		   	$http.post("http://localhost:8888/rest/myresource/login",credentials).
+		   	$http.post(pathRemote+"rest/myresource/login",credentials).
 			  success(function(data, status, headers, config) {
             cfpLoadingBar.complete();
 				    if(data == null){
@@ -37,7 +39,7 @@ angular.module('app.services', ['ngResource', 'angular-loading-bar', 'ngAnimate'
   }
 
   authService.newUser = function (user) {
-        $http.post("http://localhost:8888/rest/myresource/new",user).
+        $http.post(pathRemote+"rest/myresource/new",user).
         success(function(data, status, headers, config) {
             cfpLoadingBar.complete();    
             if(data == "null"){

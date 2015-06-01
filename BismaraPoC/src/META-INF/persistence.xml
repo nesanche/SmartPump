@@ -8,15 +8,15 @@
    </persistence-unit>
 </persistence>
 
-<!--     
+<!--      
 	<persistence-unit name="personUnit" transaction-type="RESOURCE_LOCAL">
         <class>com.smartpump.service.Person</class>
     </persistence-unit>
     <persistence-unit name="bismara_smartpump" transaction-type="RESOURCE_LOCAL">
          <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <class>com.smartpump.service.Person</class>
-  </persistence-unit> -->
-    <!-- <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+  </persistence-unit>
+    <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
             <property name="hibernate.connection.url" value="jdbc:mysql://96.30.30.72:2083/bismara_smartpump" />
             <property name="hibernate.connection.username" value="bismara_user" />
             <property name="hibernate.connection.password" value="smartpump" />
