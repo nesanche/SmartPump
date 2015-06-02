@@ -24,16 +24,19 @@ angular.module('app.services', ['ngResource', 'angular-loading-bar', 'ngAnimate'
 			  success(function(data, status, headers, config) {
             cfpLoadingBar.complete();
 				    if(data == null){
-              alert("No existe el Medico con los datos ingresados! Imposible ingresar.")
-            }
+              //alert("No existe el Medico con los datos ingresados! Imposible ingresar.")
+			  sweetAlert("Error!", "No exite el Medico con los datos ingresados!", "error")
+			}
             else{
-              alert("Bienvenido a Bismara " + data.username);
+              //alert("Bienvenido a Bismara " + data.username);
+              sweetAlert("Bienvenido nuevamente a Bismara "+ data.username);
               location.reload();
             }
 			  }).
 			  error(function(data, status, headers, config) {
              cfpLoadingBar.complete();
-			   		 alert("Imposible conectar con el servidor.")
+			   		 //alert("Imposible conectar con el servidor.")
+             		sweetAlert("Error de Servidor", "Imposible conectr con el servidor.", "error")
 			  });
 
   }
@@ -43,16 +46,19 @@ angular.module('app.services', ['ngResource', 'angular-loading-bar', 'ngAnimate'
         success(function(data, status, headers, config) {
             cfpLoadingBar.complete();    
             if(data == "null"){
-              alert("Ya existe un medico con esa matricula! Imposible registrar.")
+              //alert("Ya existe un medico con esa matricula! Imposible registrar.")
+            	sweetAlert("Oops..", "Ya existe un Medico con esa matricula!", "error")
             }
             else{
-              alert("Bienvenido a Bismara " + data.username);
+              //alert("Bienvenido a Bismara " + data.username);
+              sweetAlert("Bienvenido!", "Gracias por registrarse en Bismara " + data.username, "success");
               location.reload();
             }
         }).
         error(function(data, status, headers, config) {
              cfpLoadingBar.complete();
-              alert("Imposible conectar con el servidor.")
+              //alert("Imposible conectar con el servidor.")
+              sweetAlert("Imposible conectar con el servidor.", "error")
         });
   }
   
