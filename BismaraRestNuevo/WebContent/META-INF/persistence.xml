@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+		version="1.0">
+   <persistence-unit name="userUnit">
+          <provider>org.hibernate.ejb.HibernatePersistence</provider>
+          <class>com.smartpump.model.UserState</class>
+     <properties>
+      <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+      <property name="hibernate.connection.url" value="jdbc:mysql://aa6mjoobosk803.cl2wr2bk6v6l.sa-east-1.rds.amazonaws.com:3306/bismara" />
+      <property name="hibernate.connection.username" value="admin" />
+      <property name="hibernate.connection.password" value="bismara1234" />
+      <property name="hibernate.connection.show_sql" value="true" />
+      <property name="hibernate.connection.type" value="DEBUG" />
+      <property name="dialect" value="org.hibernate.dialect.MySQLDialect" />
+      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.HashtableCacheProvider"/>
+      <property name="hibernate.archive.autodetection" value="class"/>             
+     </properties>
+   </persistence-unit> 
+</persistence>
+
+<!--      
+	<persistence-unit name="personUnit" transaction-type="RESOURCE_LOCAL">
+        <class>com.smartpump.service.Person</class>
+    </persistence-unit>
+    <persistence-unit name="bismara_smartpump" transaction-type="RESOURCE_LOCAL">
+         <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>com.smartpump.service.Person</class>
+  </persistence-unit>
+    <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+            <property name="hibernate.connection.url" value="jdbc:mysql://96.30.30.72:2083/bismara_smartpump" />
+            <property name="hibernate.connection.username" value="bismara_user" />
+            <property name="hibernate.connection.password" value="smartpump" />
+            <property name="hibernate.connection.show_sql" value="true" />
+            <property name="hibernate.connection.type" value="DEBUG" />
+        	<property name="dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.HashtableCacheProvider"/>
+			<property name="hibernate.archive.autodetection" value="class"/> -->
