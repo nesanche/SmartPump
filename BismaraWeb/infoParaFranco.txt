@@ -1,0 +1,18 @@
+ESTRUCTURA
+css - estilos
+fonts - hay archivos glyphicons que sirven para algunos iconos del diseño
+images - imagenes
+lib - librerias (las de angular, alertas, jquery, bootstrap)
+templates - las vistas..los html
+en el index.html declaro una sola vez las librerias, estilos y sobre todo para el funcoinamiento de Angular sus 3 javascripts importantes:
+ <!-- AngularJS MVC -->
+      <script src="js/app.js"></script>
+      <script src="js/controllers.js"></script>
+      <script src="js/services.js"></script>
+
+
+
+Recorda que Angular se basa en el patron MVC.
+Vista: seran los html
+Controller: controla las interacciones vista-modelo
+Model: responsable de la gestión de datos
