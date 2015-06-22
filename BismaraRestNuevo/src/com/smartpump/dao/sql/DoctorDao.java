@@ -1,43 +1,130 @@
 package com.smartpump.dao.sql;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.smartpump.dao.constants.Queries;
+import com.smartpump.dao.constants.Units;
 import com.smartpump.dao.interfaces.IDoctorDao;
 import com.smartpump.model.Doctor;
+import com.smartpump.model.User;
+import com.smartpump.model.UserState;
+import com.smartpump.model.VerificationToken;
 
 public class DoctorDao implements IDoctorDao {
 
-    @PersistenceContext(unitName = "userUnit")
+    @PersistenceContext(unitName = Units.USER_UNIT, type = PersistenceContextType.TRANSACTION)
+    @Autowired
     private EntityManager entityManager;
 
     @Transactional
     @Override
-    public void registerDoctor(Doctor doctor) {
+    public Doctor registerDoctor(Doctor doctor) {
         entityManager.persist(doctor);
+        entityManager.flush();
+        return doctor;
+    }
+
+    @Transactional
+    @Override
+    public VerificationToken registerToken(Doctor doctor, String tokenString) {
+        VerificationToken token = new VerificationToken(tokenString,
+                doctor.getUser());
+        token.getUser().setId(doctor.getUser().getId());
+        entityManager.persist(token);
+        entityManager.flush();
+        return token;
     }
 
     @Transactional
     @Override
     public List<Doctor> getAllDoctors() {
-        List<Doctor> doctors = entityManager.createNamedQuery("Doctor.getAll",
-                Doctor.class).getResultList();
+        List<Doctor> doctors = entityManager.createNamedQuery(
+                Queries.DOCTOR_GET_ALL_QUERY, Doctor.class).getResultList();
         return doctors;
     }
 
     @Transactional
     @Override
     public Doctor getDoctor(String username, String password) {
-        Query query = entityManager.createNamedQuery(
-                "Doctor.getByUsernameAndPassword", Doctor.class);
+        Query query = entityManager
+                .createNamedQuery(
+                        Queries.DOCTOR_GET_BY_USERNAME_AND_PASSWORD_QUERY,
+                        Doctor.class);
         query.setParameter("username", username);
         query.setParameter("password", password);
-        Doctor doctor = (Doctor) query.getSingleResult();
+        Doctor doctor;
+        try {
+            doctor = (Doctor) query.getSingleResult();
+        } catch (NoResultException e) {
+            doctor = null;
+        }
+        return doctor;
+    }
+
+    @Override
+    public boolean confirmDoctor(String id, String token) {
+        Query query = entityManager.createNamedQuery(
+                Queries.VERIFICATION_TOKEN_CONFIRM_USER_QUERY,
+                VerificationToken.class);
+        query.setParameter("id", Integer.parseInt(id));
+        query.setParameter("token", token);
+        VerificationToken verificationToken = null;
+        try {
+            verificationToken = (VerificationToken) query.getSingleResult();
+        } catch (NoResultException e) {
+            return false;
+        }
+        if (verificationToken != null) {
+            Date today = new Date();
+            if (today.after(verificationToken.getExpirationDate())) {
+                return false;
+            }
+            User user = verificationToken.getUser();
+            user.setState(new UserState(2, "Registered"));
+            entityManager.persist(user);
+            entityManager.flush();
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean verifyEmail(String email) {
+        Query query = entityManager.createNamedQuery(
+                Queries.DOCTOR_VERIFY_EMAIL_QUERY, Doctor.class);
+        query.setParameter("email", email);
+        Doctor doctor = null;
+        try {
+            doctor = (Doctor) query.getResultList().get(0);
+        } catch (Exception ex) {
+            doctor = null;
+        }
+        return doctor != null;
+    }
+
+    @Transactional
+    @Override
+    public Doctor getDoctorByUserId(int id) {
+        Query query = entityManager.createNamedQuery(
+                Queries.DOCTOR_GET_BY_USER_ID, Doctor.class);
+        query.setParameter("userid", id);
+        Doctor doctor = null;
+        try {
+            doctor = (Doctor) query.getResultList().get(0);
+        } catch (Exception ex) {
+            doctor = null;
+        }
         return doctor;
     }
 

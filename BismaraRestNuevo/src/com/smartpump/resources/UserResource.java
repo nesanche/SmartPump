@@ -9,7 +9,6 @@ import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.smartpump.dao.interfaces.IUserDao;
@@ -22,21 +21,13 @@ public class UserResource {
     private IUserDao userDao;
     private Gson gson = new Gson();
 
-    @Path("/states")
+    @Path("/verifyUsername")
     @GET
     @Consumes({ MediaType.APPLICATION_JSON })
-    @Transactional
-    public Response getStates(@QueryParam("id") int id) {
-        String json = gson.toJson(userDao.getUserState(id));
-        return Response.status(201).entity(json).build();
-    }
-
-    @Path("/all")
-    @GET
-    @Consumes({ MediaType.APPLICATION_JSON })
-    @Transactional
-    public Response getAllUsers() {
-        String json = gson.toJson(userDao.getUsers());
+    public Response verifyUsername(@QueryParam("username") String username) {
+        String response = (userDao.validateUser(username)) ? "{'state':'ok'}"
+                : "{'state':'denied'}";
+        String json = gson.toJson(response);
         return Response.status(201).entity(json).build();
     }
 

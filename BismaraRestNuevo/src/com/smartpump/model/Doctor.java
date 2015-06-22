@@ -11,11 +11,16 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.smartpump.dao.constants.Queries;
+import com.smartpump.dao.constants.Tables;
+
 @Entity
-@Table(name = "doctors")
+@Table(name = Tables.DOCTOR_TABLE)
 @NamedQueries({
-        @NamedQuery(name = "Doctor.getAll", query = "SELECT d FROM Doctor d"),
-        @NamedQuery(name = "Doctor.getByUsernameAndPassword", query = "SELECT d FROM Doctor d WHERE d.user.username=:username AND d.user.password=:password") })
+        @NamedQuery(name = Queries.DOCTOR_GET_ALL_QUERY, query = "SELECT d FROM Doctor d"),
+        @NamedQuery(name = Queries.DOCTOR_GET_BY_USERNAME_AND_PASSWORD_QUERY, query = "SELECT d FROM Doctor d WHERE d.user.username=:username AND d.user.password=:password"),
+        @NamedQuery(name = Queries.DOCTOR_GET_BY_USER_ID, query = "SELECT d FROM Doctor d WHERE d.user.id=:userid"),
+        @NamedQuery(name = Queries.DOCTOR_VERIFY_EMAIL_QUERY, query = "SELECT d FROM Doctor d WHERE d.email=:email") })
 @XmlRootElement
 public class Doctor {
 

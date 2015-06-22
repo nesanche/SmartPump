@@ -11,13 +11,16 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.smartpump.dao.constants.Queries;
+import com.smartpump.dao.constants.Tables;
+
 @Entity
-@Table(name = "users")
+@Table(name = Tables.USER_TABLE)
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "User.getAll", query = "SELECT u FROM User u"),
-        @NamedQuery(name = "User.getByUsername", query = "SELECT u FROM User u WHERE u.username=:username"),
-        @NamedQuery(name = "User.getByUsernameAndPassword", query = "SELECT u FROM User u WHERE u.username=:username AND u.password=:password") })
+        @NamedQuery(name = Queries.USER_GET_ALL_QUERY, query = "SELECT u FROM User u"),
+        @NamedQuery(name = Queries.USER_GET_BY_USERNAME_QUERY, query = "SELECT u FROM User u WHERE u.username=:username"),
+        @NamedQuery(name = Queries.USER_GET_BY_USERNAME_AND_PASSWORD_QUERY, query = "SELECT u FROM User u WHERE u.username=:username AND u.password=:password") })
 public class User {
 
     @Id
@@ -26,7 +29,7 @@ public class User {
     private String username;
     private String password;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "id_state")
     private UserState state;
 

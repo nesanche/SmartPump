@@ -8,16 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.smartpump.dao.constants.Tables;
+
 @Entity
-@Table(name = "users_states")
-/*
- * @NamedQueries({
- * 
- * @NamedQuery(name = "UserState.findAll", query = "SELECT * FROM users_state"),
- * 
- * @NamedQuery(name = "UserState.findById", query =
- * "SELECT * FROM users_state where id_users_states=:id") })
- */
+@Table(name = Tables.USER_STATE_TABLE)
 @XmlRootElement
 public class UserState implements Serializable {
 
@@ -27,6 +21,14 @@ public class UserState implements Serializable {
     @GeneratedValue
     private int id;
     private String description;
+
+    public UserState() {
+    }
+
+    public UserState(int id, String description) {
+        this.id = id;
+        this.description = description;
+    }
 
     public int getId() {
         return id;

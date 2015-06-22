@@ -8,6 +8,7 @@
           <class>com.smartpump.model.UserState</class>
           <class>com.smartpump.model.User</class>
           <class>com.smartpump.model.Doctor</class>
+          <class>com.smartpump.model.VerificationToken</class>
      <properties>
       <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
       <property name="hibernate.connection.url" value="jdbc:mysql://aa6mjoobosk803.cl2wr2bk6v6l.sa-east-1.rds.amazonaws.com:3306/bismara" />
@@ -19,7 +20,7 @@
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.HashtableCacheProvider"/>
       <property name="hibernate.archive.autodetection" value="class"/>             
      </properties>
-   </persistence-unit> 
+     </persistence-unit>
 </persistence>
 
 <!--      

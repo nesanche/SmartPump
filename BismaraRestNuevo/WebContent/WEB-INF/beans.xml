@@ -9,8 +9,25 @@
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
-    <context:component-scan base-package="com.smartpump.resources.RestService, com.smartpump.services.MailService" />
+    <context:component-scan base-package="com.smartpump.resources, com.smartpump.services" />
     
+    <!-- DAO beans -->
+   <bean id="UserDao" class="com.smartpump.dao.sql.UserDao"/>
+   <bean id="DoctorDao" class="com.smartpump.dao.sql.DoctorDao"/>		
+   
+   <!-- Resources beans -->
+   <bean id="UserResource" class="com.smartpump.resources.UserResource" />
+   <bean id="DoctorResource" class="com.smartpump.resources.DoctorResource" />
+   
+   <!-- Service beans -->
+   <bean id="DoctorService" class="com.smartpump.services.DoctorService" />
+   
+   <!-- Persistence beans -->
+   <tx:annotation-driven transaction-manager="transactionManager"/>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+   
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceXmlLocation" value="classpath:/META-INF/persistence.xml" />
         <property name="persistenceUnitName" value="userUnit" />       
@@ -18,7 +35,7 @@
        <!--  <property name="packagesToScan" value="com.smartpump.*" /> -->
       	<property name="jpaVendorAdapter" ref ="vendorAdapter"/>
     </bean> 
-    
+        
    <bean id="vendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
         <property name="showSql" value="true" />
         <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
@@ -30,10 +47,24 @@
 		<property name="username" value="admin" />
 		<property name="password" value="bismara1234" />
 	</bean> 
-    
-   <bean id="UserDao" class="com.smartpump.dao.sql.UserDao"/>
-   <bean id="DoctorDao" class="com.smartpump.dao.sql.DoctorDao"/>		
-   <bean id="UserResource" class="com.smartpump.resources.UserResource" />
-   <bean id="DoctorResource" class="com.smartpump.resources.DoctorResource" />
    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+   
+   <!-- Mail beans -->
+   <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<property name="host" value="smtp.gmail.com" />
+	<property name="port" value="587" />
+	<property name="username" value="no.reply.bismara@gmail.com" />
+	<property name="password" value="bismara1234" />
+	<property name="javaMailProperties">
+	   <props>
+       	      <prop key="mail.smtp.auth">true</prop>
+       	      <prop key="mail.smtp.starttls.enable">true</prop>
+       	   </props>
+	</property>
+	</bean>
+	 
+	<bean id="mailService" class="com.smartpump.services.MailService">
+		<property name="mailSender" ref="mailSender" />
+	</bean>
+   
 </beans>
