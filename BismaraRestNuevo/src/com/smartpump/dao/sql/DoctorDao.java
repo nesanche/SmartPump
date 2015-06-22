@@ -20,8 +20,16 @@ import com.smartpump.model.User;
 import com.smartpump.model.UserState;
 import com.smartpump.model.VerificationToken;
 
+/**
+ * Clase que implementa la interfaz IDoctorDao y utiliza los servicios de JPA e
+ * Hibernate para persistir.
+ * 
+ * @author Franco Ariel Salonia
+ *
+ */
 public class DoctorDao implements IDoctorDao {
 
+    /** Atributo encargado del manejo de persistencia. */
     @PersistenceContext(unitName = Units.USER_UNIT, type = PersistenceContextType.TRANSACTION)
     @Autowired
     private EntityManager entityManager;
@@ -71,6 +79,7 @@ public class DoctorDao implements IDoctorDao {
         return doctor;
     }
 
+    @Transactional
     @Override
     public boolean confirmDoctor(String id, String token) {
         Query query = entityManager.createNamedQuery(
@@ -99,6 +108,7 @@ public class DoctorDao implements IDoctorDao {
         return true;
     }
 
+    @Transactional
     @Override
     public boolean verifyEmail(String email) {
         Query query = entityManager.createNamedQuery(

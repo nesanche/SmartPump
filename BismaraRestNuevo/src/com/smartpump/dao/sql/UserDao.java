@@ -12,18 +12,19 @@ import com.smartpump.dao.constants.Queries;
 import com.smartpump.dao.constants.Units;
 import com.smartpump.dao.interfaces.IUserDao;
 import com.smartpump.model.User;
-import com.smartpump.model.UserState;
 
+/**
+ * Clase que implementa la interfaz IUserDao y utiliza los servicios de JPA e
+ * Hibernate para persistir.
+ * 
+ * @author Franco Ariel Salonia
+ *
+ */
 public class UserDao implements IUserDao {
 
+    /** Atributo encargado del manejo de persistencia. */
     @PersistenceContext(unitName = Units.USER_UNIT)
     private EntityManager entityManager;
-
-    @Transactional
-    public UserState getUserState(int id) {
-        UserState userState = entityManager.find(UserState.class, id);
-        return userState;
-    }
 
     @Override
     @Transactional
@@ -31,13 +32,6 @@ public class UserDao implements IUserDao {
         List<User> users = entityManager.createNamedQuery(
                 Queries.USER_GET_ALL_QUERY, User.class).getResultList();
         return users;
-    }
-
-    @Override
-    @Transactional
-    public User getUserById(int id) {
-        User user = entityManager.find(User.class, id);
-        return (user != null) ? user : null;
     }
 
     @Override
@@ -55,22 +49,4 @@ public class UserDao implements IUserDao {
         return (user != null);
     }
 
-    @Override
-    @Transactional
-    public User validateUser(String username, String password) {
-        Query query = entityManager.createNamedQuery(
-                Queries.USER_GET_BY_USERNAME_AND_PASSWORD_QUERY, User.class);
-        query.setParameter("username", username);
-        query.setParameter("password", password);
-        User user = (User) query.getSingleResult();
-        return user;
-    }
-
-    @Override
-    @Transactional
-    public void registerUser(User u) {
-        entityManager.getTransaction().begin();
-        entityManager.persist(u);
-        entityManager.getTransaction().commit();
-    }
 }

@@ -9,7 +9,11 @@
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
-    <context:component-scan base-package="com.smartpump.resources, com.smartpump.services" />
+    <context:component-scan base-package="com.smartpump.resources, com.smartpump.services, com.smartpump.exceptions.mappers, com.smartpump.utils" />
+    
+    <!-- Exceptions beans -->
+    <bean id="genericExceptionMapper" class="com.smartpump.exceptions.mappers.GenericExceptionMapper" scope="singleton"/>
+    <bean id="restExceptionMapper" class="com.smartpump.exceptions.mappers.RestExceptionMapper" scope="singleton"/>
     
     <!-- DAO beans -->
    <bean id="UserDao" class="com.smartpump.dao.sql.UserDao"/>
@@ -21,6 +25,9 @@
    
    <!-- Service beans -->
    <bean id="DoctorService" class="com.smartpump.services.DoctorService" />
+   
+   <!-- Utils beans -->
+   <bean id="tokenGenerator" class="com.smartpump.utils.TokenGenerator" />
    
    <!-- Persistence beans -->
    <tx:annotation-driven transaction-manager="transactionManager"/>
@@ -53,8 +60,10 @@
    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	<property name="host" value="smtp.gmail.com" />
 	<property name="port" value="587" />
-	<property name="username" value="no.reply.bismara@gmail.com" />
-	<property name="password" value="bismara1234" />
+	<property name="username" value="some.raiseyourconfidence@gmail.com" />
+	<property name="password" value="somebismara" />
+	<!-- <property name="username" value="no.reply.bismara@gmail.com" />
+	<property name="password" value="bismara1234" /> -->
 	<property name="javaMailProperties">
 	   <props>
        	      <prop key="mail.smtp.auth">true</prop>

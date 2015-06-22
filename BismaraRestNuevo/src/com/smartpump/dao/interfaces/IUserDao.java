@@ -3,19 +3,31 @@ package com.smartpump.dao.interfaces;
 import java.util.List;
 
 import com.smartpump.model.User;
-import com.smartpump.model.UserState;
 
+/**
+ * Interfaz que provee el comportamiento necesario para el manejo de
+ * persistencia de la entidad User.
+ * 
+ * @author Franco Ariel Salonia
+ *
+ */
 public interface IUserDao {
 
-    UserState getUserState(int id);
-
+    /**
+     * Método que devuelve todos los usuarios persistidos.
+     * 
+     * @return todos los usuarios persistidos hasta el momento.
+     */
     List<User> getUsers();
 
-    User getUserById(int id);
-
+    /**
+     * Método que valida si un determinado nombre de usuario ya existe.
+     * 
+     * @param username
+     *            el nombre de usuario a verificar.
+     * @return true si el nombre de usuario ya fue usado, false en caso
+     *         contrario.
+     */
     boolean validateUser(String username);
 
-    User validateUser(String username, String password);
-
-    void registerUser(User u);
 }
