@@ -26,6 +26,16 @@ public class UserDao implements IUserDao {
     @PersistenceContext(unitName = Units.USER_UNIT)
     private EntityManager entityManager;
 
+    /**
+     * Establece el EntityManager a utilizar por el controlador DAO.
+     * 
+     * @param entityManager
+     *            el EntityManager a utilizar.
+     */
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
     @Override
     @Transactional
     public List<User> getUsers() {

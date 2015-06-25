@@ -8,7 +8,13 @@
 	 
     <context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/beans.xml</param-value>
+		<param-value>
+		    /WEB-INF/applicationContext-exceptions.xml
+		    /WEB-INF/applicationContext-persistence.xml
+		    /WEB-INF/applicationContext-resources.xml
+		    /WEB-INF/applicationContext-services.xml
+		    /WEB-INF/applicationContext-utils.xml
+		</param-value>
 	</context-param>
    <listener>
           <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

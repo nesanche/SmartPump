@@ -35,6 +35,36 @@ public class DoctorService {
     private IMailService mailService;
 
     /**
+     * Establece el generador de tokens.
+     * 
+     * @param tokenGenerator
+     *            el generador de tokens.
+     */
+    public void setTokenGenerator(TokenGenerator tokenGenerator) {
+        this.tokenGenerator = tokenGenerator;
+    }
+
+    /**
+     * Establece el controlador DAO para doctor.
+     * 
+     * @param doctorDao
+     *            el controlador DAO.
+     */
+    public void setDoctorDao(IDoctorDao doctorDao) {
+        this.doctorDao = doctorDao;
+    }
+
+    /**
+     * Establece el servicio de mail responsable del envío.
+     * 
+     * @param mailService
+     *            el servicio de mail.
+     */
+    public void setMailService(IMailService mailService) {
+        this.mailService = mailService;
+    }
+
+    /**
      * Método responsable del registro o actualización de un doctor en el
      * sistema.
      * 
@@ -77,9 +107,13 @@ public class DoctorService {
      * @return true si la operación fue exitosa, false en caso contrario.
      */
     public boolean confirmDoctor(String id, String token) {
+        Doctor doctor = doctorDao.getDoctorByUserId(Integer.parseInt(id));
+        if (doctor == null) {
+            throw new RuntimeException(
+                    "No existe un doctor con ese id de usuario.");
+        }
         boolean result = doctorDao.confirmDoctor(id, token);
         if (result) {
-            Doctor doctor = doctorDao.getDoctorByUserId(Integer.parseInt(id));
             sendConfirmationMail(doctor);
         }
         return result;
