@@ -13,5 +13,5 @@
 	
    <bean id="tokenGenerator" class="com.smartpump.utils.TokenGenerator" />
    <bean id="fileUploader" class="com.smartpump.utils.FileUploader" />
-   	
+   <bean id="responseBuilder" class="com.smartpump.utils.BismaraResponseBuilder" />
 </beans>

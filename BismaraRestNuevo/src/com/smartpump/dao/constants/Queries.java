@@ -18,6 +18,11 @@ public class Queries {
      */
     public static final String DOCTOR_GET_BY_USERNAME_AND_PASSWORD_QUERY = "Doctor.getByUsernameAndPassword";
     /**
+     * Consulta de doctores que devuelve uno filtrando por username y password.
+     * Ambos parámetros.
+     */
+    public static final String DOCTOR_GET_BY_REGISTRATION_NUMBER = "Doctor.getByRegistrationNumber";
+    /**
      * Consulta de doctores que devuelve uno filtrando por email, único
      * parámetro.
      */
@@ -27,6 +32,27 @@ public class Queries {
      * Único parámetro "userid".
      */
     public static final String DOCTOR_GET_BY_USER_ID = "Doctor.getByUserId";
+
+    // -----------------------------Pacientes-------------------------------
+    /**
+     * Consulta de pacientes que devuelve uno filtrando por email, único
+     * parámetro.
+     */
+    public static final String PATIENT_VERIFY_EMAIL_QUERY = "Patient.verifyEmail";
+    /**
+     * Consulta de pacientes que devuelve uno filtrando por id de usuario.
+     */
+    public static final String PATIENT_GET_BY_USER_ID = "Patient.getByUserId";
+
+    /**
+     * Consulta de pacientes que devuelve todos los que pertenecen a un doctor,
+     * su id se envía por parámetro.
+     */
+    public static final String PATIENT_GET_PATIENTS_LIST_OF_DOCTOR = "Patient.getListOfDoctor";
+
+    // -----------------------------Bombas-------------------------------
+    /** Consulta de bombas que devuelve una bomba filtrando por dirección MAC. */
+    public static final String PUMP_GET_BY_MAC_ADDRESS = "Pump.getByMacAddress";
 
     // -----------------------------Usuarios-------------------------------
     /** Consulta de usuarios que devuelve todos los registros almacenados. */

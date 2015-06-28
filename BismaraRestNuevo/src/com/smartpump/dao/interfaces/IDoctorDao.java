@@ -3,7 +3,7 @@ package com.smartpump.dao.interfaces;
 import java.util.List;
 
 import com.smartpump.model.Doctor;
-import com.smartpump.model.VerificationToken;
+import com.smartpump.model.Patient;
 
 /**
  * Interfaz que provee el comportamiento necesario para el manejo de
@@ -17,6 +17,7 @@ public interface IDoctorDao {
      * Registra un nuevo doctor o actualiza uno existente en la base de datos.
      * 
      * @param doctor
+     *            el doctor a crear o actualizar.
      * @return el doctor con los datos actualizados de la base de datos.
      */
     Doctor registerDoctor(Doctor doctor);
@@ -30,6 +31,16 @@ public interface IDoctorDao {
      *         ninguno.
      */
     Doctor getDoctorByUserId(int id);
+
+    /**
+     * Devuelve un doctor filtrando por el número de matrícula.
+     * 
+     * @param registrationNumber
+     *            el número de matrícula.
+     * @return un doctor filtrando por el número de matrícula, null si no
+     *         encontró ninguno.
+     */
+    Doctor getDoctorByRegistrationNumber(int registrationNumber);
 
     /**
      * Devuelve todos los doctores persistidos.
@@ -50,18 +61,6 @@ public interface IDoctorDao {
     Doctor getDoctor(String username, String password);
 
     /**
-     * Encargado de actualizar el estado de un doctor a "Registered" si el token
-     * es válido y está dentro de la fecha de expiración.
-     * 
-     * @param id
-     *            el id del usuario del doctor.
-     * @param token
-     *            el token asignado.
-     * @return true si la confirmación fue exitosa. False en caso contrario.
-     */
-    boolean confirmDoctor(String id, String token);
-
-    /**
      * Verifica la existencia de un doctor con un email determinado.
      * 
      * @param email
@@ -71,13 +70,12 @@ public interface IDoctorDao {
     boolean verifyEmail(String email);
 
     /**
-     * Registra un nuevo VerificationToken en la base de datos.
+     * Devuelve una lista de pacientes de un doctor determinado.
      * 
-     * @param doctor
-     *            el doctor asignado al token.
-     * @param tokenString
-     *            el string generado para ese VerificationToken.
-     * @return el objeto persistido con todos los datos.
+     * @param doctorId
+     *            el id del doctor.
+     * @return una lista de pacientes asociados al doctor.
      */
-    VerificationToken registerToken(Doctor doctor, String tokenString);
+    List<Patient> getPatientsOfDoctor(int doctorId);
+
 }

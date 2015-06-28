@@ -1,11 +1,16 @@
 package com.smartpump.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.smartpump.dao.interfaces.IDoctorDao;
+import com.smartpump.dao.interfaces.IUserDao;
 import com.smartpump.model.Doctor;
+import com.smartpump.model.Patient;
 import com.smartpump.model.VerificationToken;
 import com.smartpump.services.interfaces.IMailService;
+import com.smartpump.utils.ApplicationConstants;
 import com.smartpump.utils.TokenGenerator;
 
 /**
@@ -17,19 +22,18 @@ import com.smartpump.utils.TokenGenerator;
  */
 public class DoctorService {
 
-    /** Dirección de mail utilizada para el envío de los mismos. */
-    // private static final String FROM_EMAIL = "no.reply.bismara@gmail.com";
-    private static final String FROM_EMAIL = "some.raiseyourconfidence@gmail.com";
-    /** Dirección de mail destino para enviar la confirmación del doctor. */
-    private static final String TO_MAIL = "bismara.staff@gmail.com";
     /** URL de confirmación para el registro del doctor. */
-    private static final String CONFIRM_URL = "http://bismara.elasticbeanstalk.com/rest/doctors/confirm";
+    private static final String CONFIRM_URL = ApplicationConstants.REST_URL
+            + "/rest/doctors/confirm";
     /** Generador de token. */
     @Autowired
     private TokenGenerator tokenGenerator;
     /** Entidad responsable del manejo de persistencia de los doctores. */
     @Autowired
     private IDoctorDao doctorDao;
+    /** Entidad responsable del manejo de persistencia de los usuarios. */
+    @Autowired
+    private IUserDao userDao;
     /** Servicio de envío de mails. */
     @Autowired
     private IMailService mailService;
@@ -74,7 +78,7 @@ public class DoctorService {
      */
     public Doctor registerDoctor(Doctor doctor) {
         Doctor result = doctorDao.registerDoctor(doctor);
-        VerificationToken token = doctorDao.registerToken(doctor,
+        VerificationToken token = userDao.registerToken(doctor.getUser(),
                 tokenGenerator.generateToken());
         sendToVerifyMail(result, token);
         return result;
@@ -96,6 +100,19 @@ public class DoctorService {
     }
 
     /**
+     * Método responsable de devolver un doctor en función de su matrícula
+     * 
+     * @param registrationNumber
+     *            la matrícula del doctor.
+     * @return el doctor asociado, null en caso contrario.
+     */
+    public Doctor getDoctor(int registrationNumber) {
+        Doctor doctor = doctorDao
+                .getDoctorByRegistrationNumber(registrationNumber);
+        return doctor;
+    }
+
+    /**
      * Método responsable de confirmar a un doctor para que su estado pase a ser
      * registrado en el sistema. Realiza el envío del mail al usuario para
      * avisarle de esta información.
@@ -106,13 +123,13 @@ public class DoctorService {
      *            el contenido del token de confirmación.
      * @return true si la operación fue exitosa, false en caso contrario.
      */
-    public boolean confirmDoctor(String id, String token) {
-        Doctor doctor = doctorDao.getDoctorByUserId(Integer.parseInt(id));
+    public boolean confirmDoctor(int id, String token) {
+        Doctor doctor = doctorDao.getDoctorByUserId(id);
         if (doctor == null) {
             throw new RuntimeException(
                     "No existe un doctor con ese id de usuario.");
         }
-        boolean result = doctorDao.confirmDoctor(id, token);
+        boolean result = userDao.confirmUser(id, token);
         if (result) {
             sendConfirmationMail(doctor);
         }
@@ -132,6 +149,17 @@ public class DoctorService {
     }
 
     /**
+     * Método responsable de obtener los pacientes asociados a un doctor.
+     * 
+     * @param doctorId
+     *            el id del doctor.
+     * @return una lista con los pacientes asociados al doctor.
+     */
+    public List<Patient> getPatientsOfDoctor(int doctorId) {
+        return doctorDao.getPatientsOfDoctor(doctorId);
+    }
+
+    /**
      * Método que envia el mail a la cuenta de administración para que valide al
      * doctor.
      * 
@@ -141,7 +169,8 @@ public class DoctorService {
      *            el token de confirmación del mismo.
      */
     private void sendToVerifyMail(Doctor doctor, VerificationToken token) {
-        mailService.sendMail(FROM_EMAIL, TO_MAIL, "Confirma",
+        mailService.sendMail(ApplicationConstants.BROKER_MAIL,
+                ApplicationConstants.ADMINISTRATION_MAIL, "Confirma",
                 getToVerifyMailBody(doctor, token));
     }
 
@@ -183,7 +212,7 @@ public class DoctorService {
     private void sendConfirmationMail(Doctor doctor) {
         mailService
                 .sendMail(
-                        FROM_EMAIL,
+                        ApplicationConstants.BROKER_MAIL,
                         doctor.getEmail(),
                         "Tu cuenta ha sido activada",
                         "¡Felicitaciones! Tu cuenta ha sido activada. Ya puedes comenzar a utilizar los servicios de Bismara.");

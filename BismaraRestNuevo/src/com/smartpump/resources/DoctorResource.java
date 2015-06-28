@@ -1,5 +1,7 @@
 package com.smartpump.resources;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -15,7 +17,9 @@ import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 import com.smartpump.model.Doctor;
+import com.smartpump.model.Patient;
 import com.smartpump.services.DoctorService;
+import com.smartpump.utils.BismaraResponseBuilder;
 import com.smartpump.utils.RestBoolean;
 
 /**
@@ -34,6 +38,9 @@ public class DoctorResource {
     /** Atributo encargado del manejo de objetos JSON. */
     @Autowired
     private Gson gson;
+    /** Atributo encargado de la construcción de las response. */
+    @Autowired
+    private BismaraResponseBuilder responseBuilder;
 
     /**
      * Establece el objeto para el manejo de JSON. Usado por Spring
@@ -62,14 +69,29 @@ public class DoctorResource {
             @HeaderParam("password") String password) {
         String json = null;
         if (username == null || password == null) {
-            return Response.status(401).build();
+            return responseBuilder.buildResponse(401);
         }
         Doctor doctor = doctorService.getDoctor(username, password);
         if (doctor == null) {
-            return Response.status(401).build();
+            return responseBuilder.buildResponse(401);
         } else {
             json = gson.toJson(doctor);
-            return Response.status(200).entity(json).build();
+            return responseBuilder.buildResponse(200, json);
+        }
+    }
+
+    @Path("/getByRegNumber")
+    @GET
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response getDoctorByRegistrationNumber(
+            @HeaderParam("registrationNumber") int registrationNumber) {
+        String json = null;
+        Doctor doctor = doctorService.getDoctor(registrationNumber);
+        if (doctor == null) {
+            return responseBuilder.buildResponse(401);
+        } else {
+            json = gson.toJson(doctor);
+            return responseBuilder.buildResponse(200, json);
         }
     }
 
@@ -87,7 +109,7 @@ public class DoctorResource {
     public Response createDoctor(Doctor doctor) {
         Doctor result = doctorService.registerDoctor(doctor);
         String json = gson.toJson(result);
-        return Response.status(200).entity(json).build();
+        return responseBuilder.buildResponse(200, json);
     }
 
     /**
@@ -104,7 +126,7 @@ public class DoctorResource {
     public Response verifyEmail(@QueryParam("email") String email) {
         RestBoolean response = new RestBoolean(
                 !doctorService.verifyEmail(email));
-        return Response.status(200).entity(response.toString()).build();
+        return responseBuilder.buildResponse(200, response.toString());
     }
 
     /**
@@ -120,11 +142,28 @@ public class DoctorResource {
     @Path("/confirm")
     @GET
     @Produces({ MediaType.TEXT_PLAIN })
-    public Response confirm(@QueryParam("id") String id,
+    public Response confirm(@QueryParam("id") int id,
             @QueryParam("token") String token) {
         RestBoolean response = new RestBoolean(doctorService.confirmDoctor(id,
                 token));
-        return Response.status(200).entity(response.toString()).build();
+        return responseBuilder.buildResponse(200, response.toString());
+    }
+
+    /**
+     * Devuelve una lista de pacientes asociadas a un doctor, cuyo id se envía
+     * en la cabecera con la clave "doctor-id"
+     * 
+     * @param doctorId
+     *            el id del doctor
+     * @return la lista de pacientes asociadas a ese doctor.
+     */
+    @Path("/patients")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPatients(@HeaderParam("doctor-id") int doctorId) {
+        List<Patient> patients = doctorService.getPatientsOfDoctor(doctorId);
+        String json = gson.toJson(patients);
+        return responseBuilder.buildResponse(200, json);
     }
 
 }

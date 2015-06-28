@@ -20,4 +20,8 @@
    <bean id="DoctorResource" class="com.smartpump.resources.DoctorResource" >	
        <property name="gson" ref="gson"/>
    </bean>	
+   
+   <bean id="PatientResource" class="com.smartpump.resources.PatientResource" >	
+       <property name="gson" ref="gson"/>
+   </bean>	
 </beans>

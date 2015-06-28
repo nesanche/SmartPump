@@ -25,6 +25,7 @@ import com.smartpump.dao.constants.Tables;
 @NamedQueries({
         @NamedQuery(name = Queries.DOCTOR_GET_ALL_QUERY, query = "SELECT d FROM Doctor d"),
         @NamedQuery(name = Queries.DOCTOR_GET_BY_USERNAME_AND_PASSWORD_QUERY, query = "SELECT d FROM Doctor d WHERE d.user.username=:username AND d.user.password=:password"),
+        @NamedQuery(name = Queries.DOCTOR_GET_BY_REGISTRATION_NUMBER, query = "SELECT d FROM Doctor d WHERE d.registrationNumber=:registrationNumber"),
         @NamedQuery(name = Queries.DOCTOR_GET_BY_USER_ID, query = "SELECT d FROM Doctor d WHERE d.user.id=:userid"),
         @NamedQuery(name = Queries.DOCTOR_VERIFY_EMAIL_QUERY, query = "SELECT d FROM Doctor d WHERE d.email=:email") })
 @XmlRootElement

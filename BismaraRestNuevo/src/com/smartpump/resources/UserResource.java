@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 import com.smartpump.dao.interfaces.IUserDao;
+import com.smartpump.utils.BismaraResponseBuilder;
 import com.smartpump.utils.FileUploader;
 import com.smartpump.utils.RestBoolean;
 import com.sun.jersey.core.header.FormDataContentDisposition;
@@ -41,6 +42,9 @@ public class UserResource {
     /** Atributo encargado del manejo de objetos JSON. */
     @Autowired
     private Gson gson;
+    /** Atributo encargado de la construcción de las response. */
+    @Autowired
+    private BismaraResponseBuilder responseBuilder;
     /** Ruta donde se almacenan las imágenes. */
     private static final String PICTURES_PATH = "/home/ec2-user/Bismara/pictures/";
 
@@ -77,7 +81,7 @@ public class UserResource {
     @Produces({ MediaType.TEXT_PLAIN })
     public Response verifyUsername(@QueryParam("username") String username) {
         RestBoolean response = new RestBoolean(!userDao.validateUser(username));
-        return Response.status(200).entity(response.toString()).build();
+        return responseBuilder.buildResponse(200, response.toString());
     }
 
     @Path("/uploadPicture")
@@ -93,6 +97,6 @@ public class UserResource {
 
         String output = "File uploaded to : " + uploadedFileLocation;
 
-        return Response.status(200).entity(output).build();
+        return responseBuilder.buildResponse(200, output);
     }
 }

@@ -10,6 +10,10 @@ package com.smartpump.dao.constants;
 public class Tables {
     /** Constante que encapsula el nombre de la tabla de la entidad Doctor. */
     public static final String DOCTOR_TABLE = "doctors";
+    /** Constante que encapsula el nombre de la tabla de la entidad Patient. */
+    public static final String PATIENT_TABLE = "patients";
+    /** Constante que encapsula el nombre de la tabla de la entidad Pump. */
+    public static final String PUMP_TABLE = "pumps";
     /** Constante que encapsula el nombre de la tabla de la entidad User. */
     public static final String USER_TABLE = "users";
     /** Constante que encapsula el nombre de la tabla de la entidad UserState. */
