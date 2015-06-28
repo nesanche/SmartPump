@@ -9,7 +9,9 @@ import javax.ws.rs.ext.Provider;
 
 import org.springframework.stereotype.Component;
 
+import com.google.gson.Gson;
 import com.smartpump.exceptions.ErrorMessage;
+import com.sun.jersey.api.NotFoundException;
 
 /**
  * Provider that handles the response of a generic exception trigger event.
@@ -34,8 +36,9 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
         ErrorMessage errorMessage = new ErrorMessage(ex);
         setHttpStatus(ex, errorMessage);
         setMessage(ex, errorMessage);
-
-        return Response.status(errorMessage.getCode()).entity(errorMessage)
+        Gson gson = new Gson();
+        String json = gson.toJson(errorMessage);
+        return Response.status(errorMessage.getCode()).entity(json)
                 .type(MediaType.APPLICATION_JSON).build();
     }
 
@@ -48,9 +51,9 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
      *            the ErrorMessage that it is being generated.
      */
     private void setMessage(Throwable ex, ErrorMessage errorMessage) {
-        if (ex instanceof javax.ws.rs.NotFoundException) {
+        if (ex instanceof NotFoundException) {
             errorMessage.setMessage("HTTP Not Found.");
-        } else if (ex instanceof javax.ws.rs.NotAuthorizedException) {
+        } else if (ex instanceof com.sun.jersey.api.ConflictException) {
             errorMessage.setMessage("Unauthorized. Invalid access token.");
         } else {
             errorMessage.setMessage(ex.getMessage());

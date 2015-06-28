@@ -7,6 +7,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.beans.BeanUtils;
 
+import com.sun.jersey.api.ConflictException;
+import com.sun.jersey.api.NotFoundException;
+import com.sun.jersey.api.ParamException;
+
 /**
  * Class used for exception mappers to create the error message retrieved in
  * response of an exception event.
@@ -92,7 +96,7 @@ public class ErrorMessage {
      * @param ex
      *            the Exception triggered by this error.
      */
-    public ErrorMessage(javax.ws.rs.NotFoundException ex) {
+    public ErrorMessage(NotFoundException ex) {
         this(Response.Status.NOT_FOUND.getStatusCode(), "Not found.");
     }
 
@@ -102,7 +106,7 @@ public class ErrorMessage {
      * @param ex
      *            the Exception triggered by this error.
      */
-    public ErrorMessage(javax.ws.rs.NotAuthorizedException ex) {
+    public ErrorMessage(ConflictException ex) {
         this(Response.Status.UNAUTHORIZED.getStatusCode(),
                 "Unauthorized. Invalid access token.");
     }
@@ -115,7 +119,7 @@ public class ErrorMessage {
      * @param message
      *            the cause of the Bad exception error.
      */
-    public ErrorMessage(javax.ws.rs.BadRequestException ex, String message) {
+    public ErrorMessage(ParamException ex, String message) {
         this(Response.Status.BAD_REQUEST.getStatusCode(), message);
     }
 

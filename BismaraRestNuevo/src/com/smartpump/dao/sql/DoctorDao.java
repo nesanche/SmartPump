@@ -1,5 +1,6 @@
 package com.smartpump.dao.sql;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +35,16 @@ public class DoctorDao implements IDoctorDao {
     @Autowired
     private EntityManager entityManager;
 
+    /**
+     * Establece el manejador de entidades para la persistencia.
+     * 
+     * @param entityManager
+     *            el manejador de entidades.
+     */
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
     @Transactional
     @Override
     public Doctor registerDoctor(Doctor doctor) {
@@ -56,8 +67,13 @@ public class DoctorDao implements IDoctorDao {
     @Transactional
     @Override
     public List<Doctor> getAllDoctors() {
-        List<Doctor> doctors = entityManager.createNamedQuery(
-                Queries.DOCTOR_GET_ALL_QUERY, Doctor.class).getResultList();
+        List<Doctor> doctors;
+        try {
+            doctors = entityManager.createNamedQuery(
+                    Queries.DOCTOR_GET_ALL_QUERY, Doctor.class).getResultList();
+        } catch (NoResultException ex) {
+            doctors = new ArrayList<>();
+        }
         return doctors;
     }
 
@@ -93,18 +109,14 @@ public class DoctorDao implements IDoctorDao {
         } catch (NoResultException e) {
             return false;
         }
-        if (verificationToken != null) {
-            Date today = new Date();
-            if (today.after(verificationToken.getExpirationDate())) {
-                return false;
-            }
-            User user = verificationToken.getUser();
-            user.setState(new UserState(2, "Registered"));
-            entityManager.persist(user);
-            entityManager.flush();
-        } else {
+        Date today = new Date();
+        if (today.after(verificationToken.getExpirationDate())) {
             return false;
         }
+        User user = verificationToken.getUser();
+        user.setState(new UserState(2, "Registered"));
+        entityManager.persist(user);
+        entityManager.flush();
         return true;
     }
 
@@ -116,8 +128,8 @@ public class DoctorDao implements IDoctorDao {
         query.setParameter("email", email);
         Doctor doctor = null;
         try {
-            doctor = (Doctor) query.getResultList().get(0);
-        } catch (Exception ex) {
+            doctor = (Doctor) query.getSingleResult();
+        } catch (NoResultException ex) {
             doctor = null;
         }
         return doctor != null;
@@ -132,7 +144,7 @@ public class DoctorDao implements IDoctorDao {
         Doctor doctor = null;
         try {
             doctor = (Doctor) query.getResultList().get(0);
-        } catch (Exception ex) {
+        } catch (NoResultException ex) {
             doctor = null;
         }
         return doctor;

@@ -45,6 +45,8 @@ public class Doctor {
     private String email;
     /** Número de matrícula. Debe ser único. */
     private int registrationNumber;
+    /** Dirección donde trabaja el médico. */
+    private String address;
 
     /** Usuario que posee ese doctor para ingresar al sistema. */
     @OneToOne(cascade = CascadeType.PERSIST)
@@ -182,6 +184,25 @@ public class Doctor {
      */
     public void setRegistrationNumber(int registrationNumber) {
         this.registrationNumber = registrationNumber;
+    }
+
+    /**
+     * Devuelve la dirección donde trabaja el médico.
+     * 
+     * @return la dirección donde trabaja el médico.
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * Establece la dirección donde trabaja el médico.
+     * 
+     * @param address
+     *            la dirección donde trabaja el médico.
+     */
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 }

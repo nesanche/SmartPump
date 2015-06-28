@@ -1,8 +1,13 @@
 package com.smartpump.resources;
 
+import java.io.InputStream;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -12,6 +17,10 @@ import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 import com.smartpump.dao.interfaces.IUserDao;
+import com.smartpump.utils.FileUploader;
+import com.smartpump.utils.RestBoolean;
+import com.sun.jersey.core.header.FormDataContentDisposition;
+import com.sun.jersey.multipart.FormDataParam;
 
 /**
  * Representa el punto de entrada para la API Rest en el manejo de usuarios.
@@ -26,24 +35,64 @@ public class UserResource {
     /** El Controlador DAO relacionado al recurso. */
     @Autowired
     private IUserDao userDao;
+    /** Responsable la subida de archivos. */
+    @Autowired
+    private FileUploader fileUploader;
     /** Atributo encargado del manejo de objetos JSON. */
-    private Gson gson = new Gson();
+    @Autowired
+    private Gson gson;
+    /** Ruta donde se almacenan las imágenes. */
+    private static final String PICTURES_PATH = "/home/ec2-user/Bismara/pictures/";
 
     /**
-     * Verifica que un nombre de usuario ya ha sido utilizado por algún usuario.
+     * Establece el objeto para el manejo de JSON. Usado por Spring
+     * 
+     * @param gson
+     *            el objeto para el manejo de JSON.
+     */
+    public void setGson(Gson gson) {
+        this.gson = gson;
+    }
+
+    /**
+     * Establece cual va a ser el DAO a utilizar.
+     * 
+     * @param userDao
+     *            el controlador DAO relacionado al recurso.
+     */
+    public void setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    /**
+     * Verifica que si un nombre de usuario puede ser utilizado para la creación
+     * de uno nuevo.
      * 
      * @param username
      *            el nombre de usuario a verificar.
-     * @return {'state':'ok'} si existe, {'state':'denied'} en caso contrario.
+     * @return true si puede ser utilizado, false en caso contrario.
      */
     @Path("/verifyUsername")
     @GET
-    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.TEXT_PLAIN })
     public Response verifyUsername(@QueryParam("username") String username) {
-        String response = (userDao.validateUser(username)) ? "{'state':'ok'}"
-                : "{'state':'denied'}";
-        String json = gson.toJson(response);
-        return Response.status(200).entity(json).build();
+        RestBoolean response = new RestBoolean(!userDao.validateUser(username));
+        return Response.status(200).entity(response.toString()).build();
     }
 
+    @Path("/uploadPicture")
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadPicture(
+            @FormDataParam("file") InputStream uploadedInputStream,
+            @FormDataParam("file") FormDataContentDisposition fileDetail,
+            @HeaderParam("user-id") int userId) {
+        String uploadedFileLocation = PICTURES_PATH + userId;
+
+        fileUploader.writeToFile(uploadedInputStream, uploadedFileLocation);
+
+        String output = "File uploaded to : " + uploadedFileLocation;
+
+        return Response.status(200).entity(output).build();
+    }
 }

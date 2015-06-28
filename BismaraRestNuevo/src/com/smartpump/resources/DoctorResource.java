@@ -2,8 +2,10 @@ package com.smartpump.resources;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
 import com.google.gson.Gson;
 import com.smartpump.model.Doctor;
 import com.smartpump.services.DoctorService;
+import com.smartpump.utils.RestBoolean;
 
 /**
  * Representa el punto de entrada para la API Rest en el manejo de doctores.
@@ -29,7 +32,18 @@ public class DoctorResource {
     @Autowired
     private DoctorService doctorService;
     /** Atributo encargado del manejo de objetos JSON. */
-    private Gson gson = new Gson();
+    @Autowired
+    private Gson gson;
+
+    /**
+     * Establece el objeto para el manejo de JSON. Usado por Spring
+     * 
+     * @param gson
+     *            el objeto para el manejo de JSON.
+     */
+    public void setGson(Gson gson) {
+        this.gson = gson;
+    }
 
     /**
      * Devuelve un doctor enviando por parámetros en la URL el username y el
@@ -43,16 +57,20 @@ public class DoctorResource {
      */
     @Path("/getDoctor")
     @GET
-    @Consumes({ MediaType.APPLICATION_JSON })
-    public Response getDoctor(@QueryParam("username") String username,
-            @QueryParam("password") String password) {
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response getDoctor(@HeaderParam("username") String username,
+            @HeaderParam("password") String password) {
         String json = null;
         if (username == null || password == null) {
             return Response.status(401).build();
         }
         Doctor doctor = doctorService.getDoctor(username, password);
-        json = gson.toJson(doctor);
-        return Response.status(200).entity(json).build();
+        if (doctor == null) {
+            return Response.status(401).build();
+        } else {
+            json = gson.toJson(doctor);
+            return Response.status(200).entity(json).build();
+        }
     }
 
     /**
@@ -65,6 +83,7 @@ public class DoctorResource {
     @Path("/new")
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
     public Response createDoctor(Doctor doctor) {
         Doctor result = doctorService.registerDoctor(doctor);
         String json = gson.toJson(result);
@@ -72,21 +91,20 @@ public class DoctorResource {
     }
 
     /**
-     * Verifica la existencia de un email asociado a un doctor. Devuelve ok si
-     * existe, denied en caso contrario.
+     * Verifica si se puede utilizar una dirección de email. Devuelve true si
+     * puede ser utilizada, false en caso contrario.
      * 
      * @param email
      *            el email a verificar.
-     * @return {'state':'ok'} si existe, {'state':'denied'} en caso contrario.
+     * @return true si no existe, false en caso contrario.
      */
     @Path("/verifyEmail")
     @GET
-    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.TEXT_PLAIN })
     public Response verifyEmail(@QueryParam("email") String email) {
-        String response = (doctorService.verifyEmail(email)) ? "{'state':'ok'}"
-                : "{'state':'denied'}";
-        String json = gson.toJson(response);
-        return Response.status(200).entity(json).build();
+        RestBoolean response = new RestBoolean(
+                !doctorService.verifyEmail(email));
+        return Response.status(200).entity(response.toString()).build();
     }
 
     /**
@@ -97,18 +115,16 @@ public class DoctorResource {
      *            el id del usuario del doctor.
      * @param token
      *            el contenido del token a verificar.
-     * @return {'state':'ok'} si todo fue exitoso, {'state':'denied'} en caso
-     *         contrario.
+     * @return true si todo fue exitoso, false en caso contrario.
      */
     @Path("/confirm")
     @GET
-    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.TEXT_PLAIN })
     public Response confirm(@QueryParam("id") String id,
             @QueryParam("token") String token) {
-        String response = (doctorService.confirmDoctor(id, token)) ? "{'state':'ok'}"
-                : "{'state':'denied'}";
-        String json = gson.toJson(response);
-        return Response.status(200).entity(json).build();
+        RestBoolean response = new RestBoolean(doctorService.confirmDoctor(id,
+                token));
+        return Response.status(200).entity(response.toString()).build();
     }
 
 }
