@@ -1,80 +1,58 @@
-//y aca consumo y envio a la rest
-//aca tengo otro modulo
-// .factory con el mismo nombre que habia declarado en el controller anteriormente.
-// en las factorias puedo implementar librerias de funciones o almacenar datos. me devuelven un dato de cualquier tipo
+angular.module('app.services',[ 'ngResource', 'angular-loading-bar', 'ngAnimate','angular-md5' ])
 
-//podes tener otras como .service o .provider  pero aca uso .factory 
-//y para la comunicaciion con la rest usas $resource vs $http..en este caso opte por el ultimo
-//http.post y http.get
-//la diferencia aca: http://angularjs4u.com/http/angularjs-resource-http/
+/**
+ * Factory con servicios:
+ * 1- AuthService para login en general y registración de doctor.
+ */
 
-angular.module('app.services', ['ngResource', 'angular-loading-bar', 'ngAnimate'])
+var pathLocal = "http://localhost:8080/";
+var pathRemote = "http://bismara.elasticbeanstalk.com/";
 
-//para la barra de progreso
 .config(function(cfpLoadingBarProvider) {
-    cfpLoadingBarProvider.includeSpinner = true;
-  })
-
-.factory('AuthService', function ($rootScope, $http, cfpLoadingBar) {
-    var authService = {};
-    var pathLocal = "http://localhost:8080/";
-    var pathRemote = "http://bismara.elasticbeanstalk.com/";
- 
-    authService.login = function (credentials) {
-        cfpLoadingBar.start();
-      	/*var sanitizeCredentials = function(credentials) {
-        return {
-          username: $sanitize(credentials.username),
-          password: $sanitize(credentials.password),
-          csrf_token: CSRF_TOKEN
-        };
-      	};*/
-
-        //la conexion va a dar .succes si es correcta pudieron ver el data, status, etc
-		   	$http.post(pathRemote+"rest/myresource/login",credentials).
-			  success(function(data, status, headers, config) {
-            cfpLoadingBar.complete();
-				    if(data == null){
-              //alert("No existe el Medico con los datos ingresados! Imposible ingresar.")
-			  sweetAlert("Error!", "No exite el Medico con los datos ingresados!", "error")
-			}
-            else{
-              //alert("Bienvenido a Bismara " + data.username);
-              sweetAlert("Bienvenido nuevamente a Bismara "+ data.username);
-              location.reload();
-            }
-			  }).
-			  error(function(data, status, headers, config) {
-             cfpLoadingBar.complete();
-			   		 //alert("Imposible conectar con el servidor.")
-             //aca podria ver tambien la data, status del error.
-             		sweetAlert("Error de Servidor", "Imposible conectr con el servidor.", "error")
-			  });
-
-  }
-
-  authService.newUser = function (user) {
-        $http.post(pathRemote+"rest/myresource/new",user).
-        success(function(data, status, headers, config) {
-            cfpLoadingBar.complete();    
-            if(data == "null"){
-              //alert("Ya existe un medico con esa matricula! Imposible registrar.")
-            	sweetAlert("Oops..", "Ya existe un Medico con esa matricula!", "error")
-            }
-            else{
-              //alert("Bienvenido a Bismara " + data.username);
-              sweetAlert("Bienvenido!", "Gracias por registrarse en Bismara " + data.username, "success");
-              location.reload();
-            }
-        }).
-        error(function(data, status, headers, config) {
-             cfpLoadingBar.complete();
-              //alert("Imposible conectar con el servidor.")
-              sweetAlert("Imposible conectar con el servidor.", "error")
-        });
-  }
-  
-//y aca la factory retorna authService dependiendo el caso del metodo en el que entre...
-  return authService;
-
- })
+			cfpLoadingBarProvider.includeSpinner = true;
+})
+		
+.factory('AuthService',	function($rootScope, $http, cfpLoadingBar, md5) {
+					var authService = {};		
+					
+					authService.login = function(user) {
+						cfpLoadingBar.start();
+						var passwordEncryt = md5.createHash(user.password || '');
+						$http.get(pathRemote+"rest/doctors/getDoctor?username="+user.username+"&password="+passwordEncryt)
+							.success(function(data, status, headers, config) {
+											cfpLoadingBar.complete();
+											if (data == null) {
+												sweetAlert("Error!","No existe el Médico con los datos ingresados!","error");
+											} else {
+												if(data.user.state.id == 1){
+													 sweetAlert("Pendiente de Autorización","Todavía no está autorizado para usar Bismara!","");
+												}
+												else{
+															sweetAlert("Bienvenido a Bismara "+ user.username);
+												}
+											}
+										})
+								.error(function(data, status, headers, config) {
+									cfpLoadingBar.complete();
+											sweetAlert("Error de Servidor","Imposible conectar con el servidor.","error");
+										});
+					};
+					
+					authService.newDoctor = function(doctor) {
+						doctor.user.password = md5.createHash(doctor.user.password || '');
+						$http.post(pathRemote + "rest/doctors/new", doctor)
+								.success(function(data, status, headers, config) {
+											cfpLoadingBar.complete();
+											if (data == "null") {
+												sweetAlert("Oops..","Ya existe un Medico con esa matrícula!","error");
+											} else {
+												sweetAlert("Bienvenido!","Gracias por registrarse en Bismara "+ doctor.user.username,"success");
+											}
+										})
+								.error(function(data, status, headers, config) {
+											cfpLoadingBar.complete();
+											sweetAlert("Imposible conectar con el servidor.","error");
+										});
+					}
+					return authService;
+})
