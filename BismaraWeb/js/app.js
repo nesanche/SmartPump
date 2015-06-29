@@ -6,8 +6,21 @@ var app = angular.module('app', [ 'ngRoute', 'app.controllers' ]);
  */
 app.config(function($routeProvider) {
 	$routeProvider
-	.when('/', {
+	.when('/loginMedico', {
 		templateUrl : 'templates/login.html',
+		controller : 'loginMedicoController'
+	})
+	.when('/loginPaciente', {
+		templateUrl : 'templates/login.html',
+		controller : 'loginPacienteController'
+	})
+	.when('/index', {
+		templateUrl : 'templates/home.html',
 		controller : 'appController'
 	})
-})
+    .otherwise({
+        redirectTo: '/index'
+      });
+});
+
+
