@@ -1,6 +1,5 @@
 html,body{
 	background-image: url("../images/background.jpg");
-  	background-size: cover;
 }
 
 body {
@@ -188,6 +187,7 @@ body {
 
 input[type="submit"]:disabled{
 	background-color: #AD0101 !important;
+	border-color: #AD0101 !important;
 }
 
 .obligatorios{
@@ -256,16 +256,12 @@ input[type="submit"]:disabled{
   	opacity: 0;
 }
 
-.ch-img-1 { 
-	background-image: url(../images/19.jpg);
+#paciente{ 
+	background-image: url('../images/paciente.png');
 }
 
-.ch-img-2 { 
-	background-image: url(../images/20.jpg);
-}
-
-.ch-img-3 { 
-	background-image: url(../images/21.jpg);
+#doctor{ 
+	background-image: url('../images/doctor.png');
 }
 
 .ch-info h3 {
@@ -370,4 +366,14 @@ a:hover{
 
 #volver{
 	color: #FFFFFF !important;
+}
+
+
+@media (max-width: 411px) {
+   	.ch-grid li {
+    	margin: auto !important;
+    }
+    #paciente{
+    	margin-top: 20px !important;
+    }
 }

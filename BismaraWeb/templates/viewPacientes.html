@@ -1,0 +1,27 @@
+<div class="container mycontainer">
+        <div class="left-nav">
+        	<h1>Pacientes de: <strong>{{doctor.firstName}} {{doctor.lastName}}</strong></h1>
+            <accordion close-others="true">
+                  <accordion-group  is-open="isopen"
+                      ng-repeat="item in items" 
+                      ng-controller="ItemController">
+                      <accordion-heading >
+                      <strong>{{item.lastName}}, {{item.firstName}}</strong>
+                          <i class="pull-right glyphicon" 
+                                ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+                      </accordion-heading>
+                      <div>
+                      	<tr ng-repeat="patient in patients">
+                      		<p><strong>Usuario:</strong> {{item.user.username}}</p>
+                      		<p><strong>Teléfono 1:</strong> {{item.phoneOne}}</p>
+                    		<p><strong>Teléfono 2:</strong> {{item.phoneTwo}}</p>
+                    		<p><strong>Email:</strong> {{item.email}}</p>
+                    		<p><strong>Dirección:</strong> {{item.address}}</p>                    		
+   						</tr>
+   					  </div>
+                  </accordion-group>
+              </accordion>
+        </div>
+        <div class="content">
+        </div>
+</div>

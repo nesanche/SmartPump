@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('app.controllers', ['app.services' , 'ngMessages']);
+var app = angular.module('app.controllers', ['app.services' , 'ngMessages', 'ui.bootstrap']);
 
 /**
  * 	Controladores:
@@ -46,11 +46,30 @@ app.directive("compareTo", compareTo)
                     };
 })
 
-app.controller('appController', function($scope) {
-
+app.controller('appController', function($scope, $rootScope) {
+	$scope.doctor = {};
+	$scope.user = {};
+	$rootScope.doctor = {};
 })
 
-app.controller('loginPacienteController', function($scope) {
+app.controller('doctorController', function($scope, DoctorService, $rootScope) {
+	$scope.doctor = $rootScope.doctor;
+	DoctorService.allPacientes($scope.doctor.id).then(function(response) {
+					                        $scope.items = response;
+					                    })
+})
+
+app.controller('ItemController', ['$scope', function (scope) {
+
+                scope.$parent.isopen = (scope.$parent.default === scope.item);
+
+                scope.$watch('isopen', function (newvalue, oldvalue, scope) {
+                    scope.$parent.isopen = newvalue;
+                });
+
+}])
+
+app.controller('loginPatientController', function($scope, AuthService) {
 	$('#register-form-link').remove();
 	$('#inicioSesion').css("width", "100%");
 	$('#login-form-link').click(function(e) {
@@ -58,9 +77,15 @@ app.controller('loginPacienteController', function($scope) {
 		$scope.doctor = "";
 		e.preventDefault();
 	});
+
+	$scope.login = function(user) {
+		$scope.user = user;
+		AuthService.login(user);
+	}
+
 })
 
-app.controller('loginMedicoController', function($scope, AuthService) {
+app.controller('loginDoctorController', function($scope, AuthService, $rootScope) {
 
 	$('#login-form-link').click(function(e) {
 		$scope.user = "";

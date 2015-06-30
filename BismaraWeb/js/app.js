@@ -1,22 +1,24 @@
 var app = angular.module('app', [ 'ngRoute', 'app.controllers' ]);
 /**
  * Configuración de rutas:
- * 
- * 1- Login
  */
 app.config(function($routeProvider) {
 	$routeProvider
-	.when('/loginMedico', {
+	.when('/loginDoctor', {
 		templateUrl : 'templates/login.html',
-		controller : 'loginMedicoController'
+		controller : 'loginDoctorController'
 	})
 	.when('/loginPaciente', {
 		templateUrl : 'templates/login.html',
-		controller : 'loginPacienteController'
+		controller : 'loginPatientController'
 	})
 	.when('/index', {
 		templateUrl : 'templates/home.html',
 		controller : 'appController'
+	})
+	.when('/pacientes', {
+		templateUrl : 'templates/viewPacientes.html',
+		controller : 'doctorController'
 	})
     .otherwise({
         redirectTo: '/index'
