@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_enter_name"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:text="Last step!"
+        android:textColor="#ffffff"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="Please enter below your medical license. We will verify your personal data and your medical license to make sure everything is fine and we'll notifiy you when your account is ready to use"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#fff" />
+
+        <EditText
+        android:id="@+id/etLicenseNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignStart="@+id/tvStart"
+        android:layout_below="@+id/tvStart"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginStart="25dp"
+        android:background="@drawable/rounded_edittext"
+        android:drawableStart="@drawable/ic_user"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:hint="@string/en_hint_license"
+        android:inputType="text"
+        android:lines="1"
+        android:maxLines="1"
+        android:paddingEnd="3dp"
+        android:paddingStart="3dp"
+        android:paddingTop="5dp" >
+
+        <requestFocus />
+    </EditText>
+    
+    <Button
+        android:id="@+id/btnFinishRegistration"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignEnd="@+id/etLicenseNumber"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/etLicenseNumber"
+        android:layout_marginBottom="34dp"
+        android:background="@drawable/btnstyle"
+        android:text="Finish registration"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+</RelativeLayout>
