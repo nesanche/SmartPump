@@ -1,5 +1,7 @@
 package com.smartpump.model;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -46,6 +48,10 @@ public class Patient {
     private String email;
     /** Dirección de residencia */
     private String address;
+    /** Sexo. M si es masculino. F si es femenino. */
+    private String sex;
+    /** Fecha de nacimiento */
+    private Date birthDate;
     /** Usuario que posee ese paciente para ingresar al sistema. */
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_user")
@@ -190,6 +196,48 @@ public class Patient {
      */
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    /**
+     * Obtiene el sexo del paciente.
+     * 
+     * @return el sexo del paciente.
+     */
+    public String getSex() {
+        return sex;
+    }
+
+    /**
+     * Establece el sexo del paciente.
+     * 
+     * @param sex
+     *            el sexo del paciente.
+     */
+    public void setSex(String sex) {
+        if (!sex.equalsIgnoreCase("M") && !sex.equalsIgnoreCase("F")) {
+            throw new RuntimeException(
+                    "El sexo es incorrecto. Los valores deben ser 'M' o 'F'");
+        }
+        this.sex = sex;
+    }
+
+    /**
+     * Obtiene la fecha de nacimiento del paciente.
+     * 
+     * @return la fecha de nacimiento del paciente.
+     */
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    /**
+     * Establece la fecha de nacimiento del paceinte.
+     * 
+     * @param birthDate
+     *            la fecha de nacimiento del paciente.
+     */
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     /**

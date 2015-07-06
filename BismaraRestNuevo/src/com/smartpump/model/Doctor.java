@@ -45,7 +45,7 @@ public class Doctor {
     /** Email de contacto */
     private String email;
     /** Número de matrícula. Debe ser único. */
-    private int registrationNumber;
+    private String registrationNumber;
     /** Dirección donde trabaja el médico. */
     private String address;
 
@@ -173,7 +173,7 @@ public class Doctor {
      * 
      * @return la matrícula del doctor.
      */
-    public int getRegistrationNumber() {
+    public String getRegistrationNumber() {
         return registrationNumber;
     }
 
@@ -183,7 +183,7 @@ public class Doctor {
      * @param registrationNumber
      *            la matrícula del doctor.
      */
-    public void setRegistrationNumber(int registrationNumber) {
+    public void setRegistrationNumber(String registrationNumber) {
         this.registrationNumber = registrationNumber;
     }
 

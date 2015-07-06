@@ -26,7 +26,6 @@ import com.smartpump.utils.RestBoolean;
  * Representa el punto de entrada para la API Rest en el manejo de doctores.
  * 
  * @author Franco Ariel Salonia
- *
  */
 @Component
 @Path("/doctors")
@@ -84,7 +83,7 @@ public class DoctorResource {
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
     public Response getDoctorByRegistrationNumber(
-            @HeaderParam("registrationNumber") int registrationNumber) {
+            @HeaderParam("registrationNumber") String registrationNumber) {
         String json = null;
         Doctor doctor = doctorService.getDoctor(registrationNumber);
         if (doctor == null) {

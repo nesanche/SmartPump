@@ -106,7 +106,7 @@ public class DoctorService {
      *            la matrícula del doctor.
      * @return el doctor asociado, null en caso contrario.
      */
-    public Doctor getDoctor(int registrationNumber) {
+    public Doctor getDoctor(String registrationNumber) {
         Doctor doctor = doctorDao
                 .getDoctorByRegistrationNumber(registrationNumber);
         return doctor;

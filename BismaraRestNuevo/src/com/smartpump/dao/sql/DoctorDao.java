@@ -113,7 +113,7 @@ public class DoctorDao implements IDoctorDao {
 
     @Transactional
     @Override
-    public Doctor getDoctorByRegistrationNumber(int registrationNumber) {
+    public Doctor getDoctorByRegistrationNumber(String registrationNumber) {
         TypedQuery<Doctor> query = entityManager.createNamedQuery(
                 Queries.DOCTOR_GET_BY_REGISTRATION_NUMBER, Doctor.class);
         query.setParameter("registrationNumber", registrationNumber);

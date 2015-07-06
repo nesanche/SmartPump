@@ -7,10 +7,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 import com.smartpump.exceptions.ErrorMessage;
+import com.smartpump.utils.BismaraResponseBuilder;
 import com.sun.jersey.api.NotFoundException;
 
 /**
@@ -21,6 +23,10 @@ import com.sun.jersey.api.NotFoundException;
 @Provider
 @Component
 public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
+
+    /** Atributo encargado de la construcción de las response. */
+    @Autowired
+    private BismaraResponseBuilder responseBuilder;
 
     /**
      * Overridden method from ExceptionMapper. Receives a generic exception and
@@ -38,8 +44,8 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
         setMessage(ex, errorMessage);
         Gson gson = new Gson();
         String json = gson.toJson(errorMessage);
-        return Response.status(errorMessage.getCode()).entity(json)
-                .type(MediaType.APPLICATION_JSON).build();
+        return responseBuilder.buildResponse(errorMessage.getCode(), json,
+                MediaType.APPLICATION_JSON);
     }
 
     /**

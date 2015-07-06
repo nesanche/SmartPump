@@ -23,9 +23,9 @@ public class BismaraResponseBuilder {
      */
     public BismaraResponseBuilder() {
         defaultHeaders = new HashMap<>();
-        defaultHeaders.put("Access-Control-Allow-Origin", "*");
-        defaultHeaders.put("Access-Control-Allow-Methods", "GET, POST");
-        defaultHeaders.put("Access-Control-Allow-Headers", "*");
+        // defaultHeaders.put("Access-Control-Allow-Origin", "*");
+        // defaultHeaders.put("Access-Control-Allow-Methods", "GET, POST");
+        // defaultHeaders.put("Access-Control-Allow-Headers", "*");
     }
 
     /**
@@ -57,6 +57,27 @@ public class BismaraResponseBuilder {
      */
     public Response buildResponse(int status) {
         ResponseBuilder builder = Response.status(status);
+        addDefaultHeaders(builder);
+        return builder.build();
+    }
+
+    /**
+     * Método responsable de construir la respuesta en función de un estado, una
+     * entidad y un tipo de respuesta que reciba por parámetro. También agrega
+     * las cabeceras por defecto seteadas en el atributo.
+     * 
+     * @param status
+     *            el estado de la respuesta.
+     * @param entity
+     *            la entidad a devolver.
+     * @param mediaType
+     *            el tipo de respuesta
+     * @return la respuesta del servidor.
+     */
+    public Response buildResponse(int status, Object entity, String mediaType) {
+        ResponseBuilder builder = Response.status(status);
+        builder.entity(entity);
+        builder.type(mediaType);
         addDefaultHeaders(builder);
         return builder.build();
     }

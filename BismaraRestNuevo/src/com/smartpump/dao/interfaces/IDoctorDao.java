@@ -40,7 +40,7 @@ public interface IDoctorDao {
      * @return un doctor filtrando por el número de matrícula, null si no
      *         encontró ninguno.
      */
-    Doctor getDoctorByRegistrationNumber(int registrationNumber);
+    Doctor getDoctorByRegistrationNumber(String registrationNumber);
 
     /**
      * Devuelve todos los doctores persistidos.
