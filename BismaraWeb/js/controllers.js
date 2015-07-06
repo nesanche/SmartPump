@@ -1,15 +1,92 @@
 'use strict';
-angular.module('app.controllers', [ 'app.services' ])
+var app = angular.module('app.controllers', ['app.services' , 'ngMessages', 'ui.bootstrap']);
 
 /**
  * 	Controladores:
  * 
  * 1- appController para la app en general.
- * 2- loginController para login.
+ * 2- loginController para login y nuevo registro.
  * 
  */
+var compareTo = function() {
+	    return {
+	        require: "ngModel",
+	        scope: {
+	            otherModelValue: "=compareTo"
+	        },
+	        link: function(scope, element, attributes, ngModel) {	        	
+	            ngModel.$validators.compareTo = function(modelValue) {
+	                return modelValue == scope.otherModelValue;
+	            };	 
+	            scope.$watch("otherModelValue", function() {
+	                ngModel.$validate();
+	            });
+	        }
+	    };
+	};
+app.directive("compareTo", compareTo)
 
-.controller('appController', function($scope) {
+.directive('passwordValidator', function($q) {
+                    return {
+                        require: 'ngModel',
+                        link: function(scope, element, attrs, ngModel) {
+                            ngModel.$asyncValidators.password = function(modelValue, viewValue) {
+                                if (!viewValue) {
+                                    return $q.when(true);
+                                }
+                                	var deferred = $q.defer(); 
+                                	var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;                                   
+					                if (!viewValue.match(passw)) {
+					                    deferred.reject();
+					                }
+					                deferred.resolve();                                                    
+                                return deferred.promise;
+                            };
+                        }
+                    };
+})
+
+app.controller('appController', function($scope, $rootScope) {
+	$scope.doctor = {};
+	$scope.user = {};
+	$rootScope.doctor = {};
+})
+
+app.controller('doctorController', function($scope, DoctorService, $rootScope) {
+	$scope.doctor = $rootScope.doctor;
+	DoctorService.allPacientes($scope.doctor.id).then(function(response) {
+					                        $scope.items = response;
+					                    })
+})
+
+app.controller('ItemController', ['$scope', function (scope) {
+
+                scope.$parent.isopen = (scope.$parent.default === scope.item);
+
+                scope.$watch('isopen', function (newvalue, oldvalue, scope) {
+                    scope.$parent.isopen = newvalue;
+                });
+
+}])
+
+app.controller('loginPatientController', function($scope, AuthService) {
+	$('#register-form-link').remove();
+	$('#inicioSesion').css("width", "100%");
+	$('#login-form-link').click(function(e) {
+		$scope.user = "";
+		$scope.doctor = "";
+		e.preventDefault();
+	});
+
+	$scope.login = function(user) {
+		$scope.user = user;
+		AuthService.login(user);
+	}
+
+})
+
+app.controller('loginDoctorController', function($scope, AuthService, $rootScope) {
+
 	$('#login-form-link').click(function(e) {
 		$scope.user = "";
 		$scope.doctor = "";
@@ -31,15 +108,19 @@ angular.module('app.controllers', [ 'app.services' ])
 		$(this).addClass('active');
 		e.preventDefault();
 	});
-})
 
-.controller('loginController', function($scope, AuthService) {
 	$scope.login = function(user) {
 		$scope.user = user;
 		AuthService.login(user);
 	}
 
 	$scope.newUser = function(userRegistration, doctor) {
+		
+		if(userRegistration.password != userRegistration.confirmPassword){
+			sweetAlert("Oops...","Debe confirmar correctamente la contrasenia!","error");
+			return false;
+		}
+
 		var user = {
 			username : userRegistration.username,
 			password : userRegistration.password,
@@ -55,10 +136,20 @@ angular.module('app.controllers', [ 'app.services' ])
 			lastName : doctor.lastName,
 			registrationNumber : doctor.registrationNumber,
 			phone : doctor.phone,
+			address : doctor.address,
 			email : doctor.email
 		};
 		$scope.doctor = doctor;
 		AuthService.newDoctor($scope.doctor);
 	}
+
 });
+
+
+
+
+
+
+
+
 
