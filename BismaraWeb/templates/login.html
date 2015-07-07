@@ -1,193 +1,385 @@
 <div class="container">
+
         <div class="row">
+
         <div class="col-md-6 col-md-offset-3">
+
           <div class="panel panel-login">
+
             <div class="panel-heading">
+
               <div class="row">
+
                 <div class="col-xs-6" id="inicioSesion">
+
                   <a href="#" class="active" id="login-form-link">Iniciar sesión</a>
+
                 </div>
+
                 <div class="col-xs-6">
+
                   <a href="#" id="register-form-link">Registrarse</a>
+
                 </div>
+
               </div>
+
               <hr>
+
             </div>
+
             <div class="panel-body">
+
                <img id="profile-img" class="profile-img-card" src="images/user.png">
+
                       <!--<div class="col-md-12" id="social-buttons">
+
                           <div class="row text-center">
+
                               <div class="col-md-4 col-sm-12">
+
                                   <button type="button" class="btn btn-primary btn-block">Facebook</button>
+
                               </div>
+
                               <div class="col-md-4 col-sm-12">
+
                                   <button type="button" class="btn btn-info btn-block">Twitter</button>
+
                               </div>
+
                               <div class="col-md-4 col-sm-12">
+
                                   <button type="button" class="btn btn-danger btn-block">Google+</button>
+
                               </div>
+
                           </div>
+
                       </div>-->
+
               <div class="row">
+
                 <div class="col-lg-12">
+
                   <form id="login-form" ng-submit="login(user)" role="form" name="loginForm">
+
                     <div class="form-group">                     
+
                       <!-- <div class="omb_login">
+
                         <div class="row omb_row-sm-offset-3 omb_loginOr">
+
                           <div class="col-xs-12 col-sm-6">
+
                             <hr class="omb_hrOr">
+
                             <span class="omb_spanOr">or</span>
+
                           </div>
+
                         </div>
+
                       </div>-->
+
                       <div class="input-group">                   
+
                         <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>   
+
                       <input type="text" ng-model="user.username" name="username" id="username" tabindex="1" class="form-control" placeholder="Usuario" value="" aria-describedby="basic-addon1" required>
+
                       </div>
 
+
+
                     </div>                  
+
                     <div class="form-group">
+
                        <div class="input-group">   
+
                        <span class="input-group-addon" ><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+
                       <input type="password" ng-model="user.password" name="password" id="password" tabindex="2" class="form-control" placeholder="Contraseña" required>
+
                     </div>
+
                     </div>
+
                     <div class="form-group text-center">
+
                       <input type="checkbox" tabindex="4" class="" name="remember" id="remember">
+
                       <label for="remember"> Recordarme</label>
+
                     </div>
+
                     <div class="form-group">
+
                       <div class="row">
+
                         <div class="col-sm-6 col-sm-offset-3">
+
                           <input type="submit" name="login-submit" id="login-submit" tabindex="5" class="form-control btn btn-register" value="Ingresar" ng-disabled="loginForm.$invalid || loginForm.$pending">
+
                         </div>
+
                       </div>
+
                     </div>
+
                     <div class="form-group">
+
                       <div class="row">
+
                         <div class="col-lg-12">
+
                           <div class="text-center">
+
                             <a class="forgot-password">¿Olvid&oacute Contraseña?</a>
+
                           </div>
+
                         </div>
+
                       </div>
+
                     </div>
+
                   </form>
+
                   <form id="register-form" ng-submit="newUser(userRegistration,doctor)" role="form" name="registrationForm">
+
                        <div class="form-group">
+
                       <div class="input-group">                   
+
                        <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span> 
+
                       <input type="text" ng-model="userRegistration.username" name="usernameRegistration" 
+
                       id="usernameRegistration" tabindex="1" class="form-control" placeholder="Usuario" value="" required 
+
                       username-validator>
+
                       </div>  
+
                         <div ng-messages="registrationForm.usernameRegistration.$error" 
+
                           ng-messages-include="templates/messages.html">
+
                         </div>
+
                         <div ng-if="registrationForm.usernameRegistration.$pending" class="alert alert-info" role="alert" ng-messages="registrationForm.usernameRegistration.$pending" class="validation-pending">
+
                             <div ng-message="username">Comprobando disponibilidad...</div>
+
                         </div>
+
                     </div>            
+
                   <div class="form-group">
+
                        <div class="input-group"> 
+
                           <span class="input-group-addon"><span class="glyphicon glyphicon-education" aria-hidden="true"></span></span>         
+
                       <input type="number"  ng-model="doctor.registrationNumber" name="registrationNumber" id="registrationNumber" tabindex="2" class="form-control" placeholder="Matrícula" value="" required
+
                       matricula-validator>
+
                     </div>
+
                     <div ng-messages="registrationForm.registrationNumber.$error" 
+
                        ng-messages-include="templates/messages.html"></div>
+
                     </div>
+
                     <div class="form-group">
+
                      <div class="input-group">   
+
                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+
                       <input type="password"  ng-model="userRegistration.password" name="userRegistrationPassword" id="userRegistrationPassword" tabindex="3" class="form-control" placeholder="Contraseña" required 
+
                       password-validator>
+
                     </div>
+
                        <div ng-messages="registrationForm.userRegistrationPassword.$error" 
+
                           ng-messages-include="templates/messages.html">
+
                         </div>
+
                   </div>
+
                     <div class="form-group">
+
                      <div class="input-group">   
+
                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+
                       <input type="password"  ng-model="userRegistration.confirmPassword" name="confirmPassword" id="confirmPassword" tabindex="4" class="form-control" placeholder="Confirmar Contraseña" required
+
                       compare-to="userRegistration.password">                      
+
                     </div>
+
                      <div ng-messages="registrationForm.confirmPassword.$error" 
+
                        ng-messages-include="templates/messages.html"></div>
+
                   </div>
+
                   <h1>
+
                     Datos Personales
+
                   </h1>  
+
                    <div class="row">
+
                 <div class="col-md-6">
+
                     <div class="form-group">
+
                       <div class="input-group">                   
+
                       <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>                        
+
                       <input type="text"  ng-model="doctor.firstName" name="firstName" id="firstName" tabindex="5" class="form-control" placeholder="Nombre" value="" required>
+
                     </div>
+
                   </div>
+
                 </div>
+
                 <div class="col-md-6">
+
                    <div class="form-group">
+
                            <div class="input-group">                   
+
                       <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>                        
+
                       <input type="text"  ng-model="doctor.lastName" name="lastName" id="lastName" tabindex="6" class="form-control" placeholder="Apellido" value="" required>
+
                     </div>
+
                   </div>
+
                 </div>
+
             </div>   
+
                      <div class="row">
+
                 <div class="col-md-6">
+
                     <div class="form-group">
+
                       <div class="input-group">  
+
                          <span class="input-group-addon"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></span>                        
+
                       <input type="number" ng-model="doctor.phone" name="phone" id="phone" tabindex="7" class="form-control" placeholder="Teléfono" value="" required>
+
                     </div>
+
                     </div>
+
                 </div>
+
                 <div class="col-md-6">
+
                     <div class="form-group">
+
                   <div class="input-group">  
+
                          <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></span></span>   
+
                       <input type="text" ng-model="doctor.address" name="address" id="address" tabindex="8" class="form-control" placeholder="Dirección del Hospital" value="" required>
+
                     </div>
+
                      </div>                 
+
                 </div>
+
             </div>     
+
                     <div class="form-group">
+
                          <div class="input-group">  
+
                          <span class="input-group-addon" id="basic-addon1">@</span>
+
                       <input type="email" ng-model="doctor.email" name="email" id="email" tabindex="9" class="form-control" placeholder="Email" value="" required email-validator>
+
                     </div>
+
                         <div ng-messages="registrationForm.email.$error" 
+
                           ng-messages-include="templates/messages.html">
+
                         </div>
+
                          <div ng-if="registrationForm.email.$pending" class="alert alert-info" role="alert" ng-messages="registrationForm.email.$pending" class="validation-pending">
+
                             <div ng-message="email">Comprobando disponibilidad...</div>
+
                         </div>
+
                     </div>                    
+
                     <br>
+
                     <div class="center">
+
                       <div class="g-recaptcha" data-sitekey="6Lfj_wgTAAAAAF6PMRUmAvhYnAAB_mtsul48IL-h"></div>
+
                     </div>
+
                     <br>
+
                     <div class="form-group">
+
                       <div class="row">
+
                         <div class="col-sm-6 col-sm-offset-3">
+
                           <input type="submit" name="register-submit" id="register-submit" tabindex="10" class="form-control btn btn-register" value="¡Registrarse!" ng-disabled="registrationForm.$invalid || registrationForm.$pending">
+
                         </div>
+
                       </div>
+
                     </div>
+
                     <span class="obligatorios">Todos los campos son obligatorios.</span>
+
                   </form>
+
                 </div>
+
               </div>             
+
             </div>            
+
           </div>
+
            <div class="center">
+
             <a href="#/index" id="volver" alt="volver"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></a>
+
            </div>
+
         </div>
+
       </div>
+
 </div>
