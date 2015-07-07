@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.view.Window;
 
 import com.smartpump.bismara.bismaraapp.R;
 import com.smartpump.bismara.bismaraapp.adapter.TabsPagerLoginAdapter;
@@ -24,6 +25,7 @@ public class MainActivity extends FragmentActivity implements TabListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         setContentView(R.layout.activity_main);
         
         this.getActionBar().hide();
@@ -76,5 +78,15 @@ public class MainActivity extends FragmentActivity implements TabListener {
     
     public void setCurrentItem(int item) {
         viewPager.setCurrentItem(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 }

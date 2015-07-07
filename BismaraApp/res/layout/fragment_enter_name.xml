@@ -133,7 +133,7 @@
         android:drawableStart="@drawable/ic_user"
         android:ems="10"
         android:gravity="center_vertical"
-        android:hint="@string/en_hint_phone"
+        android:hint="@string/en_hint_address"
         android:inputType="text"
         android:lines="1"
         android:maxLines="1"

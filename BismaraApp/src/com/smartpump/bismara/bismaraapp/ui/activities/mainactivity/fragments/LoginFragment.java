@@ -52,6 +52,7 @@ public class LoginFragment extends Fragment {
         etPassword.setTransformationMethod(new PasswordTransformationMethod());
         progress = new ProgressDialog(getActivity());
 
+
         tvRegisterSuggestion.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -103,7 +104,10 @@ public class LoginFragment extends Fragment {
     private void pendingActivity() {
         this.startActivity(new Intent(getActivity(),
                 ConfirmationOnHoldActivity.class));
+        getActivity().finish();
     }
+    
+    
 
     class LoginTask extends AsyncTask<String, Void, String> {
         private String responseString;

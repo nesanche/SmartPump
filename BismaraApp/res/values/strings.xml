@@ -51,5 +51,9 @@
     <string name="es_logging_in">Iniciando sesión...</string>
     <string name="en_hint_address">Address</string>
     <string name="es_hint_address">Dirección</string>
+    <string name="en_already_have_account">Already have an account? Log in to Bismara!</string>
+    <string name="es_already_have_account">Ya tienes una cuenta? Inicia sesión en Bismara!</string>
+    <string name="en_logout">Log Out</string>
+    <string name="es_logout">Cerrar sesión</string>
 
 </resources>
