@@ -1,0 +1,209 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('../fonts/Lato-Regular.eot'); 
+    src: url('../fonts/Lato-Regular.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Lato-Regular.woff') format('woff'), 
+         url('../fonts/Lato-Regular.ttf') format('truetype'); 
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+@font-face {
+    font-family: 'Kalinga';
+    src: url('../fonts/kalinga.ttf') format('truetype'); 
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+@font-face {
+    font-family: 'KalingaB';
+    src: url('../fonts/kalingab.ttf') format('truetype'); 
+    font-style: normal;
+    font-weight: bold;
+    text-rendering: optimizeLegibility;
+}
+
+nav{
+	 background-color: rgb(228, 232, 234) !important;
+}
+
+#logoB{
+	margin: auto;
+	margin-top:-10px;
+}
+
+.navbar-brand {
+  padding: 0px 15px !important;
+}
+
+.page-scroll{
+  color: #34495e !important;
+  font-weight: bold;
+}
+
+strong{
+  font-weight: 900;
+  color: #34495e !important;
+}
+
+.strong2{
+  color: #fff !important;
+}
+
+h2{
+  font-family: inherit !important;
+  font-size: 55px;
+  color: #34495e;
+}
+
+/* imagenes que salen del costado */
+.main.style2 {
+  padding: 3em 0 3em 0;
+  overflow: hidden;
+}
+.main.fullscreen {
+  height: 100%;
+}
+.dark {
+  color: #fff;
+}
+.main {
+  position: relative;
+  margin: 0;
+  overflow-x: hidden;
+}
+.main.style2.right:before {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media screen and (max-width: 1280px)
+.main.style2.right .content {
+  left: 50%;
+}
+@media screen and (max-width: 1920px)
+.main.style2.right .content {
+  left: 60%;
+}
+.main.style2.right .content {
+  left: 65%;
+}
+@media screen and (max-width: 1280px)
+.main.style2 .content {
+  width: 50%;
+}
+@media screen and (max-width: 1920px)
+.main.style2 .content {
+  width: 40%;
+}
+.main.style2 .content {
+  -moz-transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all 1s ease;
+  -moz-transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  position: relative;
+  width: 35%;
+  display: inline-block;
+  vertical-align: middle;
+}
+.box.style2 {
+  padding: 3.5em 2.5em 3.5em 2.5em;
+}
+.box {
+  background: #fff;
+  color: #39454b;
+  padding: 2em;
+}
+
+.box-icon {
+  height: 150px;
+  width: 150px;
+  -moz-border-radius: 35px;
+  border-radius: 100%;
+  padding: 47px 10px;
+  background-color: #f0f1ec;
+  color: #034b81;
+  text-align: center;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  margin-right: 15px;
+}
+.navbar-header{
+	margin-left: 50px;
+}
+.navbar-main-collapse{
+	margin-right: 15px !important; 
+}
+@media screen and (max-width: 909px) {
+  #logoB{
+    height: 60px !important;
+    margin-top: 5px !important;
+  }
+}
+
+#contacto {
+    padding-bottom: 0;
+    overflow: hidden;
+    background-color: rgb(80, 167, 222);
+}
+
+header{
+    height: 100%;
+}
+
+.fa-bars{
+  color: #34495e !important;
+}
+
+#queEs{
+    background-image: url("../img/2.jpg");
+}
+#comoFunciona{
+    background-image: url("../img/1.jpg");
+}
+
+.box{
+    box-shadow: -5px 5px 30px #34495E; 
+    -webkit-box-shadow: -5px 5px 30px #34495E;
+}
+
+.main{
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+h5{
+  margin:0 !important;
+  font-weight: normal !important;
+}
+.subtitle{
+  margin: 5px !important;
+  font-size: 16px !important;
+  color: rgb(182, 191, 197) !important;
+}
+.inner p{
+  font-size: 12px;
+  font-style: oblique;
+  margin-top: 10px;
+}
+.redesPersonales li{
+  float: left;
+  margin-left: 10px;
+}
+.img-circle {
+  border: 2px solid white;
+}
