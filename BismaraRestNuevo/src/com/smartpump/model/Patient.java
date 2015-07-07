@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.smartpump.dao.constants.Queries;
 import com.smartpump.dao.constants.Tables;
+import com.smartpump.model.scheduling.Treatment;
 
 /**
  * Clase que representa un objeto paciente dentro del sistema.
@@ -60,10 +61,10 @@ public class Patient {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "id_doctor")
     private Doctor doctor;
-    /** Bomba del paciente. */
+    /** Tratamiento del paciente. */
     @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "id_pump")
-    private Pump pump;
+    @JoinColumn(name = "id_treatment")
+    private Treatment treatment;
 
     /**
      * Devuelve el id autogenerado del paciente.
@@ -279,22 +280,22 @@ public class Patient {
     }
 
     /**
-     * Devuelve la bomba del paciente.
+     * Devuelve el tratamiento del paciente.
      * 
-     * @return la bomba del paciente.
+     * @return el tratamiento del paciente.
      */
-    public Pump getPump() {
-        return pump;
+    public Treatment getTreatment() {
+        return treatment;
     }
 
     /**
-     * Establece la bomba del paciente.
+     * Establece el tratamiento del paciente.
      * 
-     * @param pump
-     *            la bomba del paciente.
+     * @param treatment
+     *            el tratamiento del paciente.
      */
-    public void setPump(Pump pump) {
-        this.pump = pump;
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
     }
 
 }

@@ -18,8 +18,14 @@ public class Tables {
     public static final String PATIENT_TABLE = "patients";
     /** Constante que encapsula el nombre de la tabla de la entidad Pump. */
     public static final String PUMP_TABLE = "pumps";
+    /** Constante que encapsula el nombre de la tabla de la entidad Schedule. */
+    public static final String SCHEDULE_TABLE = "schedules";
+    /** Constante que encapsula el nombre de la tabla de la entidad Treatment. */
+    public static final String TREATMENT_TABLE = "treatments";
     /** Constante que encapsula el nombre de la tabla de la entidad User. */
     public static final String USER_TABLE = "users";
+    /** Constante que encapsula el nombre de la tabla de la entidad UserRole. */
+    public static final String USER_ROLE_TABLE = "users_roles";
     /** Constante que encapsula el nombre de la tabla de la entidad UserState. */
     public static final String USER_STATE_TABLE = "users_states";
     /**

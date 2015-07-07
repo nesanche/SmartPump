@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.smartpump.dao.constants.Tables;
 
@@ -16,6 +17,7 @@ import com.smartpump.dao.constants.Tables;
  */
 @Entity
 @Table(name = Tables.DOSE_TYPE_TABLE)
+@XmlRootElement
 public class DoseType {
 
     /** Id autogenerado del tipo de dosis. */

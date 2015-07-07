@@ -41,6 +41,10 @@ public class User {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "id_state")
     private UserState state;
+    /** Rol del usuario */
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "id_role")
+    private UserRole role;
 
     /**
      * Devuelve el id del usuario
@@ -116,6 +120,25 @@ public class User {
      */
     public void setState(UserState state) {
         this.state = state;
+    }
+
+    /**
+     * Devuelve el rol del usuario.
+     * 
+     * @return el rol del usuario.
+     */
+    public UserRole getRole() {
+        return role;
+    }
+
+    /**
+     * Establece el rol del usuario.
+     * 
+     * @param role
+     *            el rol del usuario.
+     */
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
 }

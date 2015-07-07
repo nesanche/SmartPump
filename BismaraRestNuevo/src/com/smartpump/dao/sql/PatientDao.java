@@ -13,7 +13,7 @@ import com.smartpump.dao.constants.Queries;
 import com.smartpump.dao.constants.Units;
 import com.smartpump.dao.interfaces.IPatientDao;
 import com.smartpump.model.Patient;
-import com.smartpump.model.Pump;
+import com.smartpump.model.scheduling.Pump;
 
 /**
  * Clase que implementa la interfaz IPatientDao y utiliza los servicios de JPA e

@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.smartpump.dao.constants.Tables;
 
@@ -20,6 +21,7 @@ import com.smartpump.dao.constants.Tables;
  */
 @Entity
 @Table(name = Tables.DOSE_TABLE)
+@XmlRootElement
 public class Dose {
 
     /** Id de la dosis. */
