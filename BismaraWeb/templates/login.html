@@ -73,21 +73,6 @@
                       </div>
                     </div>
                   </form>
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-                  <form id="register-form" ng-submit="newUser(userRegistration,doctor)" role="form">
-                       <div class="form-group">
-                      <div class="input-group">                   
-                       <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>   
-                      <input type="text" ng-model="userRegistration.username" name="usernameRegistration" id="usernameRegistration" tabindex="1" class="form-control" placeholder="Usuario" value="" required>
-=======
-                  <form id="register-form" ng-submit="newUser(doctor)" role="form">
-                       <div class="form-group">
-                      <div class="input-group">                   
-                       <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>   
-                      <input type="text" ng-model="doctor.user.username" name="username" id="username" tabindex="1" class="form-control" placeholder="Usuario" value="" required>
->>>>>>> Stashed changes
-=======
                   <form id="register-form" ng-submit="newUser(userRegistration,doctor)" role="form" name="registrationForm">
                        <div class="form-group">
                       <div class="input-group">                   
@@ -95,7 +80,6 @@
                       <input type="text" ng-model="userRegistration.username" name="usernameRegistration" 
                       id="usernameRegistration" tabindex="1" class="form-control" placeholder="Usuario" value="" required 
                       username-validator>
->>>>>>> dc6c2f70e1baad52aed48e571dd44efe570b53f8
                       </div>  
                         <div ng-messages="registrationForm.usernameRegistration.$error" 
                           ng-messages-include="templates/messages.html">
@@ -107,16 +91,8 @@
                   <div class="form-group">
                        <div class="input-group"> 
                           <span class="input-group-addon"><span class="glyphicon glyphicon-education" aria-hidden="true"></span></span>         
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-                      <input type="text"  ng-model="doctor.registrationNumber" name="registrationNumber" id="registrationNumber" tabindex="2" class="form-control" placeholder="Matrícula" value="" required>
-=======
-                      <input type="text"  ng-model="doctor.registrationNumber" name="matricula" id="matricula" tabindex="2" class="form-control" placeholder="Matrícula" value="" required>
->>>>>>> Stashed changes
-=======
                       <input type="number"  ng-model="doctor.registrationNumber" name="registrationNumber" id="registrationNumber" tabindex="2" class="form-control" placeholder="Matrícula" value="" required
                       matricula-validator>
->>>>>>> dc6c2f70e1baad52aed48e571dd44efe570b53f8
                     </div>
                     <div ng-messages="registrationForm.registrationNumber.$error" 
                        ng-messages-include="templates/messages.html"></div>
@@ -124,16 +100,8 @@
                     <div class="form-group">
                      <div class="input-group">   
                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-                      <input type="password"  ng-model="userRegistration.password" name="userRegistrationPassword" id="userRegistrationPassword" tabindex="3" class="form-control" placeholder="Contraseña" required>
-=======
-                      <input type="password"  ng-model="doctor.user.password" name="password" id="password" tabindex="3" class="form-control" placeholder="Contraseña" required>
->>>>>>> Stashed changes
-=======
                       <input type="password"  ng-model="userRegistration.password" name="userRegistrationPassword" id="userRegistrationPassword" tabindex="3" class="form-control" placeholder="Contraseña" required 
                       password-validator>
->>>>>>> dc6c2f70e1baad52aed48e571dd44efe570b53f8
                     </div>
                        <div ng-messages="registrationForm.userRegistrationPassword.$error" 
                           ng-messages-include="templates/messages.html">
@@ -142,16 +110,8 @@
                     <div class="form-group">
                      <div class="input-group">   
                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-                      <input type="password"  ng-model="userRegistration.confirmPassword" name="confirmPassword" id="confirmPassword" tabindex="4" class="form-control" placeholder="Confirmar Contraseña" required>
-=======
-                      <input type="password"  ng-model="doctor.user.confirmPassword" name="confirmPassword" id="confirmPassword" tabindex="4" class="form-control" placeholder="Confirmar Contraseña" required>
->>>>>>> Stashed changes
-=======
                       <input type="password"  ng-model="userRegistration.confirmPassword" name="confirmPassword" id="confirmPassword" tabindex="4" class="form-control" placeholder="Confirmar Contraseña" required
                       compare-to="userRegistration.password">                      
->>>>>>> dc6c2f70e1baad52aed48e571dd44efe570b53f8
                     </div>
                      <div ng-messages="registrationForm.confirmPassword.$error" 
                        ng-messages-include="templates/messages.html"></div>
@@ -164,11 +124,7 @@
                     <div class="form-group">
                       <div class="input-group">                   
                       <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>                        
-<<<<<<< Updated upstream
                       <input type="text"  ng-model="doctor.firstName" name="firstName" id="firstName" tabindex="5" class="form-control" placeholder="Nombre" value="" required>
-=======
-                      <input type="text"  ng-model="doctor.firstName" name="first_name" id="first_name" tabindex="5" class="form-control" placeholder="Nombre" value="" required>
->>>>>>> Stashed changes
                     </div>
                   </div>
                 </div>
@@ -176,11 +132,7 @@
                    <div class="form-group">
                            <div class="input-group">                   
                       <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>                        
-<<<<<<< Updated upstream
                       <input type="text"  ng-model="doctor.lastName" name="lastName" id="lastName" tabindex="6" class="form-control" placeholder="Apellido" value="" required>
-=======
-                      <input type="text"  ng-model="doctor.lastName" name="last_name" id="last_name" tabindex="6" class="form-control" placeholder="Apellido" value="" required>
->>>>>>> Stashed changes
                     </div>
                   </div>
                 </div>

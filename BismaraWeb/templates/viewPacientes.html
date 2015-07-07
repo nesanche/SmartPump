@@ -1,10 +1,8 @@
 <div class="container mycontainer">
         <div class="left-nav">
         	<h1>Pacientes de: <strong>{{doctor.firstName}} {{doctor.lastName}}</strong></h1>
-            <accordion close-others="true">
-                  <accordion-group  is-open="isopen"
-                      ng-repeat="item in items" 
-                      ng-controller="ItemController">
+            <accordion close-others="true"><!--  ng-controller="ItemController" -->
+                  <accordion-group is-open="isopen" ng-repeat="item in items">
                       <accordion-heading >
                       <strong>{{item.lastName}}, {{item.firstName}}</strong>
                           <i class="pull-right glyphicon" 
