@@ -29,7 +29,8 @@ import com.smartpump.model.scheduling.Treatment;
 @NamedQueries({
         @NamedQuery(name = Queries.PATIENT_VERIFY_EMAIL_QUERY, query = "SELECT p FROM Patient p WHERE p.email=:email"),
         @NamedQuery(name = Queries.PATIENT_GET_BY_USER_ID, query = "SELECT p FROM Patient p WHERE p.user.id=:userid"),
-        @NamedQuery(name = Queries.PATIENT_GET_PATIENTS_LIST_OF_DOCTOR, query = "SELECT p FROM Patient p WHERE p.doctor.id=:doctorid") })
+        @NamedQuery(name = Queries.PATIENT_GET_PATIENTS_LIST_OF_DOCTOR, query = "SELECT p FROM Patient p WHERE p.doctor.id=:doctorid"),
+        @NamedQuery(name = Queries.PATIENT_GET_SCHEDULES, query = "SELECT p.treatment.pump.schedules FROM Patient p WHERE p.id=:idPatient ORDER BY p.treatment.pump.schedules.startDate DESC ") })
 @XmlRootElement
 public class Patient {
 

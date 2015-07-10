@@ -50,6 +50,12 @@ public class Queries {
      */
     public static final String PATIENT_GET_PATIENTS_LIST_OF_DOCTOR = "Patient.getListOfDoctor";
 
+    /**
+     * Obtiene las programaciones de un paciente filtrando por su id. Parámetro
+     * idPatient.
+     */
+    public static final String PATIENT_GET_SCHEDULES = "Patient.getSchedules";
+
     // -----------------------------Bombas-------------------------------
     /** Consulta de bombas que devuelve una bomba filtrando por dirección MAC. */
     public static final String PUMP_GET_BY_MAC_ADDRESS = "Pump.getByMacAddress";
@@ -62,6 +68,12 @@ public class Queries {
      * parámetro.
      */
     public static final String USER_GET_BY_USERNAME_QUERY = "User.getByUsername";
+
+    /**
+     * Consulta de usuarios que devuelve uno filtrando por username y password,
+     * ambos parámetros.
+     */
+    public static final String USER_GET_BY_USERNAME_AND_PASSWORD_QUERY = "User.getByUsernameAndPassword";
     // -----------------------------Tokens de
     // verificación-------------------------------
     /**

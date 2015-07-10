@@ -9,19 +9,26 @@
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
-	<context:component-scan base-package="com.smartpump.resources"/>
+	<context:component-scan base-package="com.smartpump.resources, com.smartpump.security"/>
 	
 	<bean id="gson" class="com.google.gson.Gson"/>
+	<bean id="resourceFilter" class="com.smartpump.security.ResourceFilter"/>
 	
-   <bean id="UserResource" class="com.smartpump.resources.UserResource" >
-       <property name="gson" ref="gson"/>
+	<bean id="AbstractResource" class="com.smartpump.resources.AbstractResource" >
+	    <property name="gson" ref="gson"/>
+	    <property name="responseBuilder" ref="responseBuilder"/>
+	    <property name="resourceFilter" ref="resourceFilter"/>
+	</bean>
+	
+   <bean id="UserResource" class="com.smartpump.resources.UserResource" parent="AbstractResource">
    </bean>
    
-   <bean id="DoctorResource" class="com.smartpump.resources.DoctorResource" >	
-       <property name="gson" ref="gson"/>
+   <bean id="DoctorResource" class="com.smartpump.resources.DoctorResource" parent="AbstractResource">	
    </bean>	
    
-   <bean id="PatientResource" class="com.smartpump.resources.PatientResource" >	
-       <property name="gson" ref="gson"/>
-   </bean>	
+   <bean id="PatientResource" class="com.smartpump.resources.PatientResource" parent="AbstractResource">	
+   </bean>
+   
+   <bean id="ScheduleResource" class="com.smartpump.resources.ScheduleResource" parent="AbstractResource">	
+   </bean>		
 </beans>

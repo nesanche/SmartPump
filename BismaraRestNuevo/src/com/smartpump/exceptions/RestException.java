@@ -7,7 +7,7 @@ import javax.ws.rs.core.Response;
  * Class responsible for mapping application related exceptions. Any exception
  * not contemplated in the API should extend this class.
  */
-public class RestException extends Exception {
+public class RestException extends RuntimeException {
 
     /** Serial Version UID */
     private static final long serialVersionUID = -8999932578270387947L;

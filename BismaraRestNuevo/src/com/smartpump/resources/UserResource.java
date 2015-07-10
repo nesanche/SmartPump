@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 import com.smartpump.dao.interfaces.IUserDao;
-import com.smartpump.utils.BismaraResponseBuilder;
 import com.smartpump.utils.FileUploader;
 import com.smartpump.utils.RestBoolean;
 import com.sun.jersey.core.header.FormDataContentDisposition;
@@ -31,7 +30,7 @@ import com.sun.jersey.multipart.FormDataParam;
  */
 @Component
 @Path("/users")
-public class UserResource {
+public class UserResource extends AbstractResource {
 
     /** El Controlador DAO relacionado al recurso. */
     @Autowired
@@ -39,12 +38,6 @@ public class UserResource {
     /** Responsable la subida de archivos. */
     @Autowired
     private FileUploader fileUploader;
-    /** Atributo encargado del manejo de objetos JSON. */
-    @Autowired
-    private Gson gson;
-    /** Atributo encargado de la construcción de las response. */
-    @Autowired
-    private BismaraResponseBuilder responseBuilder;
     /** Ruta donde se almacenan las imágenes. */
     private static final String PICTURES_PATH = "/home/ec2-user/Bismara/pictures/";
 

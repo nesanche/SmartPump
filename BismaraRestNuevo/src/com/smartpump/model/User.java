@@ -26,7 +26,8 @@ import com.smartpump.dao.constants.Tables;
 @XmlRootElement
 @NamedQueries({
         @NamedQuery(name = Queries.USER_GET_ALL_QUERY, query = "SELECT u FROM User u"),
-        @NamedQuery(name = Queries.USER_GET_BY_USERNAME_QUERY, query = "SELECT u FROM User u WHERE u.username=:username") })
+        @NamedQuery(name = Queries.USER_GET_BY_USERNAME_QUERY, query = "SELECT u FROM User u WHERE u.username=:username"),
+        @NamedQuery(name = "User.getByUsernameAndPassword", query = "SELECT u FROM User u WHERE u.username=:username AND u.password=:password") })
 public class User {
 
     /** Id autogenerado del usuario. */
@@ -139,6 +140,17 @@ public class User {
      */
     public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    /**
+     * Devuelve una bandera que indica que el usuario puede realizar operaciones
+     * o no.
+     * 
+     * @return una bandera que indica si el usuario puede realizar operaciones o
+     *         no.
+     */
+    public boolean isEnabled() {
+        return this.state.getId() == 2;
     }
 
 }

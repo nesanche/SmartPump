@@ -13,7 +13,8 @@
     <!-- DAO beans -->
    <bean id="UserDao" class="com.smartpump.dao.sql.UserDao"/>
    <bean id="DoctorDao" class="com.smartpump.dao.sql.DoctorDao"/>
-   <bean id="PatientDao" class="com.smartpump.dao.sql.PatientDao"/>		
+   <bean id="PatientDao" class="com.smartpump.dao.sql.PatientDao"/>
+   <bean id="ScheduleDao" class="com.smartpump.dao.sql.ScheduleDao"/>				
 			
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">

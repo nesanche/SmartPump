@@ -13,10 +13,8 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.gson.Gson;
 import com.smartpump.model.Patient;
 import com.smartpump.services.PatientService;
-import com.smartpump.utils.BismaraResponseBuilder;
 import com.smartpump.utils.RestBoolean;
 
 /**
@@ -27,27 +25,11 @@ import com.smartpump.utils.RestBoolean;
  */
 @Component
 @Path("/patients")
-public class PatientResource {
+public class PatientResource extends AbstractResource {
 
     /** El servicio relacionado al recurso. */
     @Autowired
     private PatientService patientService;
-    /** Atributo encargado del manejo de objetos JSON. */
-    @Autowired
-    private Gson gson;
-    /** Atributo encargado de la construcción de las response. */
-    @Autowired
-    private BismaraResponseBuilder responseBuilder;
-
-    /**
-     * Establece el objeto para el manejo de JSON. Usado por Spring
-     * 
-     * @param gson
-     *            el objeto para el manejo de JSON.
-     */
-    public void setGson(Gson gson) {
-        this.gson = gson;
-    }
 
     /**
      * Verifica si se puede utilizar una dirección de email. Devuelve true si

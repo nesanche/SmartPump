@@ -98,4 +98,35 @@ public class UserDao implements IUserDao {
         return true;
     }
 
+    @Transactional
+    @Override
+    public User getUser(String username, String password) {
+        TypedQuery<User> query = entityManager.createNamedQuery(
+                Queries.USER_GET_BY_USERNAME_AND_PASSWORD_QUERY, User.class);
+        query.setParameter("username", username);
+        query.setParameter("password", password);
+        User user;
+        try {
+            user = query.getSingleResult();
+        } catch (NoResultException ex) {
+            user = null;
+        }
+        return user;
+    }
+
+    @Transactional
+    @Override
+    public User getUser(String username) {
+        TypedQuery<User> query = entityManager.createNamedQuery(
+                Queries.USER_GET_BY_USERNAME_QUERY, User.class);
+        query.setParameter("username", username);
+        User user;
+        try {
+            user = query.getSingleResult();
+        } catch (Exception ex) {
+            user = null;
+        }
+        return user;
+    }
+
 }

@@ -53,4 +53,25 @@ public interface IUserDao {
      * @return true si la confirmación fue exitosa. False en caso contrario.
      */
     boolean confirmUser(int id, String token);
+
+    /**
+     * Obtiene un usuario en función del usuario y de la contraseña.
+     * 
+     * @param username
+     *            el nombre de usuario
+     * @param password
+     *            la contraseña
+     * @return el usuario asociado. Null si no existe.
+     */
+    User getUser(String username, String password);
+
+    /**
+     * Obtiene un usuario en función del usuario.
+     * 
+     * @param username
+     *            el nombre de usuario
+     * @return el usuario asociado. Null si no existe.
+     */
+    User getUser(String username);
+
 }

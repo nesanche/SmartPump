@@ -15,11 +15,10 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.gson.Gson;
 import com.smartpump.model.Doctor;
 import com.smartpump.model.Patient;
+import com.smartpump.security.ResourceFilter;
 import com.smartpump.services.DoctorService;
-import com.smartpump.utils.BismaraResponseBuilder;
 import com.smartpump.utils.RestBoolean;
 
 /**
@@ -29,27 +28,11 @@ import com.smartpump.utils.RestBoolean;
  */
 @Component
 @Path("/doctors")
-public class DoctorResource {
+public class DoctorResource extends AbstractResource {
 
     /** El servicio relacionado al recurso. */
     @Autowired
     private DoctorService doctorService;
-    /** Atributo encargado del manejo de objetos JSON. */
-    @Autowired
-    private Gson gson;
-    /** Atributo encargado de la construcción de las response. */
-    @Autowired
-    private BismaraResponseBuilder responseBuilder;
-
-    /**
-     * Establece el objeto para el manejo de JSON. Usado por Spring
-     * 
-     * @param gson
-     *            el objeto para el manejo de JSON.
-     */
-    public void setGson(Gson gson) {
-        this.gson = gson;
-    }
 
     /**
      * Devuelve un doctor enviando por parámetros en la URL el username y el
@@ -159,7 +142,10 @@ public class DoctorResource {
     @Path("/patients")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPatients(@HeaderParam("doctor-id") int doctorId) {
+    public Response getPatients(@HeaderParam("doctor-id") int doctorId,
+            @HeaderParam("Authorization") String authorization) {
+        resourceFilter
+                .validateAccess(authorization, ResourceFilter.DOCTOR_ROLE);
         List<Patient> patients = doctorService.getPatientsOfDoctor(doctorId);
         String json = gson.toJson(patients);
         return responseBuilder.buildResponse(200, json);
