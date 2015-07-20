@@ -33,12 +33,23 @@ public class Queries {
      */
     public static final String DOCTOR_GET_BY_USER_ID = "Doctor.getByUserId";
 
+    // -----------------------------GCM Registro-------------------------------
+    /**
+     * Consulta de registros GCM que devuelve uno filtrando por el id de su
+     * usuario. Único parámetro "userid".
+     */
+    public static final String GCM_REGISTRATION_GET_BY_USER_ID = "GCMRegistration.getByUserId";
+
     // -----------------------------Pacientes-------------------------------
     /**
      * Consulta de pacientes que devuelve uno filtrando por email, único
      * parámetro.
      */
     public static final String PATIENT_VERIFY_EMAIL_QUERY = "Patient.verifyEmail";
+    /**
+     * Consulta de pacientes que devuelve uno filtrando por id de bomba.
+     */
+    public static final String PATIENT_GET_BY_PUMP_ID = "Patient.getByPumpId";
     /**
      * Consulta de pacientes que devuelve uno filtrando por id de usuario.
      */

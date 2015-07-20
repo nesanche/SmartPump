@@ -11,10 +11,13 @@
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 			
     <!-- DAO beans -->
-   <bean id="UserDao" class="com.smartpump.dao.sql.UserDao"/>
-   <bean id="DoctorDao" class="com.smartpump.dao.sql.DoctorDao"/>
-   <bean id="PatientDao" class="com.smartpump.dao.sql.PatientDao"/>
-   <bean id="ScheduleDao" class="com.smartpump.dao.sql.ScheduleDao"/>				
+   <bean id="AbstractDao" class="com.smartpump.dao.sql.AbstractDao"/>
+   <bean id="UserDao" class="com.smartpump.dao.sql.UserDao" parent="AbstractDao"/>
+   <bean id="DoctorDao" class="com.smartpump.dao.sql.DoctorDao" parent="AbstractDao"/>
+   <bean id="GCMRegistrationDao" class="com.smartpump.dao.sql.GCMRegistrationDao" parent="AbstractDao"/>
+   <bean id="NotificationDao" class="com.smartpump.dao.sql.NotificationDao" parent="AbstractDao"/>
+   <bean id="PatientDao" class="com.smartpump.dao.sql.PatientDao" parent="AbstractDao"/>
+   <bean id="ScheduleDao" class="com.smartpump.dao.sql.ScheduleDao" parent="AbstractDao"/>				
 			
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">

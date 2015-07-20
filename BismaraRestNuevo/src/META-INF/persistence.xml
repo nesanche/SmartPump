@@ -11,6 +11,9 @@
           <class>com.smartpump.model.Doctor</class>
           <class>com.smartpump.model.VerificationToken</class>
           <class>com.smartpump.model.Patient</class>
+          <class>com.smartpump.model.notifications.GCMRegistration</class>
+          <class>com.smartpump.model.notifications.Notification</class>
+          <class>com.smartpump.model.notifications.NotificationType</class>
           <class>com.smartpump.model.scheduling.DoseType</class>
           <class>com.smartpump.model.scheduling.Dose</class>
           <class>com.smartpump.model.scheduling.Pump</class>

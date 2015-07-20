@@ -3,22 +3,23 @@ package com.smartpump.dao.sql;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.smartpump.dao.constants.Queries;
 import com.smartpump.dao.interfaces.IScheduleDao;
 import com.smartpump.model.scheduling.Pump;
 import com.smartpump.model.scheduling.Schedule;
 
-public class ScheduleDao implements IScheduleDao {
-
-    @Autowired
-    private EntityManager entityManager;
+/**
+ * Clase que implementa la interfaz IScheduleDao y utiliza los servicios de JPA
+ * e Hibernate para persistir.
+ * 
+ * @author Franco Ariel Salonia
+ *
+ */
+public class ScheduleDao extends AbstractDao implements IScheduleDao {
 
     @Transactional
     @Override

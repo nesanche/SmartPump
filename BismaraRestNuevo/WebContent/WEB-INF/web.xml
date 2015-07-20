@@ -38,6 +38,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 		    /WEB-INF/applicationContext-exceptions.xml
+		    /WEB-INF/applicationContext-notifications.xml
 		    /WEB-INF/applicationContext-persistence.xml
 		    /WEB-INF/applicationContext-resources.xml
 		    /WEB-INF/applicationContext-services.xml

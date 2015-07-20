@@ -44,11 +44,21 @@ public interface IPatientDao {
     Patient registerPatient(Patient patient);
 
     /**
+     * Devuelve un paciente filtrando por el id de bomba.
+     * 
+     * @param id
+     *            el id de la bomba del paciente
+     * @return el paciente asociado a ese id de bomba, null si no encontró
+     *         ninguno.
+     */
+    Patient getPatientByPumpId(int id);
+
+    /**
      * Devuelve un paciente filtrando por el id de usuario.
      * 
      * @param id
      *            el id de usuario del paciente
-     * @return el paciente asociado a ese id de usuario, nill si no encontró
+     * @return el paciente asociado a ese id de usuario, null si no encontró
      *         ninguno.
      */
     Patient getPatientByUserId(int id);

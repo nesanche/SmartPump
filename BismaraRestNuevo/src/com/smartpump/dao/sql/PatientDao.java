@@ -1,16 +1,10 @@
 package com.smartpump.dao.sql;
 
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.smartpump.dao.constants.Queries;
-import com.smartpump.dao.constants.Units;
 import com.smartpump.dao.interfaces.IPatientDao;
 import com.smartpump.model.Patient;
 import com.smartpump.model.scheduling.Pump;
@@ -22,22 +16,7 @@ import com.smartpump.model.scheduling.Pump;
  * @author Franco Ariel Salonia
  *
  */
-public class PatientDao implements IPatientDao {
-
-    /** Atributo encargado del manejo de persistencia. */
-    @PersistenceContext(unitName = Units.USER_UNIT, type = PersistenceContextType.TRANSACTION)
-    @Autowired
-    private EntityManager entityManager;
-
-    /**
-     * Establece el manejador de entidades para la persistencia.
-     * 
-     * @param entityManager
-     *            el manejador de entidades.
-     */
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+public class PatientDao extends AbstractDao implements IPatientDao {
 
     @Transactional
     @Override
@@ -83,6 +62,21 @@ public class PatientDao implements IPatientDao {
         TypedQuery<Patient> query = entityManager.createNamedQuery(
                 Queries.PATIENT_GET_BY_USER_ID, Patient.class);
         query.setParameter("userid", id);
+        Patient patient = null;
+        try {
+            patient = query.getResultList().get(0);
+        } catch (NoResultException ex) {
+            patient = null;
+        }
+        return patient;
+    }
+
+    @Transactional
+    @Override
+    public Patient getPatientByPumpId(int id) {
+        TypedQuery<Patient> query = entityManager.createNamedQuery(
+                Queries.PATIENT_GET_BY_PUMP_ID, Patient.class);
+        query.setParameter("idPump", id);
         Patient patient = null;
         try {
             patient = query.getResultList().get(0);

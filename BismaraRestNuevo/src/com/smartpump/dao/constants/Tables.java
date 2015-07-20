@@ -14,6 +14,20 @@ public class Tables {
     public static final String DOSE_TABLE = "doses";
     /** Constante que encapsula el nombre de la tabla de la entidad DoseType. */
     public static final String DOSE_TYPE_TABLE = "dose_types";
+    /**
+     * Constante que encapsula el nombre de la tabla de la entidad
+     * GCMRegistration.
+     */
+    public static final String GCM_REGISTRATION_TABLE = "gcm_registrations";
+    /**
+     * Constante que encapsula el nombre de la tabla de la entidad Notification.
+     */
+    public static final String NOTIFICATION_TABLE = "notifications";
+    /**
+     * Constante que encapsula el nombre de la tabla de la entidad
+     * NotificationType.
+     */
+    public static final String NOTIFICATION_TYPE_TABLE = "notification_types";
     /** Constante que encapsula el nombre de la tabla de la entidad Patient. */
     public static final String PATIENT_TABLE = "patients";
     /** Constante que encapsula el nombre de la tabla de la entidad Pump. */

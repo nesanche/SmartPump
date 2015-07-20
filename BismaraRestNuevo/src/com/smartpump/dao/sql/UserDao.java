@@ -3,15 +3,12 @@ package com.smartpump.dao.sql;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.transaction.annotation.Transactional;
 
 import com.smartpump.dao.constants.Queries;
-import com.smartpump.dao.constants.Units;
 import com.smartpump.dao.interfaces.IUserDao;
 import com.smartpump.model.User;
 import com.smartpump.model.UserState;
@@ -24,21 +21,7 @@ import com.smartpump.model.VerificationToken;
  * @author Franco Ariel Salonia
  *
  */
-public class UserDao implements IUserDao {
-
-    /** Atributo encargado del manejo de persistencia. */
-    @PersistenceContext(unitName = Units.USER_UNIT)
-    private EntityManager entityManager;
-
-    /**
-     * Establece el EntityManager a utilizar por el controlador DAO.
-     * 
-     * @param entityManager
-     *            el EntityManager a utilizar.
-     */
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+public class UserDao extends AbstractDao implements IUserDao {
 
     @Override
     @Transactional

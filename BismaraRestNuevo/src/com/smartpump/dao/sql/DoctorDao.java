@@ -3,17 +3,12 @@ package com.smartpump.dao.sql;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.smartpump.dao.constants.Queries;
-import com.smartpump.dao.constants.Units;
 import com.smartpump.dao.interfaces.IDoctorDao;
 import com.smartpump.model.Doctor;
 import com.smartpump.model.Patient;
@@ -25,22 +20,7 @@ import com.smartpump.model.Patient;
  * @author Franco Ariel Salonia
  *
  */
-public class DoctorDao implements IDoctorDao {
-
-    /** Atributo encargado del manejo de persistencia. */
-    @PersistenceContext(unitName = Units.USER_UNIT, type = PersistenceContextType.TRANSACTION)
-    @Autowired
-    private EntityManager entityManager;
-
-    /**
-     * Establece el manejador de entidades para la persistencia.
-     * 
-     * @param entityManager
-     *            el manejador de entidades.
-     */
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+public class DoctorDao extends AbstractDao implements IDoctorDao {
 
     @Transactional
     @Override
