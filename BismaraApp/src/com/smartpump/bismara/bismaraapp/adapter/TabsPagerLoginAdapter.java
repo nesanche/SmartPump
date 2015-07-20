@@ -8,12 +8,21 @@ import com.smartpump.bismara.bismaraapp.ui.activities.mainactivity.fragments.Ent
 import com.smartpump.bismara.bismaraapp.ui.activities.mainactivity.fragments.LoginFragment;
 
 
+/**
+ * Adapter that holds the information for the different pages in the login viewpager
+ * 
+ * @author nesanche
+ *
+ */
 public class TabsPagerLoginAdapter extends FragmentPagerAdapter {
 
 	public TabsPagerLoginAdapter(FragmentManager fm) {
 		super(fm);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.FragmentPagerAdapter#getItem(int)
+	 */
 	public Fragment getItem(int index) {
 		switch (index) {
 		case 0:

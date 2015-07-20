@@ -27,10 +27,17 @@ import com.smartpump.bismara.bismaraapp.util.MD5Encryptor;
 
 public class EnterUserFragment extends Fragment {
 
+    /** Boton que lleva al siguiente paso de registracio */
     private Button btnNext;
+    
+    /**
+     * Editores de texto para esta fase de registración
+     */
     private EditText etUserName;
     private EditText etPassword;
     private EditText etRepeatPassword;
+    
+    /** Indicador de progreso que verifica que no exista el usuario */
     private ProgressDialog progress;
 
     @Override
@@ -95,10 +102,16 @@ public class EnterUserFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * Método que inicializa la tarea asincrona para la validacion de la existencia de un usuario
+     */
     private void validateUsername() {
         new VerifyUserName().execute(etUserName.getText().toString());
     }
 
+    /**
+     * Metodo que refresca la UI cuando el usuario existe
+     */
     private void userNameExists() {
         Toast.makeText(getActivity(), "Username exists", Toast.LENGTH_SHORT)
                 .show();
@@ -106,8 +119,10 @@ public class EnterUserFragment extends Fragment {
                 0, R.drawable.ic_wrong, 0);
     }
 
+    /**
+     * Metodo que valida que todos los campos y continua el registros
+     */
     private void userNameIsOk() {
-
         if (!FieldsValidator.matchPattern(etPassword)) {
             Toast.makeText(getActivity(), R.string.en_pass_format,
                     Toast.LENGTH_SHORT).show();
@@ -133,10 +148,19 @@ public class EnterUserFragment extends Fragment {
         setCurrentItem();
     }
 
+    /**
+     * Metodo que cambia la vista de la fase actual del registro
+     */
     private void setCurrentItem() {
         ((RegisterActivity) getActivity()).setCurrentItem(2);
     }
 
+    /**
+     * Clase que representa una AsyncTask que verifica que no exista la el usuario
+     * 
+     * @author nesanche
+     *
+     */
     class VerifyUserName extends AsyncTask<String, Void, String> {
         private String responseString;
 

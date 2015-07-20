@@ -1,12 +1,10 @@
 package com.smartpump.bismara.bismaraapp.ui.activities.mainactivity.fragments;
 
-import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.transition.Explode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,11 +25,15 @@ import com.smartpump.bismara.bismaraapp.util.EntityManager;
 
 public class EnterMailFragment extends Fragment {
 
+    /** Botón que comienza la registración */
     private Button btnStartRegistration;
+    /** EditText donde se ingresa el mail */
     private EditText etMail;
+    /** Indicador de progreso mientras se verifica el mail */
     private ProgressDialog progress;
+    /** Texto que vuelve a la pantalla de login en caso de ya tener una cuenta */
     private TextView tvHaveAccount;
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -43,15 +45,15 @@ public class EnterMailFragment extends Fragment {
         btnStartRegistration = (Button) rootView
                 .findViewById(R.id.btnStartRegistration);
         etMail = (EditText) rootView.findViewById(R.id.etEmail);
-        
+
         tvHaveAccount.setOnClickListener(new OnClickListener() {
-            
+
             @Override
             public void onClick(View v) {
                 setCurrentItem();
             }
         });
-        
+
         btnStartRegistration.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -80,21 +82,29 @@ public class EnterMailFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * Metodo que ejecuta el asynctask para verificar la existencia del mail
+     * contra la REST API
+     */
     private void verifyMailExists() {
         new VerifyMail().execute(etMail.getText().toString());
     }
 
+    /**
+     * Metodo que inicializa la activity de registro
+     */
     private void startRegistrationFlow() {
         etMail.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_mail, 0,
                 R.drawable.ic_ok, 0);
-        EntityManager.getInstance().getDoctor().setEmail(etMail.getText().toString());
-//        getActivity().getWindow().setExitTransition(new Explode());
-//        Intent intent = new Intent(getActivity(), RegisterActivity.class);
-//        getActivity().startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+        EntityManager.getInstance().getDoctor()
+                .setEmail(etMail.getText().toString());
         this.startActivity(new Intent(getActivity(), RegisterActivity.class));
         getActivity().finish();
     }
 
+    /**
+     * Método que refresca la interfaz en caso de que el mail exista
+     */
     private void errorMailExists() {
         Toast.makeText(getActivity(), "Mail already exists", Toast.LENGTH_SHORT)
                 .show();
@@ -102,6 +112,12 @@ public class EnterMailFragment extends Fragment {
                 R.drawable.ic_wrong, 0);
     }
 
+    /**
+     * Clase que representa una AsyncTask para hacer consultas http y refrescar la UI
+     * 
+     * @author nesanche
+     *
+     */
     class VerifyMail extends AsyncTask<String, Void, String> {
         private String responseString;
 
@@ -149,18 +165,21 @@ public class EnterMailFragment extends Fragment {
                 return;
             }
 
-            if (result.contains("false")) {
+            if (result.equals("false")) {
                 errorMailExists();
                 return;
             }
 
-            if (result.contains("true")) {
+            if (result.equals("true")) {
                 startRegistrationFlow();
                 return;
             }
         }
     }
-    
+
+    /**
+     * Cambia de pestaña del ViewPager de la respectiva Activity
+     */
     private void setCurrentItem() {
         ((MainActivity) getActivity()).setCurrentItem(0);
     }

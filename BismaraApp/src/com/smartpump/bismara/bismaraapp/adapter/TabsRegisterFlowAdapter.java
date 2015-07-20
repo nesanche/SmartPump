@@ -8,6 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+/**
+ * Adapter that holds the flow of the register adapter activity
+ * 
+ * @author nesanche
+ *
+ */
 public class TabsRegisterFlowAdapter extends FragmentPagerAdapter {
 
     public TabsRegisterFlowAdapter(FragmentManager fm) {

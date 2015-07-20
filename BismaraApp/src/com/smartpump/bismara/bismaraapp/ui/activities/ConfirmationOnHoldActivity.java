@@ -10,8 +10,16 @@ import android.widget.TextView;
 import com.smartpump.bismara.bismaraapp.R;
 import com.smartpump.bismara.bismaraapp.ui.activities.mainactivity.MainActivity;
 
+
+/**
+ * Activity 
+ * 
+ * @author nesanche
+ *
+ */
 public class ConfirmationOnHoldActivity extends Activity {
 
+    /** TextView que cierra la sesion */
     private TextView tvLogOut;
     
     @Override
@@ -30,6 +38,9 @@ public class ConfirmationOnHoldActivity extends Activity {
         });
     }
     
+    /**
+     * Intent que vuelve a la pantalla de login
+     */
     private void startLogin() {
         this.startActivity(new Intent(this, MainActivity.class));
     }

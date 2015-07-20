@@ -4,22 +4,29 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.Window;
 
 import com.smartpump.bismara.bismaraapp.R;
 import com.smartpump.bismara.bismaraapp.adapter.TabsPagerLoginAdapter;
-import com.smartpump.bismara.bismaraapp.ui.activities.registeractivity.fragments.RegisterFragment;
 
+/**
+ * Activity 
+ * 
+ * @author nesanche
+ *
+ */
 @SuppressWarnings("deprecation")
 public class MainActivity extends FragmentActivity implements TabListener {
 
+    /** Paginador */
     private ViewPager viewPager;
+    /** Adapter que inserta las paginas deseadas en el viewpager */
     private TabsPagerLoginAdapter mAdapter;
+    /** Android activity action bar */
     private ActionBar actionBar;
+    /** Nombres de las distintas pestañas */
     private String[] tabs = { "Login", "Register" };
 
     @Override
@@ -59,8 +66,6 @@ public class MainActivity extends FragmentActivity implements TabListener {
             }
         });
         
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().add((Fragment) new RegisterFragment(), "RegisterFragment").commit();
     }
 
     @Override

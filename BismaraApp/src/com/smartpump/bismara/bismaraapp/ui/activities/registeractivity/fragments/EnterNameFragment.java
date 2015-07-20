@@ -16,7 +16,12 @@ import com.smartpump.bismara.bismaraapp.ui.util.FieldsValidator;
 import com.smartpump.bismara.bismaraapp.util.EntityManager;
 
 public class EnterNameFragment extends Fragment {
+    /** Boton que lleva al siguiente paso de registracio */
     private Button btnNext;
+
+    /**
+     * Editores de texto para esta fase de registración
+     */
     private EditText etName;
     private EditText etLastName;
     private EditText etPhone;
@@ -102,6 +107,9 @@ public class EnterNameFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * Metodo que cambia el la fase de registro actual
+     */
     private void setCurrentItem() {
         ((RegisterActivity) getActivity()).setCurrentItem(1);
     }

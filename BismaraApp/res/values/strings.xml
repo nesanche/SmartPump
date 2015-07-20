@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Bismara Médico</string>
     <string name="action_settings">Settings</string>
     <string name="en_login_error_message">Error. Please check your credentials</string>
@@ -47,13 +46,22 @@
     <string name="en_hint_license">License number</string>
     <string name="es_hint_license">Número de matrícula </string>
     <string name="title_activity_confirmation_on_hold">ConfirmationOnHoldActivity</string>
-    <string name="en_logging_in">Verifying your credentials...</string>
-    <string name="es_logging_in">Iniciando sesión...</string>
+    <string name="en_logging_in">Verifying your credentials</string>
+    <string name="es_logging_in">Iniciando sesión</string>
     <string name="en_hint_address">Address</string>
     <string name="es_hint_address">Dirección</string>
     <string name="en_already_have_account">Already have an account? Log in to Bismara!</string>
     <string name="es_already_have_account">Ya tienes una cuenta? Inicia sesión en Bismara!</string>
     <string name="en_logout">Log Out</string>
     <string name="es_logout">Cerrar sesión</string>
-
+    <string name="en_start_registration_text">Start your registration and create your Bismara medical account to start enjoying all the features Bismara has for you</string>
+    <string name="es_start_registration_text">Comienza con el registro y crea tu cuenta médica Bismara para comenzar a disfrutar de todo lo que Bismara tiene para ti</string>
+    <string name="en_register_now">Register now to Bismara!</string>
+    <string name="es_register_now">Regístrate ahora a Bismara!</string>
+    <string name="en_enter_mail_suggestion">Enter your mail below to get started</string>
+    <string name="es_enter_mail_suggestion">Ingresa tu correo electrónico para comenzar</string>
+    <string name="en_start_registration_btn">Start registration now</string>
+    <string name="es_start_registration_btn">Registrarse</string>
+    <string name="en_credentials_empty">Please enter your credentials</string>
+    <string name="es_credentials_empty">Por favor ingrese usuario y contraseña</string>
 </resources>

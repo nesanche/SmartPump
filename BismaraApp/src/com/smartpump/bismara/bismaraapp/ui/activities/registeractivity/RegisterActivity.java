@@ -8,24 +8,33 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Window;
-
 import com.smartpump.bismara.bismaraapp.R;
 import com.smartpump.bismara.bismaraapp.adapter.TabsRegisterFlowAdapter;
 
+/**
+ * Activity 
+ * 
+ * @author nesanche
+ *
+ */
 @SuppressWarnings("deprecation")
 public class RegisterActivity extends FragmentActivity implements TabListener {
-    
+
+    /** Paginador */
     private ViewPager viewPager;
+    /** Adapter que inserta las paginas deseadas en el viewpager */
     private TabsRegisterFlowAdapter mAdapter;
+    /** Android activity action bar */
     private ActionBar actionBar;
+    /** Nombres de las distintas pestañas */
     private String[] tabs = { "Start", "Name", "License" };
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         setContentView(R.layout.activity_register);
-        
+
         this.getActionBar().hide();
 
         viewPager = (ViewPager) findViewById(R.id.pagerRegister);
@@ -55,24 +64,24 @@ public class RegisterActivity extends FragmentActivity implements TabListener {
             @Override
             public void onPageScrollStateChanged(int arg0) {
             }
-        });        
+        });
     }
 
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
-        
+
     }
 
     @Override
     public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-        
+
     }
 
     @Override
     public void onTabReselected(Tab tab, FragmentTransaction ft) {
-        
+
     }
-    
+
     public void setCurrentItem(int item) {
         viewPager.setCurrentItem(item);
     }
@@ -86,6 +95,4 @@ public class RegisterActivity extends FragmentActivity implements TabListener {
     protected void onStart() {
         super.onStart();
     }
-    
-    
 }

@@ -75,16 +75,28 @@ public class EnterLicenseFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * Metodo que inicializa una Activity sin funcionalidad si el registro fue exitoso
+     */
     private void onHoldActivity() {
         this.startActivity(new Intent(getActivity(),
                 ConfirmationOnHoldActivity.class));
     }
-
+    
+    /**
+     * Método que muestra un toast de error
+     */
     private void errorToast() {
         Toast.makeText(getActivity(), "Error in registration",
                 Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Clase que representa una AsyncTask que verifica que no exista la Matrícula médica
+     * 
+     * @author nesanche
+     *
+     */
     class PostLicense extends AsyncTask<Void, Void, String> {
         private String responseString;
 

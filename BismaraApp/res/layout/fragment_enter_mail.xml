@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
-        android:text="Register now to Bismara!"
+        android:text="@string/es_register_now"
         android:textColor="#ffffff"
         android:textSize="25sp"
         android:textStyle="bold" />
@@ -27,7 +27,7 @@
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:gravity="center"
-        android:text="Start your registration and create your Bismara medical account to start enjoying all the features Bismara has for you"
+        android:text="@string/es_start_registration_text"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#fff" />
 
@@ -41,7 +41,7 @@
         android:layout_margin="20dp"
         android:elevation="5dp"
         android:gravity="center"
-        android:text="Enter your mail below to get started"
+        android:text="@string/es_enter_mail_suggestion"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#fff"
         android:textStyle="bold" />
@@ -60,7 +60,7 @@
         android:elevation="10dp"
         android:ems="10"
         android:gravity="center_vertical"
-        android:hint="@string/en_hint_mail"
+        android:hint="@string/es_hint_mail"
         android:inputType="textEmailAddress"
         android:lines="1"
         android:maxLines="1"
@@ -76,7 +76,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:text="@string/en_already_have_account"
+        android:text="@string/es_already_have_account"
         android:textColor="#ffffff" />
 
     <Button
@@ -91,7 +91,7 @@
         android:layout_marginStart="25dp"
         android:elevation="10dp"
         android:background="@drawable/btnstyle"
-        android:text="Start registration now"
+        android:text="@string/es_start_registration_btn"
         android:textColor="#FFFFFF"
         android:textSize="20sp" />
 

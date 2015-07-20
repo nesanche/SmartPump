@@ -9,7 +9,9 @@ import android.widget.EditText;
 
 public class FieldsValidator {
 
+    /** Objeto patrón */
     private static Pattern pattern;
+    /**  */
     private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20})";
     private static final String EMAIL_PATTERN = 
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"

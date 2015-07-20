@@ -29,12 +29,19 @@ import com.smartpump.bismara.bismaraapp.util.MD5Encryptor;
 
 public class LoginFragment extends Fragment {
 
+    /** Constante para el estado 'Registrado' del médico */
     private static final int REGISTERED_CODE = 2;
+    /** Constante para el estado 'Pediente' del médico */
     private static final int PENDING_CODE = 1;
+    /** Editor de texto para el nombre de usuario */
     private EditText etUsername;
+    /** Editor de texto para la contraseña */
     private EditText etPassword;
+    /** BOtón para iniciar sesión */
     private Button btnSignIn;
+    /** TextView que sugiere registrarse si no se tiene una cuenta */
     private TextView tvRegisterSuggestion;
+    /** Indicador de progreso mientras se verifican las credenciales para el inicio de sesión */
     private ProgressDialog progress;
 
     @Override
@@ -68,7 +75,7 @@ public class LoginFragment extends Fragment {
                 if (FieldsValidator.isEmpty(etUsername)
                         && FieldsValidator.isEmpty(etPassword)) {
                     Toast.makeText(getActivity(),
-                            "Please enter your credentials", Toast.LENGTH_SHORT)
+                            R.string.es_credentials_empty, Toast.LENGTH_SHORT)
                             .show();
                     etUsername.setCompoundDrawablesWithIntrinsicBounds(
                             R.drawable.ic_user, 0, R.drawable.ic_wrong, 0);
@@ -78,7 +85,7 @@ public class LoginFragment extends Fragment {
                 }
 
                 if (FieldsValidator.isEmpty(etUsername)) {
-                    Toast.makeText(getActivity(), R.string.en_username_empty,
+                    Toast.makeText(getActivity(), R.string.es_username_empty,
                             Toast.LENGTH_SHORT).show();
                     etUsername.setCompoundDrawablesWithIntrinsicBounds(
                             R.drawable.ic_user, 0, R.drawable.ic_wrong, 0);
@@ -86,7 +93,7 @@ public class LoginFragment extends Fragment {
                 }
 
                 if (FieldsValidator.isEmpty(etPassword)) {
-                    Toast.makeText(getActivity(), R.string.en_password_empty,
+                    Toast.makeText(getActivity(), R.string.es_password_empty,
                             Toast.LENGTH_SHORT).show();
                     etPassword.setCompoundDrawablesWithIntrinsicBounds(
                             R.drawable.ic_user, 0, R.drawable.ic_wrong, 0);
@@ -101,14 +108,21 @@ public class LoginFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * Metodo que inicia una activity sin funcionalidad si es que su registracion está pendiente
+     */
     private void pendingActivity() {
         this.startActivity(new Intent(getActivity(),
                 ConfirmationOnHoldActivity.class));
         getActivity().finish();
     }
-    
-    
 
+    /**
+     * Clase que representa una AsyncTask para la verificacion de credenciales y el inicio de sesion
+     * 
+     * @author nesanche
+     *
+     */
     class LoginTask extends AsyncTask<String, Void, String> {
         private String responseString;
 
@@ -175,6 +189,9 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    /**
+     * Metodo que cambia la pestaña del viewpager que se esta observando
+     */
     private void setCurrentItem() {
         ((MainActivity) getActivity()).setCurrentItem(1);
     }
