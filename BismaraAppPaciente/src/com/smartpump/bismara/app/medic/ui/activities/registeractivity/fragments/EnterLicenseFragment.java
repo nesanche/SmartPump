@@ -28,7 +28,6 @@ import com.smartpump.bismara.app.medic.ui.activities.ConfirmationOnHoldActivity;
 import com.smartpump.bismara.app.medic.ui.util.FieldsValidator;
 import com.smartpump.bismara.app.medic.util.EntityManager;
 
-@SuppressWarnings("deprecation")
 public class EnterLicenseFragment extends Fragment {
 
     private EditText etLicense;

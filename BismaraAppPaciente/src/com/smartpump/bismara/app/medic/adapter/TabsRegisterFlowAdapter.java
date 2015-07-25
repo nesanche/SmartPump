@@ -3,6 +3,7 @@ package com.smartpump.bismara.app.medic.adapter;
 import com.smartpump.bismara.app.medic.ui.activities.registeractivity.fragments.EnterLicenseFragment;
 import com.smartpump.bismara.app.medic.ui.activities.registeractivity.fragments.EnterNameFragment;
 import com.smartpump.bismara.app.medic.ui.activities.registeractivity.fragments.EnterUserFragment;
+import com.smartpump.bismara.app.medic.ui.activities.registeractivity.fragments.RegisterPumpFragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,11 +24,19 @@ public class TabsRegisterFlowAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int index) {
         switch(index) {
-        case 0: 
+//        case 0: 
+//            return new EnterNameFragment();
+//        case 1:
+//            return new EnterUserFragment();
+//        case 2:
+//            return new EnterLicenseFragment();
+        case 0:
+            return new RegisterPumpFragment();
+        case 1: 
             return new EnterNameFragment();
-        case 1:
-            return new EnterUserFragment();
         case 2:
+            return new EnterUserFragment();
+        case 3:
             return new EnterLicenseFragment();
         }
         

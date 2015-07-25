@@ -6,7 +6,6 @@ import android.app.ActionBar.TabListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.view.Window;
 
 import com.smartpump.bismara.app.medic.R;
 import com.smartpump.bismara.app.medic.adapter.TabsPagerLoginAdapter;
@@ -17,7 +16,6 @@ import com.smartpump.bismara.app.medic.adapter.TabsPagerLoginAdapter;
  * @author nesanche
  *
  */
-@SuppressWarnings("deprecation")
 public class MainActivity extends FragmentActivity implements TabListener {
 
     /** Paginador */
@@ -32,7 +30,6 @@ public class MainActivity extends FragmentActivity implements TabListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         setContentView(R.layout.activity_main);
 
         this.getActionBar().hide();
