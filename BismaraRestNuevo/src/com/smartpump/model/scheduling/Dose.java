@@ -21,7 +21,7 @@ import com.smartpump.dao.constants.Tables;
  */
 @Entity
 @Table(name = Tables.DOSE_TABLE)
-@XmlRootElement
+@XmlRootElement(name = "doses")
 public class Dose {
 
     /** Id de la dosis. */
@@ -38,6 +38,9 @@ public class Dose {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "id_dose_type")
     private DoseType doseType;
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "id_schedule")
+    private Schedule schedule;
 
     /**
      * Devuelve el id de la dosis.
@@ -135,6 +138,14 @@ public class Dose {
      */
     public void setDoseType(DoseType doseType) {
         this.doseType = doseType;
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
     }
 
 }

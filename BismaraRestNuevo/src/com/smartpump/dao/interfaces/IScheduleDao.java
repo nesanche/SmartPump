@@ -2,6 +2,7 @@ package com.smartpump.dao.interfaces;
 
 import java.util.List;
 
+import com.smartpump.model.scheduling.Dose;
 import com.smartpump.model.scheduling.Pump;
 import com.smartpump.model.scheduling.Schedule;
 
@@ -34,6 +35,15 @@ public interface IScheduleDao {
     Pump getPump(int idPump);
 
     /**
+     * Devuelve una prgramación dependiendo de su id.
+     * 
+     * @param idSchedule
+     *            el id de la programación.
+     * @return la programación asociada a ese id.
+     */
+    Schedule getSchedule(int idSchedule);
+
+    /**
      * Registra/Actualiza una bomba de insulina en la base de datos. La devuelve
      * con los datos actualizados.
      * 
@@ -42,6 +52,16 @@ public interface IScheduleDao {
      * @return la bomba con lso datos actualizado.s
      */
     Pump registerPump(Pump pump);
+
+    /**
+     * Registra/Actualiza una dosis en la base de datos. La devuelve con los
+     * datos actualizados.
+     * 
+     * @param dose
+     *            la dosis a persistir.
+     * @return la dosis con lso datos actualizado.s
+     */
+    Dose registerDose(Dose dose);
 
     /**
      * Obtiene todas las programaciones de un paciente determinado, recibiendo

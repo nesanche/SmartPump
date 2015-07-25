@@ -1,0 +1,56 @@
+{
+  "firstName" : "Lucas",
+  "lastName" : "Borsatto",
+  "phoneOne" : "4568457",
+  "phoneTwo" : "411111",
+  "email" : "borsattolucas@gmail.com",
+  "address" : "Valladolid 2045",
+  "sex" : "M",
+  "birthDate" : "1991-02-11",
+  "user" :
+  {
+    "username" : "luquilu",
+    "password" : "talleresmivida",
+    "state" :
+    {
+      "id" : 1,
+      "description" : "Pending"
+    },
+    "role" :
+    {
+      "id": 3,
+      "description" : "Patient"
+    }
+  },
+"doctor" :
+ {
+   "id" : 1,
+   "firstName" : "Franco",
+   "lastName" : "Salonia",
+   "phone" : "3515478965",
+   "registrationNumber" : 59794,
+   "address" : "Cleto peña 1881",
+   "user" :
+   {
+    "username" : "Franksalo",
+    "password" : "talleres",
+    "state" :
+    {
+      "id" : 1,
+      "description" : "Pending"
+    },
+    "role" :
+    {
+      "id": 2,
+      "description" : "Doctor"
+    }
+ }},
+"treatment":
+ {
+   "pump" :
+   {
+     "macAddress" : "AA:AA:AA:AA",
+     "verificationPin" : 1234
+   }
+ }
+}

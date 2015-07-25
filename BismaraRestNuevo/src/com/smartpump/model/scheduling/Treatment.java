@@ -1,5 +1,6 @@
 package com.smartpump.model.scheduling;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ public class Treatment {
     private int id;
 
     /** Bomba asociada al tratamiento. */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_pump")
     private Pump pump;
 

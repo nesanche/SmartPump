@@ -8,6 +8,7 @@ import com.smartpump.dao.interfaces.IPatientDao;
 import com.smartpump.dao.interfaces.IScheduleDao;
 import com.smartpump.model.Patient;
 import com.smartpump.model.notifications.Notification;
+import com.smartpump.model.scheduling.Dose;
 import com.smartpump.model.scheduling.Pump;
 import com.smartpump.model.scheduling.Schedule;
 import com.smartpump.notifications.NotificationThread;
@@ -50,11 +51,23 @@ public class ScheduleService {
         Pump pump = scheduleDao.getPump(idPump);
         if (pump == null)
             throw new RuntimeException("No existe una bomba con ese id");
-        Schedule scheduleResult = scheduleDao.registerSchedule(schedule);
-        pump.addSchedule(scheduleResult);
-        scheduleDao.registerPump(pump);
-        sendScheduleNotification(idPump);
-        return scheduleResult;
+        schedule.setPump(pump);
+        scheduleDao.registerSchedule(schedule);
+        if (schedule.isConfirmed()) {
+            // sendScheduleNotification(idPump);
+        }
+        return schedule;
+    }
+
+    public List<Dose> addDosesToSchedule(List<Dose> doses, int idSchedule) {
+        Schedule schedule = scheduleDao.getSchedule(idSchedule);
+        if (schedule == null)
+            throw new RuntimeException("No existe una prgramación con ese id");
+        for (Dose dose : doses) {
+            dose.setSchedule(schedule);
+            scheduleDao.registerDose(dose);
+        }
+        return doses;
     }
 
     /**
@@ -84,4 +97,5 @@ public class ScheduleService {
         List<Schedule> schedules = scheduleDao.getSchedulesOfPatient(patientId);
         return schedules;
     }
+
 }

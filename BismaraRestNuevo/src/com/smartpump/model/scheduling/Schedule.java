@@ -1,13 +1,14 @@
 package com.smartpump.model.scheduling;
 
 import java.util.Date;
-import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -34,12 +35,11 @@ public class Schedule {
     private Date endDate;
     /** Perfil asociado a la programación */
     private String profile;
-    /** Lista de las dosis asociadas a la programación */
-    @OneToMany(orphanRemoval = true)
-    @JoinColumn(name = "id_schedule")
-    private Set<Dose> doses;
     /** Bandera que establece si la programación ya está confirmada. */
     private boolean confirmed;
+    @ManyToOne(cascade = { CascadeType.REFRESH }, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_pump")
+    private Pump pump;
 
     /**
      * Devuelve el id de la programación.
@@ -118,35 +118,6 @@ public class Schedule {
     }
 
     /**
-     * Devuelve las dosis asociadas a la programación.
-     * 
-     * @return las dosis asociadas a la programación.
-     */
-    public Set<Dose> getDoses() {
-        return doses;
-    }
-
-    /**
-     * Establece las dosis asociadas a la programación.
-     * 
-     * @param doses
-     *            las dosis asociadas a la programación.
-     */
-    public void setDoses(Set<Dose> doses) {
-        this.doses = doses;
-    }
-
-    /**
-     * Agrega una dosis a la lista de dosis.
-     * 
-     * @param dose
-     *            la dosis a agregar.
-     */
-    public void addDose(Dose dose) {
-        this.doses.add(dose);
-    }
-
-    /**
      * Devuelve la bandera que establece si la programación ya está confirmada o
      * no.
      * 
@@ -165,6 +136,14 @@ public class Schedule {
      */
     public void setConfirmed(boolean confirmed) {
         this.confirmed = confirmed;
+    }
+
+    public Pump getPump() {
+        return pump;
+    }
+
+    public void setPump(Pump pump) {
+        this.pump = pump;
     }
 
 }

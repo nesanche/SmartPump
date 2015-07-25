@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import com.smartpump.dao.constants.Queries;
 import com.smartpump.dao.interfaces.IScheduleDao;
+import com.smartpump.model.scheduling.Dose;
 import com.smartpump.model.scheduling.Pump;
 import com.smartpump.model.scheduling.Schedule;
 
@@ -43,10 +44,30 @@ public class ScheduleDao extends AbstractDao implements IScheduleDao {
 
     @Transactional
     @Override
+    public Schedule getSchedule(int idSchedule) {
+        Schedule schedule;
+        try {
+            schedule = entityManager.find(Schedule.class, idSchedule);
+        } catch (NoResultException ex) {
+            schedule = null;
+        }
+        return schedule;
+    }
+
+    @Transactional
+    @Override
     public Pump registerPump(Pump pump) {
         entityManager.persist(pump);
         entityManager.flush();
         return pump;
+    }
+
+    @Transactional
+    @Override
+    public Dose registerDose(Dose dose) {
+        entityManager.persist(dose);
+        entityManager.flush();
+        return dose;
     }
 
     @Transactional
