@@ -1,14 +1,10 @@
 package com.smartpump.model.scheduling;
 
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -35,10 +31,6 @@ public class Pump {
     private String macAddress;
     /** PIN de verificación. */
     private int verificationPin;
-    /** Conjunto de programaciones de la bomba. */
-    @OneToMany
-    @JoinColumn(name = "id_pump")
-    private Set<Schedule> schedules;
     /**
      * Bandera que establece si los bolos programados deben ser automáticos o
      * no.
@@ -100,34 +92,6 @@ public class Pump {
      */
     public void setVerificationPin(int verificationPin) {
         this.verificationPin = verificationPin;
-    }
-
-    /**
-     * Devuelve el conjunto de programaciones de la bomba.
-     * 
-     * @return el conjunto de programaciones de la bomba.
-     */
-    public Set<Schedule> getSchedules() {
-        return schedules;
-    }
-
-    /**
-     * Establece el conjunto de programaciones de la bomba.
-     * 
-     * @param schedules
-     *            el conjunto de programaciones de la bomba.
-     */
-    public void setSchedules(Set<Schedule> schedules) {
-        this.schedules = schedules;
-    }
-
-    /**
-     * Agrega una nueva programación a la bomba.
-     * 
-     * @param schedule
-     */
-    public void addSchedule(Schedule schedule) {
-        this.schedules.add(schedule);
     }
 
     /**

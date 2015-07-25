@@ -1,0 +1,30 @@
+{"doses": [
+		{
+			"units" : 0.123,
+			"time" : "18:00:00",
+			"day" : 6,
+			"doseType": {
+				"id" : 1,
+				"description" : "basal"
+			}
+		},
+		{
+			"units" : 0.123,
+			"time" : "18:11:00",
+			"day" : 6,
+			"doseType": {
+				"id" : 1,
+				"description" : "basal"
+			}
+		},
+		{
+			"units" : 0.123,
+			"time" : "20:00:00",
+			"day" : 6,
+			"doseType": {
+				"id" : 2,
+				"description" : "bolus"
+			}
+		}
+]
+}

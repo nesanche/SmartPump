@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.smartpump.model.scheduling.Dose;
 import com.smartpump.model.scheduling.Schedule;
 import com.smartpump.security.ResourceFilter;
 import com.smartpump.services.ScheduleService;
@@ -42,6 +43,21 @@ public class ScheduleResource extends AbstractResource {
         resourceFilter
                 .validateAccess(authorization, ResourceFilter.DOCTOR_ROLE);
         Schedule result = scheduleService.createSchedule(schedule, idPump);
+        String json = gson.toJson(result);
+        return responseBuilder.buildResponse(200, json);
+    }
+
+    @Path("/doses")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response addDoses(List<Dose> doses,
+            @HeaderParam("Authorization") String authorization,
+            @HeaderParam("id-schedule") int idSchedule) {
+        resourceFilter
+                .validateAccess(authorization, ResourceFilter.DOCTOR_ROLE);
+        List<Dose> result = scheduleService.addDosesToSchedule(doses,
+                idSchedule);
         String json = gson.toJson(result);
         return responseBuilder.buildResponse(200, json);
     }

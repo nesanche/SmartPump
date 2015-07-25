@@ -24,14 +24,15 @@ import com.smartpump.model.scheduling.Treatment;
  * @author Franco Ariel Salonia
  *
  */
+// ,@NamedQuery(name = Queries.PATIENT_GET_SCHEDULES, query =
+// "SELECT p.treatment.pump.schedules FROM Patient p WHERE p.id=:idPatient")
 @Entity
 @Table(name = Tables.PATIENT_TABLE)
 @NamedQueries({
         @NamedQuery(name = Queries.PATIENT_VERIFY_EMAIL_QUERY, query = "SELECT p FROM Patient p WHERE p.email=:email"),
         @NamedQuery(name = Queries.PATIENT_GET_BY_USER_ID, query = "SELECT p FROM Patient p WHERE p.user.id=:userid"),
         @NamedQuery(name = Queries.PATIENT_GET_PATIENTS_LIST_OF_DOCTOR, query = "SELECT p FROM Patient p WHERE p.doctor.id=:doctorid"),
-        @NamedQuery(name = Queries.PATIENT_GET_BY_PUMP_ID, query = "SELECT p FROM Patient p WHERE p.treatment.pump.id=:idPump"),
-        @NamedQuery(name = Queries.PATIENT_GET_SCHEDULES, query = "SELECT p.treatment.pump.schedules FROM Patient p WHERE p.id=:idPatient") })
+        @NamedQuery(name = Queries.PATIENT_GET_BY_PUMP_ID, query = "SELECT p FROM Patient p WHERE p.treatment.pump.id=:idPump") })
 @XmlRootElement
 public class Patient {
 
