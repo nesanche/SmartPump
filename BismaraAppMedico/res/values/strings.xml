@@ -64,4 +64,8 @@
     <string name="es_start_registration_btn">Registrarse</string>
     <string name="en_credentials_empty">Please enter your credentials</string>
     <string name="es_credentials_empty">Por favor ingrese usuario y contraseña</string>
+    <string name="en_on_hold_title">Thanks for your registration</string>
+    <string name="en_on_hold_message">The Bismara team will check on your personal and medical information to make sure everything is ok You will receive an e-mail when your account is activated.</string>
+    <string name="es_on_hold_title">Gracias por registrarse</string>
+    <string name="es_on_hold_message">El equipo de bismara va a chequear tu información personal y profesional para asegurarse que todo esté en orden. Recibirás un e-mail cuando tu cuenta haya sido activada.</string>
 </resources>

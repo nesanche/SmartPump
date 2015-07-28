@@ -11,14 +11,12 @@ import java.util.Date;
  * @author Franco Ariel Salonia
  *
  */
-
 public class VerificationToken {
 
     /** Tiempo establecido para el vencimiento del token. */
     private static final int EXPIRATION = 60 * 24 * 7;
 
     /** Id autogenerado. */
-
     private int id;
 
     /** Contenido del token. */

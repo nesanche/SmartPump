@@ -1,8 +1,5 @@
 package com.smartpump.bismara.app.medic.entities;
 
-import com.google.gson.annotations.Expose;
-
-
 
 /**
  * Clase que representa la entidad de un usuario registrado en el sistema. Sea
@@ -13,15 +10,35 @@ import com.google.gson.annotations.Expose;
  */
 public class User {
 
+    /** Id autogenerado del usuario. */
+    private int id;
     /** Nombre de usuario. */
-    @Expose
     private String username;
     /** Constraseña */
-    @Expose
     private String password;
     /** Estado del usuario */
-    @Expose
     private UserState state;
+    /** Rol del usuario */
+    private UserRole role;
+
+    /**
+     * Devuelve el id del usuario
+     * 
+     * @return el idi del usuario
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Establece el id del usuario.
+     * 
+     * @param id
+     *            el id del usuario.
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
 
     /**
      * Devuelve el username del usuario.
@@ -78,6 +95,36 @@ public class User {
      */
     public void setState(UserState state) {
         this.state = state;
+    }
+
+    /**
+     * Devuelve el rol del usuario.
+     * 
+     * @return el rol del usuario.
+     */
+    public UserRole getRole() {
+        return role;
+    }
+
+    /**
+     * Establece el rol del usuario.
+     * 
+     * @param role
+     *            el rol del usuario.
+     */
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    /**
+     * Devuelve una bandera que indica que el usuario puede realizar operaciones
+     * o no.
+     * 
+     * @return una bandera que indica si el usuario puede realizar operaciones o
+     *         no.
+     */
+    public boolean isEnabled() {
+        return this.state.getId() == 2;
     }
 
 }

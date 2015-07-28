@@ -62,6 +62,14 @@ public class DoctorResource extends AbstractResource {
         }
     }
 
+    /**
+     * Devuelve un médico asociado a una matrícula que se envía en el
+     * encabezado.
+     * 
+     * @param registrationNumber
+     *            la matrícula.
+     * @return el médico asociado.
+     */
     @Path("/getByRegNumber")
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
@@ -75,6 +83,24 @@ public class DoctorResource extends AbstractResource {
             json = gson.toJson(doctor);
             return responseBuilder.buildResponse(200, json);
         }
+    }
+
+    /**
+     * Verifica que se pueda utilizar una matrícula para un nuevo médico.
+     * 
+     * @param registrationNumber
+     *            la matrícula a utilizar, enviada en la URL.
+     * @return true si se puede utilizar, false en caso contrario.
+     */
+    @Path("/verifyRegNumber")
+    @GET
+    @Produces({ MediaType.TEXT_PLAIN })
+    public Response verifyRegistrationNumber(
+            @QueryParam("regNumber") String registrationNumber) {
+        String json = null;
+        Doctor doctor = doctorService.getDoctor(registrationNumber);
+        RestBoolean response = new RestBoolean(doctor == null);
+        return responseBuilder.buildResponse(200, response.toString());
     }
 
     /**

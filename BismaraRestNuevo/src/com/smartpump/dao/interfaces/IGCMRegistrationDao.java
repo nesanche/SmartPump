@@ -19,4 +19,13 @@ public interface IGCMRegistrationDao {
      * @return el objeto GCMRegistration asociado, null si no existe.
      */
     GCMRegistration getRegistrationByUserId(int userId);
+
+    /**
+     * Crea/actualiza un registro de usuario a GCM en la base de datos.
+     * 
+     * @param registration
+     *            el registro a persistir.
+     * @return el registro con los datos actualizados.
+     */
+    GCMRegistration registerUserToGCM(GCMRegistration registration);
 }

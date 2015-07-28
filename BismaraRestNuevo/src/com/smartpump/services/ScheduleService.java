@@ -71,7 +71,7 @@ public class ScheduleService {
     }
 
     /**
-     * Méotod responsable de enviar la notificación al paciente.
+     * Método responsable de enviar la notificación al paciente.
      * 
      * @param idPump
      *            el id de la bomba asociada al paciente.

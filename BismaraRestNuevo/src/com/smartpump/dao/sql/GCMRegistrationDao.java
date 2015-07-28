@@ -33,4 +33,12 @@ public class GCMRegistrationDao extends AbstractDao implements
         return registration;
     }
 
+    @Override
+    @Transactional
+    public GCMRegistration registerUserToGCM(GCMRegistration registration) {
+        entityManager.persist(registration);
+        entityManager.flush();
+        return registration;
+    }
+
 }

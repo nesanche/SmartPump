@@ -19,7 +19,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;
 import com.smartpump.bismara.app.medic.R;
@@ -51,24 +54,15 @@ public class EnterLicenseFragment extends Fragment {
             public void onClick(View v) {
 
                 if (FieldsValidator.isEmpty(etLicense)) {
-                    Toast.makeText(getActivity(), "Please enter a password",
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),
+                            "Por favor ingrese su matrícula", Toast.LENGTH_LONG)
+                            .show();
                     etLicense.setCompoundDrawablesWithIntrinsicBounds(
                             R.drawable.ic_user, 0, R.drawable.ic_wrong, 0);
                     return;
                 } else {
-                    etLicense.setCompoundDrawablesWithIntrinsicBounds(
-                            R.drawable.ic_user, 0, R.drawable.ic_ok, 0);
+                    new VerifyLicense().execute(etLicense.getText().toString());
                 }
-
-                EntityManager
-                        .getInstance()
-                        .getDoctor()
-                        .setRegistrationNumber(
-                                Integer.parseInt(etLicense.getText().toString()));
-
-                new PostLicense().execute();
-
             }
         });
 
@@ -92,21 +86,102 @@ public class EnterLicenseFragment extends Fragment {
                 Toast.LENGTH_SHORT).show();
     }
 
+    private void licenseExists() {
+        Toast.makeText(getActivity(), "Su matrícula ya existe",
+                Toast.LENGTH_LONG).show();
+        etLicense.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_user,
+                0, R.drawable.ic_wrong, 0);
+        return;
+    }
+
+    private void licenseIsOk() {
+        etLicense.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_user,
+                0, R.drawable.ic_ok, 0);
+        EntityManager.getInstance().getDoctor()
+                .setRegistrationNumber(etLicense.getText().toString());
+        new PostDoctor().execute();
+    }
+
     /**
-     * Clase que representa una AsyncTask que verifica que no exista la
-     * Matrícula médica
+     * Clase que representa una AsyncTask que verifica que no exista la el
+     * usuario
      * 
      * @author nesanche
      *
      */
-    class PostLicense extends AsyncTask<Void, Void, String> {
+    private class VerifyLicense extends AsyncTask<String, Void, String> {
         private String responseString;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress.setTitle("Verifying...");
-            progress.setMessage("Wait while we verify your license");
+            progress.setTitle("Verificando...");
+            progress.setMessage("Espere mientras verificamos que la matrícula no esté registrada.");
+            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(String... regNumber) {
+            String query = "http://bismara.elasticbeanstalk.com/rest/doctors/verifyRegNumber?regNumber="
+                    + regNumber[0];
+            SyncHttpClient client = new SyncHttpClient();
+            client.get(query, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(String response) {
+                    responseString = response;
+                }
+
+                @Override
+                public void onFailure(int statusCode, Throwable error,
+                        String content) {
+                    responseString = "error";
+                    if (statusCode == 404) {
+                        Log.d("ERROR", "Error 404 not found");
+                    } else if (statusCode == 500) {
+                        Log.d("ERROR", "Error 500");
+                    } else {
+                        Log.d("ERROR", "Unknown error");
+                    }
+                }
+            });
+
+            return responseString;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            progress.dismiss();
+            if (result.contains("error")) {
+                return;
+            }
+
+            if (result.contains("false")) {
+                licenseExists();
+                return;
+            }
+
+            if (result.contains("true")) {
+                licenseIsOk();
+                return;
+            }
+        }
+    }
+
+    /**
+     * Clase que representa una AsyncTask que registra un doctor.
+     * 
+     * @author nesanche
+     *
+     */
+    private class PostDoctor extends AsyncTask<Void, Void, String> {
+        private String responseString;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.setTitle("Registrando...");
+            progress.setMessage("Espere mientras lo registramos en el sistema");
             progress.show();
         }
 
@@ -126,7 +201,12 @@ public class EnterLicenseFragment extends Fragment {
                     new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(String response) {
-                            responseString = response;
+                            Gson gson = new GsonBuilder().create();
+                            JsonParser parser = new JsonParser();
+                            JsonObject json = parser.parse(response)
+                                    .getAsJsonObject();
+                            Doctor doctor = gson.fromJson(json, Doctor.class);
+                            EntityManager.getInstance().setDoctor(doctor);
                             onHoldActivity();
                             Log.d("Registration State",
                                     "Registered Successfuly");
@@ -150,21 +230,5 @@ public class EnterLicenseFragment extends Fragment {
             return responseString;
         }
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            progress.dismiss();
-            if (result.contains("error")) {
-                return;
-            }
-
-            if (result.contains("true")) {
-                return;
-            }
-
-            if (result.contains("false")) {
-                return;
-            }
-        }
     }
 }

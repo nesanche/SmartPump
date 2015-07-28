@@ -17,7 +17,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
-        android:text="Thanks for your registration!"
+        android:text="@string/es_on_hold_title"
         android:textColor="#ffffff"
         android:textSize="25sp"
         android:textStyle="bold" />
@@ -31,7 +31,7 @@
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:gravity="center"
-        android:text="The Bismara team will check on your personal and medical information to make sure everything is ok You will receive an e-mail when your account is activated."
+        android:text="@string/es_on_hold_message"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#fff" />
 
@@ -43,6 +43,6 @@
         android:layout_alignParentEnd="true"
         android:textColor="#ffffff"
         android:textStyle="bold|italic"
-        android:text="@string/en_logout" />
+        android:text="@string/es_logout" />
 
 </RelativeLayout>

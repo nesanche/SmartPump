@@ -9,6 +9,10 @@ import com.smartpump.dao.interfaces.IUserDao;
 import com.smartpump.model.Doctor;
 import com.smartpump.model.Patient;
 import com.smartpump.model.VerificationToken;
+import com.smartpump.model.notifications.Notification;
+import com.smartpump.notifications.NotificationThread;
+import com.smartpump.notifications.NotificationTypeConstants;
+import com.smartpump.notifications.NotificationXMLParser;
 import com.smartpump.services.interfaces.IMailService;
 import com.smartpump.utils.ApplicationConstants;
 import com.smartpump.utils.TokenGenerator;
@@ -37,6 +41,12 @@ public class DoctorService {
     /** Servicio de envío de mails. */
     @Autowired
     private IMailService mailService;
+    /**
+     * Entidad encargada de construir la notificación recorriendo un archivo xml
+     * de configuración.
+     */
+    @Autowired
+    private NotificationXMLParser notificationBuilder;
 
     /**
      * Establece el generador de tokens.
@@ -131,7 +141,9 @@ public class DoctorService {
         }
         boolean result = userDao.confirmUser(id, token);
         if (result) {
+            sendConfirmationNotification(doctor);
             sendConfirmationMail(doctor);
+
         }
         return result;
     }
@@ -216,6 +228,22 @@ public class DoctorService {
                         doctor.getEmail(),
                         "Tu cuenta ha sido activada",
                         "¡Felicitaciones! Tu cuenta ha sido activada. Ya puedes comenzar a utilizar los servicios de Bismara.");
+    }
+
+    /**
+     * Método responsable de enviar la notificación al paciente.
+     * 
+     * @param idPump
+     *            el id de la bomba asociada al paciente.
+     */
+    private void sendConfirmationNotification(Doctor doctor) {
+        Notification notification = notificationBuilder.buildNotification(
+                NotificationTypeConstants.TYPE_CONFIRMED_ACCOUNT,
+                doctor.getUser());
+        NotificationThread notificationThread = new NotificationThread(
+                notification);
+        Thread thread = new Thread(notificationThread);
+        thread.start();
     }
 
 }

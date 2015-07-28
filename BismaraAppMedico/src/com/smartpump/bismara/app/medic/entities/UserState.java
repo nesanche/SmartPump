@@ -1,7 +1,5 @@
 package com.smartpump.bismara.app.medic.entities;
 
-import com.google.gson.annotations.Expose;
-
 
 /**
  * Clase que representa el estado actual del usuario en el sistema. Por defecto
@@ -13,13 +11,11 @@ import com.google.gson.annotations.Expose;
  * @author Franco Ariel Salonia
  *
  */
-
 public class UserState {
 
-    @Expose
+    /** Id auto generado. */
     private int id;
     /** Descripción. */
-    @Expose
     private String description;
 
     /**

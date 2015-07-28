@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
+import com.smartpump.dao.interfaces.IGCMRegistrationDao;
 import com.smartpump.dao.interfaces.IUserDao;
+import com.smartpump.model.notifications.GCMRegistration;
 import com.smartpump.utils.FileUploader;
 import com.smartpump.utils.RestBoolean;
 import com.sun.jersey.core.header.FormDataContentDisposition;
@@ -35,6 +37,9 @@ public class UserResource extends AbstractResource {
     /** El Controlador DAO relacionado al recurso. */
     @Autowired
     private IUserDao userDao;
+    /** El Controlador DAO relacionado a la entidad GCMRegistration. */
+    @Autowired
+    private IGCMRegistrationDao registrationDao;
     /** Responsable la subida de archivos. */
     @Autowired
     private FileUploader fileUploader;
@@ -91,5 +96,23 @@ public class UserResource extends AbstractResource {
         String output = "File uploaded to : " + uploadedFileLocation;
 
         return responseBuilder.buildResponse(200, output);
+    }
+
+    /**
+     * Persiste un objeto del tipo GCMRegistration en la base de datos.
+     * 
+     * @param el
+     *            objeto a persistir.
+     * @return el objeto con los datos actualizados.
+     */
+    @Path("/registerToGCM")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response registerToGCM(GCMRegistration registration) {
+        GCMRegistration result = registrationDao
+                .registerUserToGCM(registration);
+        String json = gson.toJson(result);
+        return responseBuilder.buildResponse(200, json);
     }
 }

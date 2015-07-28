@@ -19,6 +19,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;
 import com.smartpump.bismara.app.medic.R;
 import com.smartpump.bismara.app.medic.entities.User;
+import com.smartpump.bismara.app.medic.entities.UserRole;
 import com.smartpump.bismara.app.medic.entities.UserState;
 import com.smartpump.bismara.app.medic.ui.activities.registeractivity.RegisterActivity;
 import com.smartpump.bismara.app.medic.ui.util.FieldsValidator;
@@ -94,6 +95,7 @@ public class EnterUserFragment extends Fragment {
                 user.setPassword(MD5Encryptor.md5(etPassword.getText()
                         .toString()));
                 user.setState(new UserState(1, "Pending"));
+                user.setRole(new UserRole(2, "Doctor"));
                 EntityManager.getInstance().getDoctor().setUser(user);
 
                 validateUsername();
@@ -115,8 +117,8 @@ public class EnterUserFragment extends Fragment {
      * Metodo que refresca la UI cuando el usuario existe
      */
     private void userNameExists() {
-        Toast.makeText(getActivity(), "Username exists", Toast.LENGTH_SHORT)
-                .show();
+        Toast.makeText(getActivity(), "El nombre de usuario ya existe",
+                Toast.LENGTH_SHORT).show();
         etUserName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_mail,
                 0, R.drawable.ic_wrong, 0);
     }

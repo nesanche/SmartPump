@@ -1,7 +1,5 @@
 package com.smartpump.bismara.app.medic.entities;
 
-import com.google.gson.annotations.Expose;
-
 
 /**
  * Entidad que representa a un doctor registrado en el sistema.
@@ -11,35 +9,42 @@ import com.google.gson.annotations.Expose;
  */
 public class Doctor {
 
+    /** Id autogenerado del doctor. */
+    private int id;
+
     /** Nombre/s de pila */
-    @Expose
     private String firstName;
     /** Apellido */
-    @Expose
     private String lastName;
     /** Teléfono de contacto */
-    @Expose
     private String phone;
     /** Email de contacto */
-    @Expose
     private String email;
     /** Número de matrícula. Debe ser único. */
-    @Expose
-    private int registrationNumber;
-    /** Dirección del médico */
-    @Expose
+    private String registrationNumber;
+    /** Dirección donde trabaja el médico. */
     private String address;
+
     /** Usuario que posee ese doctor para ingresar al sistema. */
-    @Expose
     private User user;
 
-    
-    public String getAddress() {
-        return address;
+    /**
+     * Devuelve el id único del doctor.
+     * 
+     * @return el id único del doctor.
+     */
+    public int getId() {
+        return id;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    /**
+     * Establece el id único del doctor.
+     * 
+     * @param id
+     *            el id único del doctor.
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -142,7 +147,7 @@ public class Doctor {
      * 
      * @return la matrícula del doctor.
      */
-    public int getRegistrationNumber() {
+    public String getRegistrationNumber() {
         return registrationNumber;
     }
 
@@ -152,8 +157,27 @@ public class Doctor {
      * @param registrationNumber
      *            la matrícula del doctor.
      */
-    public void setRegistrationNumber(int registrationNumber) {
+    public void setRegistrationNumber(String registrationNumber) {
         this.registrationNumber = registrationNumber;
+    }
+
+    /**
+     * Devuelve la dirección donde trabaja el médico.
+     * 
+     * @return la dirección donde trabaja el médico.
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * Establece la dirección donde trabaja el médico.
+     * 
+     * @param address
+     *            la dirección donde trabaja el médico.
+     */
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 }
