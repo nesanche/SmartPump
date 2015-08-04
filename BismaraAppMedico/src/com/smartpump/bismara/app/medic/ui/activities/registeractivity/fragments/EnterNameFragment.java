@@ -35,9 +35,9 @@ public class EnterNameFragment extends Fragment {
         etName = (EditText) rootView.findViewById(R.id.etName);
         etPhone = (EditText) rootView.findViewById(R.id.etPhone);
         etAddress = (EditText) rootView.findViewById(R.id.etAddress);
-        etName.requestFocus();
         etLastName = (EditText) rootView.findViewById(R.id.etLastName);
         btnNext = (Button) rootView.findViewById(R.id.btnNextStep);
+        etName.requestFocus();
         btnNext.setOnClickListener(new OnClickListener() {
 
             @Override

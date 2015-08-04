@@ -1,0 +1,20 @@
+{
+	"registrationId" : "asoudnaouweASBDouawbaw1q231238asdbUASDuaoentlrUuasbdkajb1324354qwdasdajdbf",
+	"user" :
+   {
+   	"id" : "25",
+    "username" : "luquilu",
+    "password" : "talleresmivida",
+    "state" :
+    {
+      "id" : 1,
+      "description" : "Pending"
+    },
+    "role" :
+    {
+      "id": 3,
+      "description" : "Patient"
+    }
+  }
+
+}
