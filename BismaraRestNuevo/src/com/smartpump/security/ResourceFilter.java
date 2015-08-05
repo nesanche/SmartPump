@@ -27,6 +27,8 @@ public class ResourceFilter {
     public static final int RESEARCHER_ROLE = 4;
     /** Rol de usuario de obra social */
     public static final int INSURANCE_EMPLOYEE_ROLE = 5;
+    /** No interesa el rol. Sólo que esté autenticado. */
+    public static final int ANY_ROLE = 6;
     /** Entidad responsable del manejo de datos de los usuarios. */
     @Autowired
     private IUserDao userDao;
@@ -49,10 +51,35 @@ public class ResourceFilter {
         if (user == null)
             throw new RuntimeException(
                     "No se encontró un usuario con esas credenciales");
-        if (user.getRole().getId() != role) {
+        if (role != ANY_ROLE && user.getRole().getId() != role) {
             throw new RuntimeException(
                     "El usuario no tiene los permisos para ingresar a esta parte del sistema");
         }
+    }
+
+    /**
+     * Método que valida si un usuario puede acceder a un recurso o no. Recibe
+     * una cadena que representa usuario:password en base64 y el rol que ese
+     * usuario debiese tener para estar autorizado.
+     * 
+     * @param authorization
+     *            usuario:password en base64.
+     * @param role
+     *            el rol que ese usuario debiese tener.
+     */
+    public User validateAccessAndGetUser(String authorization, int role) {
+        if (role == 0)
+            return null;
+        authorization = authorization.substring(6);
+        User user = getUser(authorization);
+        if (user == null)
+            throw new RuntimeException(
+                    "No se encontró un usuario con esas credenciales");
+        if (role != ANY_ROLE && user.getRole().getId() != role) {
+            throw new RuntimeException(
+                    "El usuario no tiene los permisos para ingresar a esta parte del sistema");
+        }
+        return user;
     }
 
     /**

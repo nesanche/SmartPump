@@ -1,6 +1,7 @@
 package com.smartpump.resources;
 
 import java.io.InputStream;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -17,8 +18,12 @@ import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 import com.smartpump.dao.interfaces.IGCMRegistrationDao;
+import com.smartpump.dao.interfaces.INotificationDao;
 import com.smartpump.dao.interfaces.IUserDao;
+import com.smartpump.model.User;
 import com.smartpump.model.notifications.GCMRegistration;
+import com.smartpump.model.notifications.Notification;
+import com.smartpump.security.ResourceFilter;
 import com.smartpump.utils.FileUploader;
 import com.smartpump.utils.RestBoolean;
 import com.sun.jersey.core.header.FormDataContentDisposition;
@@ -43,6 +48,9 @@ public class UserResource extends AbstractResource {
     /** Responsable la subida de archivos. */
     @Autowired
     private FileUploader fileUploader;
+    /** El Controlador DAO relacionado a la entidad Notification. */
+    @Autowired
+    private INotificationDao notificationDao;
     /** Ruta donde se almacenan las imágenes. */
     private static final String PICTURES_PATH = "/home/ec2-user/Bismara/pictures/";
 
@@ -113,6 +121,46 @@ public class UserResource extends AbstractResource {
         GCMRegistration result = registrationDao
                 .registerUserToGCM(registration);
         String json = gson.toJson(result);
+        return responseBuilder.buildResponse(200, json);
+    }
+
+    /**
+     * Confirma la visualización de una notificación.
+     * 
+     * @param notificationId
+     *            el id de la notificación.
+     * @return la notificación con los datos actualizados.
+     */
+    @Path("/confirmNotification")
+    @GET
+    public Response confirmNotification(
+            @HeaderParam("notification-id") int notificationId) {
+        Notification notification = notificationDao
+                .getNotification(notificationId);
+        notification.setViewed(true);
+        Notification result = notificationDao
+                .registerNotification(notification);
+        String json = gson.toJson(result);
+        return responseBuilder.buildResponse(200, json);
+    }
+
+    /**
+     * Obtiene todas las notificaciones de un usuario en particular.
+     * 
+     * @param authorization
+     *            el usuario y el password para Basic Authentication.
+     * @return una lista de notificiaciones.
+     */
+    @Path("/getNotifications")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getNotifications(
+            @HeaderParam("Authorization") String authorization) {
+        User user = resourceFilter.validateAccessAndGetUser(authorization,
+                ResourceFilter.ANY_ROLE);
+        List<Notification> notifications = notificationDao
+                .getNotificationsFromUser(user.getId());
+        String json = gson.toJson(notifications);
         return responseBuilder.buildResponse(200, json);
     }
 }

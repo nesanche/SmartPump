@@ -8,9 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.smartpump.dao.constants.Queries;
 import com.smartpump.dao.constants.Tables;
 import com.smartpump.model.User;
 
@@ -25,6 +28,7 @@ import com.smartpump.model.User;
  */
 @Entity
 @Table(name = Tables.NOTIFICATION_TABLE)
+@NamedQueries({ @NamedQuery(name = Queries.NOTIFICATION_GET_BY_USER_ID, query = "SELECT n FROM Notification n WHERE n.user.id=:userid ORDER BY n.timestamp DESC") })
 @XmlRootElement
 public class Notification {
 
@@ -45,7 +49,7 @@ public class Notification {
     @JoinColumn(name = "id_type")
     private NotificationType notificationType;
     /** El usuario asociado. */
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_user")
     private User user;
 

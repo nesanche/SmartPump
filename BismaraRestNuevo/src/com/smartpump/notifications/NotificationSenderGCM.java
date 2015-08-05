@@ -72,6 +72,7 @@ public class NotificationSenderGCM {
                 .getId() + "");
         notificationContent.addData("header", notification.getHeader());
         notificationContent.addData("message", notification.getMessage());
+        notificationContent.addData("id", notification.getId() + "");
         return notificationContent;
     }
 

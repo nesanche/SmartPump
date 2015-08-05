@@ -25,7 +25,11 @@ public class DoctorDao extends AbstractDao implements IDoctorDao {
     @Transactional
     @Override
     public Doctor registerDoctor(Doctor doctor) {
-        entityManager.persist(doctor);
+        if (doctor.getId() == 0) {
+            entityManager.persist(doctor);
+        } else {
+            entityManager.merge(doctor);
+        }
         entityManager.flush();
         return doctor;
     }

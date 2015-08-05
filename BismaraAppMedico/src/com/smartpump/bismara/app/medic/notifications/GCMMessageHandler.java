@@ -43,8 +43,9 @@ public class GCMMessageHandler extends IntentService {
                 .setContentTitle(extras.getString("header"))
                 .setContentText(extras.getString("message"))
                 .setContentIntent(
-                        getNotificationIntent(Integer.parseInt(extras
-                                .getString("type"))))
+                        getNotificationIntent(
+                                Integer.parseInt(extras.getString("type")),
+                                Integer.parseInt(extras.getString("id"))))
                 .setAutoCancel(true)
                 .setVibrate(new long[] { 0, 300, 100, 300 })
                 .setLights(Color.BLUE, 3000, 3000)
@@ -52,11 +53,13 @@ public class GCMMessageHandler extends IntentService {
                         Uri.parse("android.resource://com.smartpump.bismara.app.medic/"
                                 + R.raw.bismara_ringtone));
         NotificationManager notifManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notifManager.notify(1, builder.build());
+        notifManager.notify(Integer.parseInt(extras.getString("id")),
+                builder.build());
         GCMBroadcastReceiver.completeWakefulIntent(intent);
     }
 
-    private PendingIntent getNotificationIntent(int notificationType) {
+    private PendingIntent getNotificationIntent(int notificationType,
+            int notificationId) {
         Intent resultIntent = null;
         switch (notificationType) {
         case NotificationTypeConstants.TYPE_CONFIRMED_ACCOUNT:
@@ -69,6 +72,8 @@ public class GCMMessageHandler extends IntentService {
             resultIntent = new Intent(this, MainActivity.class);
             break;
         }
+        resultIntent.putExtra("fromNotification", true);
+        resultIntent.putExtra("notificationId", notificationId);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
                 resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         return resultPendingIntent;

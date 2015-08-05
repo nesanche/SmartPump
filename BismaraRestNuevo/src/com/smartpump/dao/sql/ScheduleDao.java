@@ -25,7 +25,11 @@ public class ScheduleDao extends AbstractDao implements IScheduleDao {
     @Transactional
     @Override
     public Schedule registerSchedule(Schedule schedule) {
-        entityManager.persist(schedule);
+        if (schedule.getId() == 0) {
+            entityManager.persist(schedule);
+        } else {
+            entityManager.merge(schedule);
+        }
         entityManager.flush();
         return schedule;
     }

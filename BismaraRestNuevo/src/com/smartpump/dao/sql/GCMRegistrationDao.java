@@ -23,7 +23,7 @@ public class GCMRegistrationDao extends AbstractDao implements
     public GCMRegistration getRegistrationByUserId(int userId) {
         TypedQuery<GCMRegistration> query = entityManager.createNamedQuery(
                 Queries.GCM_REGISTRATION_GET_BY_USER_ID, GCMRegistration.class);
-        query.setParameter("userId", userId);
+        query.setParameter("userid", userId);
         GCMRegistration registration = null;
         try {
             registration = query.getSingleResult();
@@ -36,7 +36,11 @@ public class GCMRegistrationDao extends AbstractDao implements
     @Override
     @Transactional
     public GCMRegistration registerUserToGCM(GCMRegistration registration) {
-        entityManager.persist(registration);
+        if (registration.getId() == 0) {
+            entityManager.persist(registration);
+        } else {
+            entityManager.merge(registration);
+        }
         entityManager.flush();
         return registration;
     }

@@ -5,12 +5,12 @@ import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Window;
 
 import com.smartpump.bismara.app.medic.R;
 import com.smartpump.bismara.app.medic.adapter.TabsRegisterFlowAdapter;
+import com.smartpump.bismara.app.medic.ui.activities.BismaraActivity;
 
 /**
  * Activity
@@ -19,7 +19,7 @@ import com.smartpump.bismara.app.medic.adapter.TabsRegisterFlowAdapter;
  *
  */
 @SuppressWarnings("deprecation")
-public class RegisterActivity extends FragmentActivity implements TabListener {
+public class RegisterActivity extends BismaraActivity implements TabListener {
 
     /** Paginador */
     private ViewPager viewPager;

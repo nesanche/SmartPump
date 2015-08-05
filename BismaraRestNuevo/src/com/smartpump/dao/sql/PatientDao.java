@@ -51,7 +51,11 @@ public class PatientDao extends AbstractDao implements IPatientDao {
     @Transactional
     @Override
     public Patient registerPatient(Patient patient) {
-        entityManager.persist(patient);
+        if (patient.getId() == 0) {
+            entityManager.persist(patient);
+        } else {
+            entityManager.merge(patient);
+        }
         entityManager.flush();
         return patient;
     }
