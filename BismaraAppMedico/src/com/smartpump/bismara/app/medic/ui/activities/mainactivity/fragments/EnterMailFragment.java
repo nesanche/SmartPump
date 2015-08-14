@@ -1,11 +1,12 @@
 package com.smartpump.bismara.app.medic.ui.activities.mainactivity.fragments;
 
+import java.util.concurrent.ExecutionException;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,13 +16,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.SyncHttpClient;
 import com.smartpump.bismara.app.medic.R;
 import com.smartpump.bismara.app.medic.ui.activities.mainactivity.MainActivity;
 import com.smartpump.bismara.app.medic.ui.activities.registeractivity.RegisterActivity;
 import com.smartpump.bismara.app.medic.ui.util.FieldsValidator;
 import com.smartpump.bismara.app.medic.util.EntityManager;
+import com.smartpump.bismara.requestmanager.RequestManager;
 
 public class EnterMailFragment extends Fragment {
 
@@ -88,7 +88,21 @@ public class EnterMailFragment extends Fragment {
      * contra la REST API
      */
     private void verifyMailExists() {
-        new VerifyMail().execute(etMail.getText().toString());
+        Boolean availability = false;
+        try {
+            availability = new VerifyMail()
+                    .execute(etMail.getText().toString()).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        if (availability) {
+            startRegistrationFlow();
+        } else {
+            errorMailExists();
+        }
+
     }
 
     /**
@@ -107,8 +121,8 @@ public class EnterMailFragment extends Fragment {
      * Método que refresca la interfaz en caso de que el mail exista
      */
     private void errorMailExists() {
-        Toast.makeText(getActivity(), "Mail already exists", Toast.LENGTH_SHORT)
-                .show();
+        Toast.makeText(getActivity(), "El mail ingresado ya existe",
+                Toast.LENGTH_SHORT).show();
         etMail.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_mail, 0,
                 R.drawable.ic_wrong, 0);
     }
@@ -120,8 +134,7 @@ public class EnterMailFragment extends Fragment {
      * @author nesanche
      *
      */
-    class VerifyMail extends AsyncTask<String, Void, String> {
-        private String responseString;
+    private class VerifyMail extends AsyncTask<String, Void, Boolean> {
 
         @Override
         protected void onPreExecute() {
@@ -132,51 +145,19 @@ public class EnterMailFragment extends Fragment {
         }
 
         @Override
-        protected String doInBackground(String... email) {
-            String query = "http://bismara.elasticbeanstalk.com/rest/doctors/verifyEmail?email="
-                    + email[0];
-            SyncHttpClient client = new SyncHttpClient();
-            client.get(query, new AsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(String response) {
-                    responseString = response;
-                }
+        protected Boolean doInBackground(String... email) {
+            RequestManager requestManager = RequestManager.getInstance();
+            return requestManager.checkEmailAvailability(getActivity(),
+                    email[0]);
 
-                @Override
-                public void onFailure(int statusCode, Throwable error,
-                        String content) {
-                    responseString = "error";
-                    if (statusCode == 404) {
-                        Log.d("ERROR", "Error 404 not found");
-                    } else if (statusCode == 500) {
-                        Log.d("ERROR", "Error 500");
-                    } else {
-                        Log.d("ERROR", "Unknown error");
-                    }
-                }
-            });
-
-            return responseString;
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            progress.dismiss();
-            if (result.contains("error")) {
-                return;
-            }
-
-            if (result.equals("false")) {
-                errorMailExists();
-                return;
-            }
-
-            if (result.equals("true")) {
-                startRegistrationFlow();
-                return;
-            }
+            progress.hide();
         }
+
     }
 
     /**

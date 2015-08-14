@@ -1,4 +1,4 @@
-package com.smartpump.bismara.app.medic.entities;
+package com.smartpump.bismara.requestmanager.model;
 
 import java.sql.Timestamp;
 import java.util.Calendar;

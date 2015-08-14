@@ -1,8 +1,6 @@
 package com.smartpump.bismara.app.medic.ui.activities.registeractivity.fragments;
 
-import java.io.UnsupportedEncodingException;
-
-import org.apache.http.entity.ByteArrayEntity;
+import java.util.concurrent.ExecutionException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -10,7 +8,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,17 +16,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.SyncHttpClient;
 import com.smartpump.bismara.app.medic.R;
-import com.smartpump.bismara.app.medic.entities.Doctor;
 import com.smartpump.bismara.app.medic.ui.activities.ConfirmationOnHoldActivity;
 import com.smartpump.bismara.app.medic.ui.util.FieldsValidator;
 import com.smartpump.bismara.app.medic.util.EntityManager;
+import com.smartpump.bismara.requestmanager.RequestManager;
+import com.smartpump.bismara.requestmanager.model.Doctor;
 
 @SuppressWarnings("deprecation")
 public class EnterLicenseFragment extends Fragment {
@@ -61,7 +53,20 @@ public class EnterLicenseFragment extends Fragment {
                             R.drawable.ic_user, 0, R.drawable.ic_wrong, 0);
                     return;
                 } else {
-                    new VerifyLicense().execute(etLicense.getText().toString());
+                    boolean licenseAvailability = false;
+                    try {
+                        licenseAvailability = new VerifyLicense().execute(
+                                etLicense.getText().toString()).get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                    if (licenseAvailability) {
+                        licenseIsOk();
+                    } else {
+                        licenseExists();
+                    }
                 }
             }
         });
@@ -109,8 +114,7 @@ public class EnterLicenseFragment extends Fragment {
      * @author nesanche
      *
      */
-    private class VerifyLicense extends AsyncTask<String, Void, String> {
-        private String responseString;
+    private class VerifyLicense extends AsyncTask<String, Void, Boolean> {
 
         @Override
         protected void onPreExecute() {
@@ -121,50 +125,16 @@ public class EnterLicenseFragment extends Fragment {
         }
 
         @Override
-        protected String doInBackground(String... regNumber) {
-            String query = "http://bismara.elasticbeanstalk.com/rest/doctors/verifyRegNumber?regNumber="
-                    + regNumber[0];
-            SyncHttpClient client = new SyncHttpClient();
-            client.get(query, new AsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(String response) {
-                    responseString = response;
-                }
-
-                @Override
-                public void onFailure(int statusCode, Throwable error,
-                        String content) {
-                    responseString = "error";
-                    if (statusCode == 404) {
-                        Log.d("ERROR", "Error 404 not found");
-                    } else if (statusCode == 500) {
-                        Log.d("ERROR", "Error 500");
-                    } else {
-                        Log.d("ERROR", "Unknown error");
-                    }
-                }
-            });
-
-            return responseString;
+        protected Boolean doInBackground(String... regNumber) {
+            RequestManager requestManager = RequestManager.getInstance();
+            return requestManager.checkRegNumberAvailability(getActivity(),
+                    regNumber[0]);
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            progress.dismiss();
-            if (result.contains("error")) {
-                return;
-            }
-
-            if (result.contains("false")) {
-                licenseExists();
-                return;
-            }
-
-            if (result.contains("true")) {
-                licenseIsOk();
-                return;
-            }
+            progress.hide();
         }
     }
 
@@ -174,8 +144,7 @@ public class EnterLicenseFragment extends Fragment {
      * @author nesanche
      *
      */
-    private class PostDoctor extends AsyncTask<Void, Void, String> {
-        private String responseString;
+    private class PostDoctor extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -186,48 +155,19 @@ public class EnterLicenseFragment extends Fragment {
         }
 
         @Override
-        protected String doInBackground(Void... empty) {
-            Doctor doctor = EntityManager.getInstance().getDoctor();
-            String query = "http://bismara.elasticbeanstalk.com/rest/doctors/new";
-            String doc = new GsonBuilder().create().toJson(doctor);
-            ByteArrayEntity entity = null;
-            try {
-                entity = new ByteArrayEntity(doc.getBytes("UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            SyncHttpClient client = new SyncHttpClient();
-            client.post(context, query, entity, "application/json",
-                    new AsyncHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(String response) {
-                            Gson gson = new GsonBuilder().create();
-                            JsonParser parser = new JsonParser();
-                            JsonObject json = parser.parse(response)
-                                    .getAsJsonObject();
-                            Doctor doctor = gson.fromJson(json, Doctor.class);
-                            EntityManager.getInstance().setDoctor(doctor);
-                            onHoldActivity();
-                            Log.d("Registration State",
-                                    "Registered Successfuly");
-                        }
+        protected Void doInBackground(Void... empty) {
+            RequestManager requestManager = RequestManager.getInstance();
+            Doctor result = requestManager.registerDoctor(getActivity(),
+                    EntityManager.getInstance().getDoctor());
+            EntityManager.getInstance().setDoctor(result);
+            return null;
+        }
 
-                        @Override
-                        public void onFailure(int statusCode, Throwable error,
-                                String content) {
-                            errorToast();
-                            responseString = "error";
-                            if (statusCode == 404) {
-                                Log.d("ERROR", "Error 404 not found");
-                            } else if (statusCode == 500) {
-                                Log.d("ERROR", "Error 500");
-                            } else {
-                                Log.d("ERROR", "Unknown error");
-                            }
-                        }
-                    });
-
-            return responseString;
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            progress.hide();
+            onHoldActivity();
         }
 
     }

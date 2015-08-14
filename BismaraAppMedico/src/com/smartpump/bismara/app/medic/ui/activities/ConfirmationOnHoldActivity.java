@@ -1,9 +1,5 @@
 package com.smartpump.bismara.app.medic.ui.activities;
 
-import java.io.UnsupportedEncodingException;
-
-import org.apache.http.entity.ByteArrayEntity;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,14 +11,12 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.gson.GsonBuilder;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.SyncHttpClient;
 import com.smartpump.bismara.app.medic.R;
-import com.smartpump.bismara.app.medic.entities.GCMRegistration;
 import com.smartpump.bismara.app.medic.ui.activities.mainactivity.MainActivity;
 import com.smartpump.bismara.app.medic.util.ApplicationConstants;
 import com.smartpump.bismara.app.medic.util.EntityManager;
+import com.smartpump.bismara.requestmanager.RequestManager;
+import com.smartpump.bismara.requestmanager.model.GCMRegistration;
 
 /**
  * Activity
@@ -76,10 +70,9 @@ public class ConfirmationOnHoldActivity extends Activity {
         new PostRegistration().execute();
     }
 
-    private class RegisterAsyncTask extends AsyncTask<Void, Void, String> {
+    private class RegisterAsyncTask extends AsyncTask<Void, Void, Void> {
         @Override
-        protected String doInBackground(Void... params) {
-            String message = "";
+        protected Void doInBackground(Void... params) {
             try {
                 if (gcm == null) {
                     gcm = GoogleCloudMessaging
@@ -87,19 +80,17 @@ public class ConfirmationOnHoldActivity extends Activity {
                 }
                 registrationId = gcm
                         .register(ApplicationConstants.GCM_PROJECT_NUMBER);
-                message = "Device registered, registration ID="
-                        + registrationId;
                 registration.setRegistrationId(registrationId);
-                Log.i("GCM", message);
+                Log.i("GCM", "Device registered, registration ID="
+                        + registrationId);
             } catch (Exception ex) {
-                message = "Error: " + ex.getMessage();
+                Log.e("GCM", "Error: " + ex.getMessage());
             }
-            Log.e("GCM", message);
-            return message;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             registered();
         }
@@ -112,8 +103,7 @@ public class ConfirmationOnHoldActivity extends Activity {
      * @author nesanche
      *
      */
-    private class PostRegistration extends AsyncTask<Void, Void, String> {
-        private String responseString;
+    private class PostRegistration extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -124,59 +114,17 @@ public class ConfirmationOnHoldActivity extends Activity {
         }
 
         @Override
-        protected String doInBackground(Void... empty) {
-            String query = "http://bismara.elasticbeanstalk.com/rest/users/registerToGCM";
-            String registrationString = new GsonBuilder().create().toJson(
-                    registration);
-            ByteArrayEntity entity = null;
-            try {
-                entity = new ByteArrayEntity(
-                        registrationString.getBytes("UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            SyncHttpClient client = new SyncHttpClient();
-            client.post(ConfirmationOnHoldActivity.this, query, entity,
-                    "application/json", new AsyncHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(String response) {
-                            responseString = response;
-                            Log.d("GCM Registration State",
-                                    "Registered Successfuly");
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Throwable error,
-                                String content) {
-                            responseString = "error";
-                            if (statusCode == 404) {
-                                Log.d("ERROR", "Error 404 not found");
-                            } else if (statusCode == 500) {
-                                Log.d("ERROR", "Error 500");
-                            } else {
-                                Log.d("ERROR", "Unknown error");
-                            }
-                        }
-                    });
-
-            return responseString;
+        protected Void doInBackground(Void... empty) {
+            RequestManager requestManager = RequestManager.getInstance();
+            requestManager.registerGcmRegistration(
+                    ConfirmationOnHoldActivity.this, registration);
+            return null;
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            progress.dismiss();
-            if (result.contains("error")) {
-                return;
-            }
-
-            if (result.contains("true")) {
-                return;
-            }
-
-            if (result.contains("false")) {
-                return;
-            }
+            progress.hide();
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.smartpump.bismara.app.medic.entities;
+package com.smartpump.bismara.requestmanager.model;
 
 
 /**

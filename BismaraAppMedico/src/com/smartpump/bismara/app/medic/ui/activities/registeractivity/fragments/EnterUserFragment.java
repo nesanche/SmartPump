@@ -1,12 +1,13 @@
 package com.smartpump.bismara.app.medic.ui.activities.registeractivity.fragments;
 
+import java.util.concurrent.ExecutionException;
+
 import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,16 +16,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.SyncHttpClient;
 import com.smartpump.bismara.app.medic.R;
-import com.smartpump.bismara.app.medic.entities.User;
-import com.smartpump.bismara.app.medic.entities.UserRole;
-import com.smartpump.bismara.app.medic.entities.UserState;
 import com.smartpump.bismara.app.medic.ui.activities.registeractivity.RegisterActivity;
 import com.smartpump.bismara.app.medic.ui.util.FieldsValidator;
 import com.smartpump.bismara.app.medic.util.EntityManager;
 import com.smartpump.bismara.app.medic.util.MD5Encryptor;
+import com.smartpump.bismara.requestmanager.RequestManager;
+import com.smartpump.bismara.requestmanager.model.User;
+import com.smartpump.bismara.requestmanager.model.UserRole;
+import com.smartpump.bismara.requestmanager.model.UserState;
 
 public class EnterUserFragment extends Fragment {
 
@@ -110,7 +110,20 @@ public class EnterUserFragment extends Fragment {
      * existencia de un usuario
      */
     private void validateUsername() {
-        new VerifyUserName().execute(etUserName.getText().toString());
+        boolean usernameAvailability = false;
+        try {
+            usernameAvailability = new VerifyUserName().execute(
+                    etUserName.getText().toString()).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        if (usernameAvailability) {
+            userNameIsOk();
+        } else {
+            userNameExists();
+        }
     }
 
     /**
@@ -166,8 +179,7 @@ public class EnterUserFragment extends Fragment {
      * @author nesanche
      *
      */
-    class VerifyUserName extends AsyncTask<String, Void, String> {
-        private String responseString;
+    private class VerifyUserName extends AsyncTask<String, Void, Boolean> {
 
         @Override
         protected void onPreExecute() {
@@ -178,50 +190,16 @@ public class EnterUserFragment extends Fragment {
         }
 
         @Override
-        protected String doInBackground(String... username) {
-            String query = "http://bismara.elasticbeanstalk.com/rest/users/verifyUsername?username="
-                    + username[0];
-            SyncHttpClient client = new SyncHttpClient();
-            client.get(query, new AsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(String response) {
-                    responseString = response;
-                }
-
-                @Override
-                public void onFailure(int statusCode, Throwable error,
-                        String content) {
-                    responseString = "error";
-                    if (statusCode == 404) {
-                        Log.d("ERROR", "Error 404 not found");
-                    } else if (statusCode == 500) {
-                        Log.d("ERROR", "Error 500");
-                    } else {
-                        Log.d("ERROR", "Unknown error");
-                    }
-                }
-            });
-
-            return responseString;
+        protected Boolean doInBackground(String... username) {
+            RequestManager requestManager = RequestManager.getInstance();
+            return requestManager.checkUsernameAvailability(getActivity(),
+                    username[0]);
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            progress.dismiss();
-            if (result.contains("error")) {
-                return;
-            }
-
-            if (result.contains("false")) {
-                userNameExists();
-                return;
-            }
-
-            if (result.contains("true")) {
-                userNameIsOk();
-                return;
-            }
+            progress.hide();
         }
     }
 }
