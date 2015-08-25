@@ -75,6 +75,12 @@ public class Queries {
      */
     public static final String PATIENT_GET_SCHEDULES = "Patient.getSchedules";
 
+    /**
+     * Obtiene las dosis de una programación filtrando por su id. Parámetro
+     * idSchedule.
+     */
+    public static final String PATIENT_GET_DOSES_OF_SCHEDULE = "Patient.getScheduleDoses";
+
     // -----------------------------Bombas-------------------------------
     /** Consulta de bombas que devuelve una bomba filtrando por dirección MAC. */
     public static final String PUMP_GET_BY_MAC_ADDRESS = "Pump.getByMacAddress";

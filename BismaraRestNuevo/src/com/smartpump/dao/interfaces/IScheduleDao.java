@@ -72,4 +72,13 @@ public interface IScheduleDao {
      * @return una lista con las programaciones asociadas al paciente.
      */
     List<Schedule> getSchedulesOfPatient(int idPatient);
+
+    /**
+     * Obtiene todas las dosis de una programación en particular.
+     * 
+     * @param idSchedule
+     *            el id de la programación.
+     * @return una lista con las dosis asociadas a la programación.
+     */
+    List<Dose> getDosesOfSchedule(int idSchedule);
 }

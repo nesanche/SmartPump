@@ -75,4 +75,17 @@ public class ScheduleResource extends AbstractResource {
         return responseBuilder.buildResponse(200, json);
     }
 
+    @Path("/getDoses")
+    @GET
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response getDosesOfSchedule(
+            @HeaderParam("Authorization") String authorization,
+            @HeaderParam("id-schedule") int idSchedule) {
+        resourceFilter
+                .validateAccess(authorization, ResourceFilter.DOCTOR_ROLE);
+        List<Dose> doses = scheduleService.getDoses(idSchedule);
+        String json = gson.toJson(doses);
+        return responseBuilder.buildResponse(200, json);
+    }
+
 }

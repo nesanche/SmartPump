@@ -9,9 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.smartpump.dao.constants.Queries;
 import com.smartpump.dao.constants.Tables;
 
 /**
@@ -23,6 +26,7 @@ import com.smartpump.dao.constants.Tables;
  */
 @Entity
 @Table(name = Tables.SCHEDULE_TABLE)
+@NamedQueries({ @NamedQuery(name = Queries.PATIENT_GET_SCHEDULES, query = "SELECT s FROM Schedule s, Patient p WHERE p.id = :idPatient AND p.treatment.pump.id = s.pump.id") })
 @XmlRootElement
 public class Schedule {
     /** Id de la programación */

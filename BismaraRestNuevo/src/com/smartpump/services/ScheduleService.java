@@ -98,4 +98,16 @@ public class ScheduleService {
         return schedules;
     }
 
+    /**
+     * Obtiene las dosis de una programación determinada.
+     * 
+     * @param patientId
+     *            el id de la programación.
+     * @return una lista con las dosis de la programación.
+     */
+    public List<Dose> getDoses(int scheduleId) {
+        List<Dose> doses = scheduleDao.getDosesOfSchedule(scheduleId);
+        return doses;
+    }
+
 }

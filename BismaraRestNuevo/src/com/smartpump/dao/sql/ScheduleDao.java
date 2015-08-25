@@ -89,4 +89,19 @@ public class ScheduleDao extends AbstractDao implements IScheduleDao {
         return schedules;
     }
 
+    @Transactional
+    @Override
+    public List<Dose> getDosesOfSchedule(int idSchedule) {
+        TypedQuery<Dose> query = entityManager.createNamedQuery(
+                Queries.PATIENT_GET_DOSES_OF_SCHEDULE, Dose.class);
+        query.setParameter("idSchedule", idSchedule);
+        List<Dose> doses;
+        try {
+            doses = query.getResultList();
+        } catch (NoResultException e) {
+            doses = new ArrayList<>();
+        }
+        return doses;
+    }
+
 }
