@@ -35,7 +35,7 @@ public class PatientDao extends AbstractDao implements IPatientDao {
 
     @Transactional
     @Override
-    public boolean verifyPump(String macAddress, int verificationPin) {
+    public Pump verifyPump(String macAddress, int verificationPin) {
         TypedQuery<Pump> query = entityManager.createNamedQuery(
                 Queries.PUMP_GET_BY_MAC_ADDRESS, Pump.class);
         query.setParameter("macAddress", macAddress);
@@ -43,9 +43,13 @@ public class PatientDao extends AbstractDao implements IPatientDao {
         try {
             pump = query.getSingleResult();
         } catch (NoResultException ex) {
-            return false;
+            return null;
         }
-        return (pump.getVerificationPin() == verificationPin);
+        if (pump.getVerificationPin() == verificationPin) {
+            return pump;
+        } else {
+            return null;
+        }
     }
 
     @Transactional

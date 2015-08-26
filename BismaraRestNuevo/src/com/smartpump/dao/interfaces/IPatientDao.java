@@ -1,6 +1,7 @@
 package com.smartpump.dao.interfaces;
 
 import com.smartpump.model.Patient;
+import com.smartpump.model.scheduling.Pump;
 
 /**
  * Interfaz que provee el comportamiento necesario para el manejo de
@@ -29,10 +30,9 @@ public interface IPatientDao {
      *            la dirección MAC de la bomba.
      * @param verificationPin
      *            el pin de verificación.
-     * @return true si encontró una bomba asociada a esos datos, false en caso
-     *         contrario.
+     * @return la bomba con los datos
      */
-    boolean verifyPump(String macAddress, int verificationPin);
+    Pump verifyPump(String macAddress, int verificationPin);
 
     /**
      * Registra un nuevo paciente o actualiza uno existente en la base de datos

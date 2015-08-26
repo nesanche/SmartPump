@@ -6,6 +6,7 @@ import com.smartpump.dao.interfaces.IPatientDao;
 import com.smartpump.dao.interfaces.IUserDao;
 import com.smartpump.model.Patient;
 import com.smartpump.model.VerificationToken;
+import com.smartpump.model.scheduling.Pump;
 import com.smartpump.services.interfaces.IMailService;
 import com.smartpump.utils.ApplicationConstants;
 import com.smartpump.utils.TokenGenerator;
@@ -59,6 +60,21 @@ public class PatientService {
      *         contrario.
      */
     public boolean verifyPump(String macAddress, int verificationPin) {
+        return patientDao.verifyPump(macAddress, verificationPin) != null;
+    }
+
+    /**
+     * Método responsable de verificar una bomba determinada, enviando su
+     * dirección de MAC y su pin de validación.
+     * 
+     * @param macAddress
+     *            la dirección MAC de la bomba.
+     * @param verificationPin
+     *            el pin de validación de la bomba.
+     * @return true si existe una bomba con esa MAC y ese pin, false en caso
+     *         contrario.
+     */
+    public Pump getPump(String macAddress, int verificationPin) {
         return patientDao.verifyPump(macAddress, verificationPin);
     }
 

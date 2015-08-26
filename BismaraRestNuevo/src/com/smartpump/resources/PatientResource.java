@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.smartpump.model.Patient;
+import com.smartpump.model.scheduling.Pump;
 import com.smartpump.services.PatientService;
 import com.smartpump.utils.RestBoolean;
 
@@ -67,6 +68,27 @@ public class PatientResource extends AbstractResource {
         RestBoolean response = new RestBoolean(patientService.verifyPump(
                 macAddress, verificationPin));
         return responseBuilder.buildResponse(200, response.toString());
+    }
+
+    /**
+     * Método responsable de verificar una bomba determinada, enviando su
+     * dirección de MAC y su pin de validación.
+     * 
+     * @param macAddress
+     *            la dirección MAC de la bomba.
+     * @param verificationPin
+     *            el pin de validación de la bomba.
+     * @return true si existe una bomba con esa MAC y ese PIN, false en caso
+     *         contrario.
+     */
+    @Path("/getPump")
+    @GET
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response getPumo(@HeaderParam("macAddress") String macAddress,
+            @HeaderParam("verificationPin") int verificationPin) {
+        Pump pump = patientService.getPump(macAddress, verificationPin);
+        String json = gson.toJson(pump);
+        return responseBuilder.buildResponse(200, json);
     }
 
     /**
