@@ -1,5 +1,7 @@
 package com.smartpump.bismara.requestmanager.model;
 
+import com.google.gson.annotations.Expose;
+
 
 /**
  * Clase que representa la entidad de un usuario registrado en el sistema. Sea
@@ -12,12 +14,16 @@ public class User {
 
     /** Id autogenerado del usuario. */
     private int id;
+    @Expose
     /** Nombre de usuario. */
     private String username;
+    @Expose
     /** Constraseña */
     private String password;
+    @Expose
     /** Estado del usuario */
     private UserState state;
+    @Expose
     /** Rol del usuario */
     private UserRole role;
 

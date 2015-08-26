@@ -2,6 +2,7 @@ package com.smartpump.bismara.app.medic.util;
 
 import com.smartpump.bismara.requestmanager.model.Doctor;
 
+
 public class EntityManager {
     private Doctor doctor;
     private static EntityManager manager;

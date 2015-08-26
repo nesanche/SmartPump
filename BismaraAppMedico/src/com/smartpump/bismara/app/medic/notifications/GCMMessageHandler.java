@@ -15,7 +15,7 @@ import com.smartpump.bismara.app.medic.R;
 import com.smartpump.bismara.app.medic.ui.activities.mainactivity.MainActivity;
 
 public class GCMMessageHandler extends IntentService {
-
+ 
     public GCMMessageHandler() {
         super("defaultName");
     }

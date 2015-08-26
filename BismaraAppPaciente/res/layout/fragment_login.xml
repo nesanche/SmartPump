@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <com.smartpump.bismara.app.medic.ui.util.RoundImage
+    <com.smartpump.bismara.app.patient.ui.util.RoundImage
         android:id="@+id/imageView_round"
         android:layout_width="150dp"
         android:layout_height="150dp"

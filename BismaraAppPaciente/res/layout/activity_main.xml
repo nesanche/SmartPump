@@ -1,4 +1,4 @@
-<com.smartpump.bismara.app.medic.util.NonSwipeableViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+<com.smartpump.bismara.app.patient.util.NonSwipeableViewPager xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pagerLogin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"

@@ -1,5 +1,7 @@
 package com.smartpump.bismara.requestmanager.model;
 
+import com.google.gson.annotations.Expose;
+
 
 /**
  * Clase que representa el estado actual del usuario en el sistema. Por defecto
@@ -14,8 +16,10 @@ package com.smartpump.bismara.requestmanager.model;
 public class UserState {
 
     /** Id auto generado. */
+    @Expose
     private int id;
     /** Descripción. */
+    @Expose
     private String description;
 
     /**

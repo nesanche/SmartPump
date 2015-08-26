@@ -1,5 +1,7 @@
 package com.smartpump.bismara.requestmanager.model;
 
+import com.google.gson.annotations.Expose;
+
 
 /**
  * Entidad que representa el rol que cumple el usuario dentro del sistema.
@@ -12,8 +14,10 @@ package com.smartpump.bismara.requestmanager.model;
 public class UserRole {
 
     /** Id autogenerado. */
+    @Expose
     private int id;
     /** Descripción. */
+    @Expose
     private String description;
 
     /**

@@ -1,5 +1,7 @@
 package com.smartpump.bismara.requestmanager.model;
 
+import com.google.gson.annotations.Expose;
+
 
 /**
  * Entidad que representa a un doctor registrado en el sistema.
@@ -9,23 +11,30 @@ package com.smartpump.bismara.requestmanager.model;
  */
 public class Doctor {
 
+    
     /** Id autogenerado del doctor. */
+    @Expose
     private int id;
-
     /** Nombre/s de pila */
+    @Expose
     private String firstName;
     /** Apellido */
+    @Expose
     private String lastName;
     /** Teléfono de contacto */
+    @Expose
     private String phone;
     /** Email de contacto */
+    @Expose
     private String email;
     /** Número de matrícula. Debe ser único. */
+    @Expose
     private String registrationNumber;
     /** Dirección donde trabaja el médico. */
+    @Expose
     private String address;
-
     /** Usuario que posee ese doctor para ingresar al sistema. */
+    @Expose
     private User user;
 
     /**

@@ -9,7 +9,7 @@ public class BismaraSyncHttpClient extends SyncHttpClient {
     String getResponse() {
         return response;
     }
-
+ 
     void setResponse(String response) {
         this.response = response;
     }
