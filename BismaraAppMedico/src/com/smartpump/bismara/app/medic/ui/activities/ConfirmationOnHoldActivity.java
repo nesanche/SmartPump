@@ -24,7 +24,6 @@ import com.smartpump.bismara.requestmanager.model.GCMRegistration;
  * @author nesanche
  *
  */
-@SuppressWarnings("deprecation")
 public class ConfirmationOnHoldActivity extends Activity {
 
     /** TextView que cierra la sesion */

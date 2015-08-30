@@ -35,7 +35,6 @@
         android:id="@+id/etLastName"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/etName"
         android:layout_centerVertical="true"
@@ -48,30 +47,6 @@
         android:gravity="center_vertical"
         android:hint="@string/es_hint_last_name"
         android:inputType="textCapWords"
-        android:lines="1"
-        android:maxLines="1"
-        android:paddingEnd="3dp"
-        android:paddingStart="3dp"
-        android:paddingTop="5dp" >
-    </EditText>
-
-    <EditText
-        android:id="@+id/etPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/etLastName"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginStart="25dp"
-        android:background="@drawable/rounded_edittext"
-        android:drawableStart="@drawable/ic_user"
-        android:ems="10"
-        android:gravity="center_vertical"
-        android:hint="@string/es_hint_phone"
-        android:inputType="phone"
         android:lines="1"
         android:maxLines="1"
         android:paddingEnd="3dp"
@@ -97,7 +72,6 @@
         android:id="@+id/etName"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_alignStart="@+id/tvStart"
         android:layout_below="@+id/tvStart"
@@ -115,30 +89,67 @@
         android:paddingEnd="3dp"
         android:paddingStart="3dp"
         android:paddingTop="5dp" >
-
-        <requestFocus />
     </EditText>
 
-    <EditText
-        android:id="@+id/etAddress"
+    <DatePicker
+        android:id="@+id/dpBirthDate"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignStart="@+id/tvStart"
-        android:layout_below="@+id/etPhone"
-        android:layout_marginEnd="25dp"
-        android:layout_marginStart="25dp"
-        android:background="@drawable/rounded_edittext"
-        android:drawableStart="@drawable/ic_user"
-        android:ems="10"
-        android:gravity="center_vertical"
-        android:hint="@string/es_hint_address"
-        android:inputType="text"
-        android:lines="1"
-        android:maxLines="1"
-        android:paddingEnd="3dp"
-        android:paddingStart="3dp"
-        android:paddingTop="5dp" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etLastName"
+        android:layout_centerHorizontal="true"
+        android:calendarViewShown="false" />
+
+    <TextView
+        android:id="@+id/tvBirthDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/etLastName"
+        android:layout_alignStart="@+id/dpBirthDate"
+        android:layout_alignTop="@+id/dpBirthDate"
+        android:text="Fecha de nacimiento"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#fff"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:id="@+id/radioSex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/tvSex"
+        android:layout_below="@+id/tvSex"
+        android:checkedButton="@+id/radioMasc" >
+
+        <RadioButton
+            android:id="@+id/radioMasc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tvSex"
+            android:layout_below="@+id/tvSex"
+            android:text="M"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radioFem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/radioMasc"
+            android:layout_centerVertical="true"
+            android:text="F"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/tvSex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/btnNextStep"
+        android:layout_alignRight="@+id/dpBirthDate"
+        android:layout_alignTop="@+id/etName"
+        android:text="Sexo"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#fff"
+        android:textStyle="bold" />
 
 </RelativeLayout>

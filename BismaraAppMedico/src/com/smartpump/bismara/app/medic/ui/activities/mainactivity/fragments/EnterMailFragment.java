@@ -33,6 +33,8 @@ public class EnterMailFragment extends Fragment {
     private ProgressDialog progress;
     /** Texto que vuelve a la pantalla de login en caso de ya tener una cuenta */
     private TextView tvHaveAccount;
+    
+    private static final int DOCTOR = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -147,7 +149,7 @@ public class EnterMailFragment extends Fragment {
         @Override
         protected Boolean doInBackground(String... email) {
             RequestManager requestManager = RequestManager.getInstance();
-            return requestManager.checkEmailAvailability(getActivity(),
+            return requestManager.checkEmailAvailability(getActivity(), DOCTOR,
                     email[0]);
 
         }

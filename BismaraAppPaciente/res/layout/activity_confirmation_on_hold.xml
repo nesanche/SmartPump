@@ -17,7 +17,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
-        android:text="Thanks for your registration!"
+        android:text="Gracias por registrarte!"
         android:textColor="#ffffff"
         android:textSize="25sp"
         android:textStyle="bold" />
@@ -31,7 +31,7 @@
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:gravity="center"
-        android:text="The Bismara team will check on your personal and medical information to make sure everything is ok You will receive an e-mail when your account is activated."
+        android:text="Ahora debes contactarte con tu médico, quien deberá activar tu cuenta para poder empezar a disfrutar de Bismara."
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#fff" />
 

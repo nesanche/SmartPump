@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Bismara Médico</string>
+    <string name="app_name">Bismara Paciente</string>
     <string name="action_settings">Settings</string>
     <string name="en_login_error_message">Error. Please check your credentials</string>
     <string name="en_login_continue_button">Sign in</string>
@@ -64,4 +64,6 @@
     <string name="es_start_registration_btn">Registrarse</string>
     <string name="en_credentials_empty">Please enter your credentials</string>
     <string name="es_credentials_empty">Por favor ingrese usuario y contraseña</string>
+    <string name="doctor_name">Nombre: </string>
+    <string name="doctor_license">Matricula: </string>
 </resources>

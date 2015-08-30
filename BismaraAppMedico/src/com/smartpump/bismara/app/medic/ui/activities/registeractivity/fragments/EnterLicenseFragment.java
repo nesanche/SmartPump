@@ -23,7 +23,6 @@ import com.smartpump.bismara.app.medic.util.EntityManager;
 import com.smartpump.bismara.requestmanager.RequestManager;
 import com.smartpump.bismara.requestmanager.model.Doctor;
 
-@SuppressWarnings("deprecation")
 public class EnterLicenseFragment extends Fragment {
 
     private EditText etLicense;
