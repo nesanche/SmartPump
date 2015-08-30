@@ -23,5 +23,6 @@ node_modules/
 *.prefs
 *.classpath
 .vagrant
-
+project.properties
+R.java
 local.properties
