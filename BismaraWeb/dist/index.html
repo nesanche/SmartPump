@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" ng-app="RDash">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="images/favicon.ico">
+	<title>Bismara</title>
+  <!-- STYLES -->
+  <link rel="stylesheet" href="lib/css/main.min.css" media="all"/>
+  <!-- SCRIPTS -->
+  <script src="lib/js/main.min.js"></script>
+  <!-- Custom Scripts and Styles -->
+  <link rel="stylesheet" type="text/css" href="css/styles.css" />   
+   <!--Captcha-->
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+  <!--Accordion
+
+  <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>-->
+  <script type = "text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js" ></script>
+  <script type="text/javascript" src="js/dashboard.min.js"></script> 
+</head>
+<body ng-controller="MasterCtrl" ng-class="viewBackground">
+  <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper" class="{{menu}}">
+      <ul class="sidebar">
+        <li class="sidebar-main">
+          <a ng-click="toggleSidebar()">
+            <img src="images/logoB.fw.png" alt="logo" style="height: 45px;"/> Bismara
+            <span class="menu-icon glyphicon glyphicon-transfer"></span>
+          </a>
+        </li>
+        <li class="sidebar-title"><span>MENU</span></li>
+        <li class="sidebar-list">
+          <a href="#/datos">Datos Personales <span class="menu-icon fa fa-user"></span></a>
+        </li>
+        <li class="sidebar-list">
+          <a href="#/pacientes">Pacientes <span class="menu-icon fa fa-users"></span></a>
+        </li>
+         <li class="sidebar-list">
+          <a href="#/nuevoTratamiento">Nueva Programación<span class="menu-icon fa fa-pencil-square-o"></span></a>
+        </li>
+        <li class="sidebar-list">
+          <a href="#/historial">Mis Programaciones<span class="menu-icon fa fa-list-alt"></span></a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="col-xs-4">
+          <a href="https://github.com/nesanche/SmartPump" target="_blank">
+            Github
+          </a>
+        </div>
+        <div class="col-xs-4">
+          <a href="https://github.com/nesanche/SmartPump/README.md" target="_blank">
+            Nosotros
+          </a>
+        </div>
+        <div class="col-xs-4">
+          <a href="#">
+            Soporte
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- End Sidebar -->
+
+    <div id="content-wrapper">
+      <div class="page-content">
+        <!-- Header Bar -->
+        <div class="row header {{menu}}"> 
+          <div class="col-xs-12">
+            <div class="user pull-right">
+              <div class="item dropdown {{profile}}">
+                <a class="dropdown-toggle" ng-click="openProfile(profile)">
+                  <img src="images/avatar.jpg">
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li class="dropdown-header">
+                    Enrique Majul
+                  </li>
+                  <li class="divider"></li>
+                  <li class="link">
+                    <a href="#/datos">
+                      Perfil
+                    </a>
+                  </li>
+                  <li class="divider"></li>
+                  <li class="link">
+                    <a href="#/logout">
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="item dropdown {{notificationOpen}}">
+               <a class="dropdown-toggle" ng-click="openNotification(notificationOpen, -1)">
+                  <i class="fa fa-bell-o"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li class="dropdown-header">
+                    Notificaciones
+                  </li>
+                  <li class="divider"></li>
+                  <li ng-repeat="notification in notifications">                
+                    <a href="#{{notification.notificationType.description}}" ng-click="openNotification(notificationOpen, notification.id)" class="notification" style="{{notification.viewed == true ? 'background-color: none;' : 'background-color: #DDE5FF;'}}">                      
+                      <span>{{notification.header}}</span>
+                      <br>{{notification.message}} <li class="divider2"></li>                     
+                    </a>                   
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="meta">
+              <div class="page">
+                 ¡Buen día Doctor!
+              </div>
+              <div class="breadcrumb-links">
+               <strong>{{doctor.firstName}} {{doctor.lastName}}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Header Bar -->
+
+        <!-- Main Content -->
+        <div ui-view></div>
+
+      </div><!-- End Page Content -->
+    </div><!-- End Content Wrapper -->
+  </div><!-- End Page Wrapper -->
+</body>
+</html>
