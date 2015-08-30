@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notifications>
+    <notification>
+        <type>1</type>
+        <header>Nueva programación</header>
+        <message>Tu médico ha enviado una nueva programación. ¡Revísala y sincronizala con tu bomba!</message>
+    </notification>
+    <notification>
+        <type>2</type>
+        <header>¡Cuenta confirmada!</header>
+        <message>¡Felicitaciones! Tu cuenta ha sido confirmada. Ya puedes comenzar a utilizar los servicios de Bismara.</message>
+    </notification>      
+</notifications>
